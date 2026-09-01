@@ -1,0 +1,134 @@
+{
+ "version": 1,
+ "note": "Begriffe fuer die automatische Vorpruefung. Nur ein Filter: er darf ablehnen oder markieren, aber niemals freigeben. Begriffe bewusst eng gefasst: zu breite Wörter (flut, war, feuer, tod) erzeugen Fehlalarme bei harmlosen Kinderinhalten. Treffer zählen nur am Wortanfang (Stämme wie „entführ“ greifen weiter), Wortmitten nicht: „Attentäter“ ist kein Täter-Treffer, „knackt“ kein „nackt“. In „exceptions“ stehen Wörter, die trotz passendem Wortanfang nicht zählen; sie wirken selbst als Anfang, „krieger“ deckt also auch „kriegerische“ ab.",
+ "hardBlock": [
+  "18+",
+  "nsfw",
+  "hentai",
+  "ecchi",
+  "erotik",
+  "porn",
+  "goon",
+  "g00n"
+ ],
+ "exceptions": [
+  "krieger",
+  "kriegerin",
+  "gewaltig",
+  "gewaltfrei",
+  "frontal",
+  "todesmutig"
+ ],
+ "topics": {
+  "sexual": [
+   "sex",
+   "sexy",
+   "nackt",
+   "waifu",
+   "fanservice"
+  ],
+  "violence": [
+   "gore",
+   "brutal",
+   "blut",
+   "gewalt",
+   "kampf bis zum tod",
+   "massaker",
+   "folter"
+  ],
+  "death": [
+   "mord",
+   "gestorben",
+   "stirbt",
+   "suicide",
+   "suizid",
+   "selbstmord",
+   "todesfall",
+   "beerdigung"
+  ],
+  "horror": [
+   "horror",
+   "grusel",
+   "creepy",
+   "dämon",
+   "geister"
+  ],
+  "war": [
+   "krieg",
+   "bombe",
+   "raketen",
+   "luftangriff",
+   "soldaten",
+   "front",
+   "waffenruhe"
+  ],
+  "disaster": [
+   "katastrophe",
+   "erdbeben",
+   "flutwelle",
+   "überflutung",
+   "hochwasser",
+   "tsunami",
+   "tornado",
+   "erdrutsch",
+   "unglück",
+   "explosion",
+   "großbrand",
+   "brandkatastrophe"
+  ],
+  "crime": [
+   "verbrechen",
+   "überfall",
+   "entführ",
+   "messer",
+   "schüsse",
+   "täter"
+  ],
+  "fear": [
+   "angst",
+   "panik",
+   "alptraum",
+   "albtraum"
+  ],
+  "politics": [
+   "wahl",
+   "politik",
+   "regierung",
+   "partei",
+   "protest",
+   "demonstration"
+  ],
+  "adultMedia": [
+   "chainsaw man",
+   "attack on titan",
+   "berserk",
+   "tokyo ghoul",
+   "jujutsu kaisen",
+   "death note",
+   "ab 16",
+   "ab 18",
+   "fsk 16",
+   "fsk 18"
+  ],
+  "coarseLanguage": [
+   "scheiß",
+   "fuck",
+   "shit",
+   "wtf",
+   "verdammt"
+  ],
+  "advertising": [
+   "werbung",
+   "anzeige",
+   "sponsored",
+   "gesponsert",
+   "rabattcode",
+   "affiliate",
+   "patreon",
+   "discord",
+   "unboxing",
+   "im test",
+   "review"
+  ]
+ }
+}

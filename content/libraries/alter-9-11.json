@@ -1,0 +1,373 @@
+{
+ "version": 1,
+ "createdAt": "2026-08-31",
+ "id": "alter-9-11",
+ "title": "Startpaket 9–11 Jahre",
+ "note": "Kuratiert für ein Profil mit Schwerpunkt 9–11 Jahre (Übergangsphase, FLIMMO-Trennung 7–10/11–13). Alle Einträge beginnen als REVIEW_REQUIRED – Eltern sehen jedes Video an und geben frei. Alle IDs am 2026-08-31 über RSS/oEmbed bzw. die PeerTube-API verifiziert.",
+ "profilePreset": {
+  "ageBand": "kids",
+  "allowNews": true,
+  "allowManga": true,
+  "allowMangaEntertainment": false,
+  "allowShorts": false,
+  "autoplayNext": false,
+  "bedtimeEnabled": true,
+  "bedtimeStartMinutes": 1200,
+  "bedtimeEndMinutes": 390,
+  "bedtimeWeekendOffsetMinutes": 60
+ },
+ "videos": [
+  {
+   "id": "_80pKGuyKWc",
+   "title": "Was ist Künstliche Intelligenz? | Die Maus | WDR",
+   "channelId": "UCRWSxXBnz9IRS4SgRhG2wpQ",
+   "channelTitle": "Die Maus",
+   "category": "mediaLiteracy",
+   "ageMin": 7,
+   "note": "FLIMMO: kindgerecht; Kernpaket Medienkompetenz"
+  },
+  {
+   "id": "yROuHLT7LfA",
+   "title": "Wie arbeitet eine Suchmaschine? | DieMaus | WDR",
+   "channelId": "UCRWSxXBnz9IRS4SgRhG2wpQ",
+   "channelTitle": "Die Maus",
+   "category": "mediaLiteracy",
+   "ageMin": 7,
+   "note": "FLIMMO: kindgerecht; Kernpaket Medienkompetenz"
+  },
+  {
+   "id": "eJE_32_5SfE",
+   "title": "Wie kommen die Daten in die Cloud? | DieMaus | WDR",
+   "channelId": "UCRWSxXBnz9IRS4SgRhG2wpQ",
+   "channelTitle": "Die Maus",
+   "category": "mediaLiteracy",
+   "ageMin": 7
+  },
+  {
+   "id": "snTgKGm3GAI",
+   "title": "Wie kommt die Sprache in den Sprachassistenten? | DieMaus | WDR",
+   "channelId": "UCRWSxXBnz9IRS4SgRhG2wpQ",
+   "channelTitle": "Die Maus",
+   "category": "mediaLiteracy",
+   "ageMin": 7
+  },
+  {
+   "id": "GfzuQfodg1w",
+   "title": "Wie funktioniert ein Touchscreen? | DieMaus | WDR",
+   "channelId": "UCRWSxXBnz9IRS4SgRhG2wpQ",
+   "channelTitle": "Die Maus",
+   "category": "technology",
+   "ageMin": 7
+  },
+  {
+   "id": "DfB5TYnguvo",
+   "title": "Wie entstehen Ebbe und Flut? | Die Maus | WDR",
+   "channelId": "UCRWSxXBnz9IRS4SgRhG2wpQ",
+   "channelTitle": "Die Maus",
+   "category": "nature",
+   "ageMin": 7
+  },
+  {
+   "id": "o62u_ER0qFk",
+   "title": "Wie kommt das Salz ins Meer? | Die Maus | WDR",
+   "channelId": "UCRWSxXBnz9IRS4SgRhG2wpQ",
+   "channelTitle": "Die Maus",
+   "category": "nature",
+   "ageMin": 7
+  },
+  {
+   "id": "8pwO0ujbCDU",
+   "title": "Der Zahlen-Check | Reportage für Kinder | Checker Tobi | BR",
+   "channelId": "UCQtsd17U8NOM1VRI8oxdwiQ",
+   "channelTitle": "CHECKER WELT",
+   "category": "knowledge",
+   "ageMin": 7,
+   "note": "FLIMMO: kindgerecht, wissensorientiert"
+  },
+  {
+   "id": "PwI5BZp26VE",
+   "title": "Der Tunnel-Check | Reportage für Kinder | Checkerin Marina | BR",
+   "channelId": "UCQtsd17U8NOM1VRI8oxdwiQ",
+   "channelTitle": "CHECKER WELT",
+   "category": "technology",
+   "ageMin": 7
+  },
+  {
+   "id": "_mT8feZshLA",
+   "title": "Der Güterverkehrs-Check | Reportage für Kinder | Checkerin Marina | BR",
+   "channelId": "UCQtsd17U8NOM1VRI8oxdwiQ",
+   "channelTitle": "CHECKER WELT",
+   "category": "technology",
+   "ageMin": 7
+  },
+  {
+   "id": "bEhkjJitP4A",
+   "title": "Der Küsten-Check | Reportage für Kinder | Checkerin Marina | BR",
+   "channelId": "UCQtsd17U8NOM1VRI8oxdwiQ",
+   "channelTitle": "CHECKER WELT",
+   "category": "environment",
+   "ageMin": 7
+  },
+  {
+   "id": "0hLbrAcn9JQ",
+   "title": "Der Blumen-Check | Reportage für Kinder | Checkerin Marina | BR",
+   "channelId": "UCQtsd17U8NOM1VRI8oxdwiQ",
+   "channelTitle": "CHECKER WELT",
+   "category": "nature",
+   "ageMin": 7
+  },
+  {
+   "id": "sFaT7qvgaX8",
+   "title": "Der Töpfer-Check | Reportage für Kinder | Checker Tobi | BR",
+   "channelId": "UCQtsd17U8NOM1VRI8oxdwiQ",
+   "channelTitle": "CHECKER WELT",
+   "category": "creative",
+   "ageMin": 7
+  },
+  {
+   "id": "KRLtY7nP17s",
+   "title": "Hitzewellen und Temperaturrekorde: Wie geht es den Bäumen in der Stadt? | PUR+",
+   "channelId": "UCp3NGUmMHlYQdFuCNEM9W7A",
+   "channelTitle": "PUR+",
+   "category": "environment",
+   "ageMin": 9,
+   "note": "PUR+ laut FLIMMO ab 9"
+  },
+  {
+   "id": "bIKaqvg3_c0",
+   "title": "Wie man ein Wespennest loswird und warum Wespen besser als ihr Ruf sind | PUR+",
+   "channelId": "UCp3NGUmMHlYQdFuCNEM9W7A",
+   "channelTitle": "PUR+",
+   "category": "nature",
+   "ageMin": 9
+  },
+  {
+   "id": "_Xpgu9WMz1Y",
+   "title": "Warum tragen Störche Ringe am Bein? | PUR+",
+   "channelId": "UCp3NGUmMHlYQdFuCNEM9W7A",
+   "channelTitle": "PUR+",
+   "category": "nature",
+   "ageMin": 9
+  },
+  {
+   "id": "8c9Gmd-rvVM",
+   "title": "Spurensuche: Trifft Eric einen Wolf in freier Wildbahn? | PUR+",
+   "channelId": "UCp3NGUmMHlYQdFuCNEM9W7A",
+   "channelTitle": "PUR+",
+   "category": "nature",
+   "ageMin": 9
+  },
+  {
+   "id": "r1ee-VqBczI",
+   "title": "Die Geschichte des Fliegens: So waghalsig waren die ersten Versuche | PUR+",
+   "channelId": "UCp3NGUmMHlYQdFuCNEM9W7A",
+   "channelTitle": "PUR+",
+   "category": "knowledge",
+   "ageMin": 9
+  },
+  {
+   "id": "TUu7LNQn9NQ",
+   "title": "Virenschleuder Handy? - Princess of Science | ZDFtivi",
+   "channelId": "UCrb6U1FuOP5EZ7n7LfOJMMQ",
+   "channelTitle": "ZDFtivi",
+   "category": "knowledge",
+   "ageMin": 9,
+   "note": "FLIMMO empfiehlt Princess of Science ab 9 – auf Home prominent"
+  },
+  {
+   "id": "XYk_wL0CMN8",
+   "title": "Lautsprecher fürs Handy selbst gemacht - Princess of Science | ZDFtivi",
+   "channelId": "UCrb6U1FuOP5EZ7n7LfOJMMQ",
+   "channelTitle": "ZDFtivi",
+   "category": "technology",
+   "ageMin": 9
+  },
+  {
+   "id": "e5sU8FxCZR4",
+   "title": "Coole Upcycling-Ideen - Princess of Science | ZDFtivi",
+   "channelId": "UCrb6U1FuOP5EZ7n7LfOJMMQ",
+   "channelTitle": "ZDFtivi",
+   "category": "creative",
+   "ageMin": 9
+  },
+  {
+   "id": "gFMimxzvjUI",
+   "title": "Datenschutz: Teste jetzt dein Wissen | neuneinhalb | WDR",
+   "channelId": "UCn7wWR5KnpX_N6ZaBNuyVYw",
+   "channelTitle": "neuneinhalb (WDR)",
+   "category": "mediaLiteracy",
+   "ageMin": 9
+  },
+  {
+   "id": "OLHiZNOqkss",
+   "title": "Schnelles Geld mit YouTube, TikTok und Co.? | neuneinhalb | WDR",
+   "channelId": "UCn7wWR5KnpX_N6ZaBNuyVYw",
+   "channelTitle": "neuneinhalb (WDR)",
+   "category": "mediaLiteracy",
+   "ageMin": 9
+  },
+  {
+   "id": "i9YDVOm20JI",
+   "title": "neuneinhalb Lexikon: Kinderrechte | WDR",
+   "channelId": "UCn7wWR5KnpX_N6ZaBNuyVYw",
+   "channelTitle": "neuneinhalb (WDR)",
+   "category": "society",
+   "ageMin": 9
+  },
+  {
+   "id": "wr0-lyvwFHg",
+   "title": "Shoppen ohne Ende: Wer zahlt den Preis für billige Klamotten? | neuneinhalb | WDR",
+   "channelId": "UCn7wWR5KnpX_N6ZaBNuyVYw",
+   "channelTitle": "neuneinhalb (WDR)",
+   "category": "society",
+   "ageMin": 9
+  },
+  {
+   "id": "zwxDQOv46xs",
+   "title": "neuneinhalb Lexikon: Müll | WDR",
+   "channelId": "UCn7wWR5KnpX_N6ZaBNuyVYw",
+   "channelTitle": "neuneinhalb (WDR)",
+   "category": "environment",
+   "ageMin": 9
+  },
+  {
+   "id": "_cATPNss0Hc",
+   "title": "Immer mehr Kinobesuche: Wie findet ihr Kino? | logo!-Nachrichten",
+   "channelId": "UCuziK4bUFRr3z62bE7FMDPQ",
+   "channelTitle": "logo!",
+   "category": "news",
+   "ageMin": 9,
+   "isNews": true,
+   "newsStatus": "safe"
+  },
+  {
+   "id": "BpOqMAAwGdc",
+   "title": "gamescom 2026: Das sind eure Highlights | logo!-Nachrichten",
+   "channelId": "UCuziK4bUFRr3z62bE7FMDPQ",
+   "channelTitle": "logo!",
+   "category": "news",
+   "ageMin": 9,
+   "isNews": true,
+   "newsStatus": "safe"
+  },
+  {
+   "id": "aCoh44Nzxt4",
+   "title": "70 Jahre Bravo: So entwickelte sich die Kult-Zeitschrift | logo!-Nachrichten",
+   "channelId": "UCuziK4bUFRr3z62bE7FMDPQ",
+   "channelTitle": "logo!",
+   "category": "mediaLiteracy",
+   "ageMin": 9,
+   "isNews": true,
+   "newsStatus": "safe"
+  },
+  {
+   "id": "Lh4BnIri0Hs",
+   "title": "Frankreich: Steigende Meerestemperaturen gefährden Seepferdchen | logo!-Nachrichten",
+   "channelId": "UCuziK4bUFRr3z62bE7FMDPQ",
+   "channelTitle": "logo!",
+   "category": "environment",
+   "ageMin": 9,
+   "isNews": true,
+   "newsStatus": "safe"
+  },
+  {
+   "id": "pt:tube.xn--baw-joa.social:7tbtVM27d19TkDDAq7Gz5x",
+   "provider": "peertube",
+   "title": "Datenschutz – leicht erklärt: Smartphone",
+   "channelId": "pt:tube.xn--baw-joa.social:lfdi",
+   "channelTitle": "LfDI Baden-Württemberg",
+   "category": "mediaLiteracy",
+   "ageMin": 9,
+   "durationSeconds": 257,
+   "sourceUrl": "https://tube.xn--baw-joa.social/w/7tbtVM27d19TkDDAq7Gz5x"
+  },
+  {
+   "id": "pt:tube.xn--baw-joa.social:9gvZc5f9EhCZc2SqxtDLF9",
+   "provider": "peertube",
+   "title": "Datenschutz – leicht erklärt: Passwörter",
+   "channelId": "pt:tube.xn--baw-joa.social:lfdi",
+   "channelTitle": "LfDI Baden-Württemberg",
+   "category": "mediaLiteracy",
+   "ageMin": 9,
+   "durationSeconds": 275,
+   "sourceUrl": "https://tube.xn--baw-joa.social/w/9gvZc5f9EhCZc2SqxtDLF9"
+  },
+  {
+   "id": "pt:tube.xn--baw-joa.social:tBbK3aivEWuyDxA74grP3d",
+   "provider": "peertube",
+   "title": "Datenschutz leicht erklärt: Tracking",
+   "channelId": "pt:tube.xn--baw-joa.social:lfdi",
+   "channelTitle": "LfDI Baden-Württemberg",
+   "category": "mediaLiteracy",
+   "ageMin": 9,
+   "durationSeconds": 259,
+   "sourceUrl": "https://tube.xn--baw-joa.social/w/tBbK3aivEWuyDxA74grP3d"
+  },
+  {
+   "id": "pt:tube.xn--baw-joa.social:mAFcVDAe91hAVa2ME7azAd",
+   "provider": "peertube",
+   "title": "Datenschutz – leicht erklärt: IT-Sicherheit",
+   "channelId": "pt:tube.xn--baw-joa.social:lfdi",
+   "channelTitle": "LfDI Baden-Württemberg",
+   "category": "mediaLiteracy",
+   "ageMin": 9,
+   "durationSeconds": 227,
+   "sourceUrl": "https://tube.xn--baw-joa.social/w/mAFcVDAe91hAVa2ME7azAd"
+  },
+  {
+   "id": "pt:tube.xn--baw-joa.social:t2st1HeimphHtontdDoMZt",
+   "provider": "peertube",
+   "title": "Datenschutz – leicht erklärt: Soziale Netzwerke",
+   "channelId": "pt:tube.xn--baw-joa.social:lfdi",
+   "channelTitle": "LfDI Baden-Württemberg",
+   "category": "mediaLiteracy",
+   "ageMin": 9,
+   "durationSeconds": 97,
+   "sourceUrl": "https://tube.xn--baw-joa.social/w/t2st1HeimphHtontdDoMZt"
+  },
+  {
+   "id": "pt:tube.xn--baw-joa.social:6k5HGNV1ZxFm818iQxfN53",
+   "provider": "peertube",
+   "title": "Datenschutz leicht erklärt: Gaming",
+   "channelId": "pt:tube.xn--baw-joa.social:lfdi",
+   "channelTitle": "LfDI Baden-Württemberg",
+   "category": "mediaLiteracy",
+   "ageMin": 9,
+   "durationSeconds": 197,
+   "sourceUrl": "https://tube.xn--baw-joa.social/w/6k5HGNV1ZxFm818iQxfN53"
+  },
+  {
+   "id": "INSRwdxGb1E",
+   "title": "Manga Figuren zeichnen lernen: Meine 4 Schritte Methode!",
+   "channelId": "UCArSticZ19uxwbcFNdF-uuw",
+   "channelTitle": "KritzelPixel",
+   "category": "mangaDrawing",
+   "ageMin": 8,
+   "note": "auf Werbung/Patreon/Discord prüfen"
+  },
+  {
+   "id": "9hTFHOmOxag",
+   "title": "Mit Mii's zeichnen lernen?!",
+   "channelId": "UCArSticZ19uxwbcFNdF-uuw",
+   "channelTitle": "KritzelPixel",
+   "category": "mangaDrawing",
+   "ageMin": 8
+  },
+  {
+   "id": "aVH0O_AEiWQ",
+   "title": "5 Fehler, die JEDER Manga-Zeichner macht | DrawinglikeaSir",
+   "channelId": "UCIUmF5e2-BRVx31HDxExQoA",
+   "channelTitle": "Drawinglikeasir",
+   "category": "mangaDrawing",
+   "ageMin": 9
+  },
+  {
+   "id": "HmE3c2POwUI",
+   "title": "Fluchtpunkt einfach erklärt - Perspektive zeichnen lernen in 60 Sekunden | Drawinglikeasir",
+   "channelId": "UCIUmF5e2-BRVx31HDxExQoA",
+   "channelTitle": "Drawinglikeasir",
+   "category": "drawing",
+   "ageMin": 9
+  }
+ ]
+}

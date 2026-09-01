@@ -1,0 +1,6 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1024 1024" width="1024" height="1024" role="img" aria-label="sidetube">
+  <!-- Side brand: SIDE_S_GEOMETRY IS SHARED AND IMMUTABLE. sidetube = S + play. Generated from branding/logo-spec.json -->
+  <path id="side-s-top" d="M 750 250 H 370 C 292 250 252 290 252 370 V 430" fill="none" stroke="#F6F4EF" stroke-width="136" stroke-linecap="round" stroke-linejoin="round"/>
+  <path id="side-s-bottom" d="M 772 594 V 654 C 772 732 732 772 654 772 H 276" fill="none" stroke="#F6F4EF" stroke-width="136" stroke-linecap="round" stroke-linejoin="round"/>
+  <path id="symbol-play" d="M 450 416 Q 426 402 426 435 L 426 585 Q 426 618 450 604 L 590 526 Q 616 511 590 495 Z" fill="#F6F4EF"/>
+</svg>

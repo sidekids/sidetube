@@ -1,0 +1,14 @@
+# Xcode / Build
+*.xcodeproj
+*.xcworkspace
+DerivedData/
+build/
+xcuserdata/
+*.xcuserstate
+.DS_Store
+# Secrets
+Config/Secrets.xcconfig
+
+
+# Private Startpakete (übernommene Gerätedaten) bleiben lokal
+content/libraries/private-*.json

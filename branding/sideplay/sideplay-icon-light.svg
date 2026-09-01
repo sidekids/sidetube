@@ -1,0 +1,11 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1024 1024" width="1024" height="1024" role="img" aria-label="sideplay">
+  <!-- Side brand: SIDE_S_GEOMETRY IS SHARED AND IMMUTABLE. sideplay = S + wave. Generated from branding/logo-spec.json -->
+  <rect id="background" width="1024" height="1024" fill="#F6F4EF"/>
+  <path id="side-s-top" d="M 750 250 H 370 C 292 250 252 290 252 370 V 430" fill="none" stroke="#FBBB1B" stroke-width="136" stroke-linecap="round" stroke-linejoin="round"/>
+  <path id="side-s-bottom" d="M 772 594 V 654 C 772 732 732 772 654 772 H 276" fill="none" stroke="#FBBB1B" stroke-width="136" stroke-linecap="round" stroke-linejoin="round"/>
+  <rect id="symbol-wave-432" x="416" y="466" width="32" height="88" rx="15" fill="#FBBB1B"/>
+  <rect id="symbol-wave-472" x="456" y="439" width="32" height="142" rx="15" fill="#FBBB1B"/>
+  <rect id="symbol-wave-512" x="496" y="405" width="32" height="210" rx="15" fill="#FBBB1B"/>
+  <rect id="symbol-wave-552" x="536" y="439" width="32" height="142" rx="15" fill="#FBBB1B"/>
+  <rect id="symbol-wave-592" x="576" y="466" width="32" height="88" rx="15" fill="#FBBB1B"/>
+</svg>
