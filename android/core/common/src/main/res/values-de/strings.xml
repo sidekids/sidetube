@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="common_back">Zurück</string>
+    <string name="common_cancel">Abbrechen</string>
+    <string name="common_save">Speichern</string>
+    <string name="common_delete">Löschen</string>
+    <string name="common_remove">Entfernen</string>
+    <string name="common_add">Hinzufügen</string>
+    <string name="common_retry">Erneut versuchen</string>
+    <string name="common_dismiss">Schließen</string>
+    <string name="common_search">Suche</string>
+    <string name="common_clear_search">Suche leeren</string>
+    <string name="common_parent_area">Elternbereich</string>
+    <string name="common_next">Nächstes Video</string>
+    <string name="common_previous">Vorheriges Video</string>
+    <string name="common_unknown_error">Unbekannter Fehler</string>
+    <string name="common_error_with_message">Fehler: %1$s</string>
+    <string name="error_video_metadata">Video-Daten konnten aus keiner Quelle geladen werden</string>
+    <string name="error_channel_metadata">Abo-Daten konnten aus keiner Quelle geladen werden</string>
+    <string name="error_playlist_metadata">Playlist-Daten konnten aus keiner Quelle geladen werden</string>
+    <string name="error_playlist_items">Playlist-Videos konnten aus keiner Quelle geladen werden</string>
+    <string name="error_channel_handle">Abo-Kürzel konnte aus keiner Quelle aufgelöst werden</string>
+    <string name="error_search_failed">Suche fehlgeschlagen</string>
+    <string name="error_channel_not_found">Abo nicht gefunden</string>
+    <string name="error_video_not_found">Video nicht gefunden</string>
+    <string name="error_playlist_not_found">Playlist nicht gefunden</string>
+    <string name="error_network">Netzwerkfehler</string>
+    <string name="error_unexpected">Unerwarteter Fehler</string>
+    <string name="error_uploads_playlist">Uploads-Playlist des Abos nicht gefunden</string>
+    <string name="error_invalid_url">Keine gültige YouTube-Adresse</string>
+    <string name="error_already_whitelisted">Bereits freigegeben</string>
+    <string name="error_export_failed">Sichern fehlgeschlagen</string>
+    <string name="error_import_failed">Einlesen fehlgeschlagen</string>
+    <string name="error_rate_limited">YouTube begrenzt gerade die Anfragen. Gleich noch einmal versuchen.</string>
+</resources>

@@ -1,0 +1,46 @@
+# YouTubeWhitelist - Session Archive Index
+
+This file tracks where session logs are stored across PROJEKT.md and archive files.
+
+## Current Session Logs Location
+
+| Session | Date       | File                | Summary |
+|---------|------------|---------------------|---------|
+| 1       | 2026-02-09 | PROJEKT_ARCHIV_1.md | Project initialization, multi-module setup, database entities |
+| 2       | 2026-02-09 | PROJEKT_ARCHIV_1.md | PIN management, auth infrastructure, navigation graph |
+| 3       | 2026-02-09 | PROJEKT_ARCHIV_1.md | M2: YouTube API DTOs, URL parser, whitelist/API/profile repositories |
+| 4       | 2026-02-09 | PROJEKT_ARCHIV_1.md | M2: Parent mode ViewModels (TDD), UI screens, navigation updates |
+| 5       | 2026-02-09 | PROJEKT_ARCHIV_1.md | Build verification, M3 Kid Mode (data layer, navigation, ViewModels, UI screens) |
+| 6       | 2026-02-09 | PROJEKT_ARCHIV_1.md | M3 completion (Coil, KidSearch TDD) + M4 Sleep Mode (timer, fade-out, dark UI) |
+| 7       | 2026-02-09 | PROJEKT_ARCHIV_1.md | M5: Multi-profile, time limits, watch stats, export/import (316 tests) |
+| 8       | 2026-02-09 | PROJEKT_ARCHIV_1.md | M6: Playlist Detail, Kiosk Mode, WebView OAuth, edge case tests, optimization (355 tests) |
+| 9       | 2026-02-09 | PROJEKT_ARCHIV_1.md | Ko-fi donation integration, About screen, README, store listing texts |
+| 10      | 2026-02-09 | PROJEKT_ARCHIV_1.md | M7: Publication preparation (ProGuard, signing, F-Droid metadata, CHANGELOG, release build 2.4MB) |
+| 11      | 2026-02-09 | PROJEKT_ARCHIV_2.md | M7: Google Cloud Console setup, AAB build, sideloading tutorial |
+| 12      | 2026-02-10 | PROJEKT_ARCHIV_2.md | Device testing, WebView navigation security fix, cookie persistence, OAuth WebView attempt (reverted) |
+| 13      | 2026-02-10 | PROJEKT_ARCHIV_2.md | Sleep Mode refactoring (phases 4-5), device testing bug fixes, channel video search via YouTube API |
+| 14      | 2026-02-10 | PROJEKT.md           | Reverse SDLC documentation (BRD, FS, HLD, LLD — 2138 lines, 18 Mermaid diagrams) |
+| 15      | 2026-02-10 | PROJEKT.md           | SDLC documentation completion (Developer Onboarding, User Manual, PRD English translation) |
+| 16      | 2026-02-10 | PROJEKT.md           | Store submission + final polish (GitHub Release v1.0.0, Privacy Policy, screenshots, API key restriction, F-Droid, Play Store guide) |
+| 17      | 2026-02-10 | PROJEKT.md           | Improved screenshots with real YouTube thumbnails (7 screenshots), Sleep Mode + Export/Import added |
+| 18      | 2026-02-10 | PROJEKT.md           | F-Droid/API strategy analysis, removed YouTube Search API from kid mode, GCP API key restriction fix |
+| 19      | 2026-02-10 | PROJEKT.md           | Strategy E: Hybrid + Invidious fallback (oEmbed, RSS, Invidious, built-in API key) |
+| 20      | 2026-02-10 | PROJEKT_ARCHIV_2.md | Channel video lazy loading + Room cache + local search (infinite scroll, 0 quota search) |
+| 21      | 2026-02-10 | PROJEKT.md           | Emulator testing: lazy loading (400 videos, 8 pages) + local search verification |
+| 22      | 2026-02-11 | PROJEKT.md           | v1.1.0 release build, feature graphic, app icon, SDLC docs update (Strategy E + lazy loading) |
+| 23      | 2026-02-11 | PROJEKT.md           | GitHub Release v1.1.0, F-Droid RFP #3794 (wrong repo), Play Store registration (device verification pending) |
+| 24      | 2026-02-12 | PROJEKT.md           | F-Droid RFP #3586 resubmitted to correct repo (fdroid/rfp) |
+| 25      | 2026-08-14 | PROJEKT.md           | Sidephone fork (SideTube): key navigation on all kid levels, Continue watching, input ownership, embed-error handling, watch-time accounting (448 tests) |
+
+## Archive Files
+
+- **PROJEKT_ARCHIV_1.md**: Sessions 1-10
+- **PROJEKT_ARCHIV_2.md**: Sessions 11-20
+
+<!--
+Archive naming convention:
+- PROJEKT.md: always latest 5 sessions
+- PROJEKT_ARCHIV_1.md: sessions 1-10
+- PROJEKT_ARCHIV_2.md: sessions 11-20
+- etc.
+-->

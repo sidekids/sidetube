@@ -1,0 +1,128 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <!-- Elternbereich -->
+    <string name="parent_title">Elternbereich</string>
+    <string name="parent_back_to_kid_mode">Zurück zum Kindmodus</string>
+    <string name="parent_profiles">Kinderprofile</string>
+    <string name="parent_no_profiles">Noch keine Kinderprofile</string>
+    <string name="parent_actions">Aktionen</string>
+    <string name="parent_action_whitelist">Freigaben verwalten</string>
+    <string name="parent_action_whitelist_sub">Freigegebene Inhalte des gewählten Profils ansehen und ändern</string>
+    <string name="parent_action_browser">YouTube öffnen</string>
+    <string name="parent_action_browser_sub">YouTube durchsuchen und Inhalte freigeben</string>
+    <string name="parent_action_sleep">Schlafmodus</string>
+    <string name="parent_action_sleep_sub">Einschlaf-Timer im Hintergrund setzen</string>
+    <string name="parent_action_edit_profile">Profil bearbeiten</string>
+    <string name="parent_action_edit_profile_sub">Name, Bild und Tageslimit ändern</string>
+    <string name="parent_action_stats">Nutzungszeit</string>
+    <string name="parent_action_stats_sub">Sehzeiten des gewählten Profils ansehen</string>
+    <string name="parent_action_backup">Sichern und Wiederherstellen</string>
+    <string name="parent_action_backup_sub">Profile und Freigaben exportieren oder einlesen</string>
+    <string name="parent_action_create_profile">Profil anlegen</string>
+    <string name="parent_action_create_profile_sub">Neues Kinderprofil hinzufügen</string>
+    <string name="parent_action_pin">PIN ändern</string>
+    <string name="parent_action_pin_sub">Elternzugang mit neuer PIN sichern</string>
+    <string name="parent_action_about">Über die App</string>
+    <string name="parent_action_about_sub">Version, Lizenz und Kontakt</string>
+
+    <!-- Freigaben -->
+    <string name="parent_whitelist_title">Freigaben</string>
+    <string name="parent_whitelist_empty">Noch keine Freigaben</string>
+    <string name="parent_whitelist_empty_hint">Mit + eine YouTube-Adresse hinzufügen</string>
+    <string name="parent_whitelist_add_title">YouTube-Adresse hinzufügen</string>
+    <string name="parent_whitelist_add_action">Adresse hinzufügen</string>
+    <string name="parent_whitelist_url_label">YouTube-Adresse</string>
+    <string name="parent_whitelist_url_hint">Adresse eines Videos, Abos oder einer Playlist einfügen</string>
+    <string name="parent_whitelist_adding">Wird hinzugefügt …</string>
+    <string name="parent_whitelist_filter_all">Alle</string>
+    <string name="parent_whitelist_filter_channels">Abos</string>
+    <string name="parent_whitelist_filter_videos">Videos</string>
+    <string name="parent_whitelist_filter_playlists">Playlists</string>
+
+    <!-- Browser -->
+    <string name="parent_browser_title">YouTube</string>
+    <string name="parent_browser_approve">%1$s freigeben</string>
+    <string name="parent_type_video">Video</string>
+    <string name="parent_type_channel">Abo</string>
+    <string name="parent_type_playlist">Playlist</string>
+
+    <!-- Profil -->
+    <string name="parent_profile_title">Profil bearbeiten</string>
+    <string name="parent_profile_name">Name</string>
+    <string name="parent_profile_avatar">Bild-Adresse (optional)</string>
+    <string name="parent_profile_limit">Tageslimit</string>
+    <string name="parent_profile_limit_enable">Limit aktivieren</string>
+    <string name="parent_profile_limit_value">%1$d Minuten pro Tag</string>
+    <string name="parent_profile_delete">Profil löschen</string>
+    <string name="parent_profile_delete_confirm">Das Profil und alle seine Freigaben werden endgültig gelöscht. Fortfahren?</string>
+
+    <!-- Nutzungszeit -->
+    <string name="parent_stats_title">Nutzungszeit – %1$s</string>
+    <string name="parent_stats_period_day">Heute</string>
+    <string name="parent_stats_period_week">Diese Woche</string>
+    <string name="parent_stats_period_month">Dieser Monat</string>
+    <string name="parent_stats_watch_time">Sehzeit</string>
+    <string name="parent_stats_videos">Videos</string>
+    <string name="parent_stats_daily">Nach Tagen</string>
+    <string name="parent_stats_empty">Für diesen Zeitraum keine Sehzeiten</string>
+
+    <!-- Sichern -->
+    <string name="parent_backup_title">Sichern und Wiederherstellen</string>
+    <string name="parent_backup_export">Sichern</string>
+    <string name="parent_backup_export_sub">Alle Profile und Freigaben in eine JSON-Datei schreiben.</string>
+    <string name="parent_backup_export_action">In Datei sichern</string>
+    <string name="parent_backup_import">Einlesen</string>
+    <string name="parent_backup_import_sub">Profile und Freigaben aus einer früher gesicherten JSON-Datei zurückholen.</string>
+    <string name="parent_backup_import_action">Aus Datei einlesen</string>
+    <string name="parent_backup_strategy">Beim Einlesen</string>
+    <string name="parent_backup_merge">Ergänzen</string>
+    <string name="parent_backup_overwrite">Ersetzen</string>
+    <string name="parent_backup_strategy_hint">Ergänzen fügt die gelesenen Profile zu den vorhandenen hinzu. Ersetzen überschreibt alle vorhandenen Profile.</string>
+    <string name="parent_backup_imported">%1$d Profile und %2$d Einträge eingelesen</string>
+
+    <!-- Über die App -->
+    <string name="parent_about_title">Über die App</string>
+    <string name="parent_about_version">v1.1.0 · basiert auf YouTubeWhitelist</string>
+    <string name="parent_about_description">Freier YouTube-Zugang für Kinder, gemacht für Tastenhandys. Eltern geben Abos, Videos und Playlists frei — Kinder sehen nur Freigegebenes.</string>
+    <string name="parent_about_licence">Lizenz</string>
+    <string name="parent_about_licence_body">GNU General Public License v3.0 (GPLv3)\nFreie Software, offener Quellcode</string>
+    <string name="parent_about_privacy">Datenschutz</string>
+    <string name="parent_about_source">Quellcode</string>
+    <string name="parent_about_support">Entwicklung unterstützen</string>
+    <string name="parent_about_support_body">Wer die App nützlich findet, kann die Entwicklung mit einer kleinen Spende unterstützen.</string>
+    <string name="parent_about_kofi">Auf Ko-fi unterstützen</string>
+    <string name="parent_about_footer">Mit Liebe für Familien gemacht</string>
+    <string name="parent_whitelist_added">%1$s freigegeben</string>
+    <string name="parent_backup_imported_skipped">%1$d übersprungen</string>
+
+    <!-- Ruhezeit -->
+    <string name="parent_bedtime_title">Ruhezeit</string>
+    <string name="parent_bedtime_enabled">Ruhezeit</string>
+    <string name="parent_bedtime_from">Ab</string>
+    <string name="parent_bedtime_to">Bis</string>
+    <string name="parent_bedtime_weekend">Freitag und Samstag später</string>
+    <string name="parent_bedtime_summary">Videos hören um %1$s auf und sind ab %2$s wieder da.</string>
+    <string name="parent_bedtime_summary_weekend">Videos hören um %1$s auf und sind ab %2$s wieder da. Freitag und Samstag ab %3$s.</string>
+    <string name="parent_bedtime_summary_off">Keine Ruhezeit. Es gilt nur das Tageslimit.</string>
+    <string name="parent_bedtime_extend">Heute 30 Minuten länger</string>
+    <string name="parent_bedtime_skip_today">Heute keine Ruhezeit</string>
+    <string name="parent_bedtime_resume">Ruhezeit wieder ab heute Abend</string>
+    <string name="parent_channel_search_title">Abo finden</string>
+    <string name="parent_channel_search_placeholder">Name des Kanals …</string>
+    <string name="parent_channel_search_hint">Namen eingeben und Suche starten. Ein genaues @Kürzel findet den Kanal direkt.</string>
+    <string name="parent_channel_search_empty">Kein Abo gefunden</string>
+    <string name="parent_channel_search_approved">Freigegeben</string>
+    <string name="parent_action_channel_search">Abo finden</string>
+    <string name="parent_action_channel_search_sub">YouTube-Kanäle über den Namen suchen und freigeben</string>
+    <string name="parent_starterpack_action">Startpakete</string>
+    <string name="parent_starterpack_title">Startpaket hinzufügen</string>
+    <string name="parent_starterpack_hint">Von Hand geprüfte Listen. Jedes Video kommt in dieses Profil, Vorhandenes bleibt unberührt.</string>
+    <string name="parent_starterpack_count">%1$d Videos</string>
+    <string name="parent_starterpack_apply_preset">Vorgeschlagene Ruhezeit mit übernehmen</string>
+    <string name="parent_starterpack_importing">Wird hinzugefügt …</string>
+    <string name="parent_starterpack_empty">In dieser Fassung sind keine Startpakete enthalten.</string>
+    <string name="parent_starterpack_result">%1$d übernommen, %2$d schon vorhanden</string>
+    <string name="parent_about_author">Idee und Autor</string>
+    <string name="parent_about_author_name">Christian-Maximilian Steier — Idee, Konzept und Entwicklung</string>
+    <string name="parent_about_author_body">SideTube ist ein SideKids-Projekt: aus dem Wunsch entstanden, Kindern gute Videos zu geben – ohne die Maschine drumherum.</string>
+</resources>

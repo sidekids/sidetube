@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="sleep_title">Sleep mode</string>
+    <string name="sleep_set_timer">Set sleep timer</string>
+    <string name="sleep_start_timer">Start sleep timer</string>
+    <string name="sleep_cancel_timer">Cancel timer</string>
+    <string name="sleep_timer_running">Timer running</string>
+    <string name="sleep_timer_expired">Timer finished</string>
+    <string name="sleep_timer_expired_body">The sleep timer has finished.</string>
+</resources>

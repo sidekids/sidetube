@@ -49,7 +49,7 @@ liegen unter `content/` als einzige verbindliche Quelle.
 
 ```
 ├── ios/          SwiftUI-App (Swift 6, SwiftData, XcodeGen), ab iOS 17
-├── android/      Jetpack-Compose-App (Kotlin, Room, Hilt), ab Android 8 — folgt
+├── android/      Jetpack-Compose-App (Kotlin, Room, Hilt), ab Android 8
 ├── content/      gemeinsame Kuratierungsdaten, verbindlich für beide Apps
 │   ├── schema/       Kategorien, Altersstufen, Sicherheitsstufen, Freigabestatus
 │   ├── sources.json  Quellenregister einschließlich PeerTube-Instanzen

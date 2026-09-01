@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <!-- Start screen -->
+    <string name="kid_greeting">Hi %1$s!</string>
+    <string name="kid_home_title">My videos</string>
+    <string name="kid_section_continue">Continue watching</string>
+    <string name="kid_section_channels">My subscriptions</string>
+    <string name="kid_section_videos">My videos</string>
+    <string name="kid_section_playlists">My shows</string>
+    <string name="kid_empty">Nothing approved yet. A parent can add videos.</string>
+    <string name="kid_time_remaining">Time left: %1$s</string>
+    <string name="kid_time_up_title">Time is up!</string>
+    <string name="kid_time_up_body">Today\'s time is over.\nA parent can allow more.</string>
+    <string name="kid_good_night_title">Good night!</string>
+    <string name="kid_good_night_body">Time to sleep.\nSleep well!</string>
+
+    <!-- Search -->
+    <string name="kid_search_placeholder">Search videos and subscriptions …</string>
+    <string name="kid_search_hint">Type to search videos and subscriptions</string>
+    <string name="kid_search_empty_title">Nothing found</string>
+    <string name="kid_search_empty_body">Try a different search term</string>
+    <string name="kid_search_type_channel">Subscription</string>
+    <string name="kid_search_type_video">Video</string>
+    <string name="kid_search_type_playlist">Playlist</string>
+
+    <!-- Channel and playlist -->
+    <string name="kid_channel_search_placeholder">Search videos …</string>
+    <string name="kid_channel_no_videos_found">No videos found</string>
+    <string name="kid_channel_empty">This subscription has no videos yet</string>
+    <string name="kid_playlist_empty">This show has no videos yet</string>
+
+    <!-- Player -->
+    <string name="kid_player_embed_blocked">This video cannot be played right now.</string>
+    <string name="kid_player_up_next">Up next</string>
+
+    <!-- Bedtime -->
+    <string name="kid_bedtime_warning">%1$d minutes left</string>
+    <string name="kid_bedtime_good_night_name">Good night, %1$s!</string>
+    <string name="kid_bedtime_tomorrow">Tomorrow morning it continues</string>
+</resources>
