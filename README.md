@@ -49,7 +49,7 @@ in `content/` as the single authoritative source.
 
 ```
 ├── ios/          SwiftUI app (Swift 6, SwiftData, XcodeGen), iOS 17+
-├── android/      Jetpack Compose app (Kotlin, Room, Hilt), Android 8+ — moving in
+├── android/      Jetpack Compose app (Kotlin, Room, Hilt), Android 8+
 ├── content/      shared curation data, authoritative for both apps
 │   ├── schema/       categories, age bands, trust levels, approval states
 │   ├── sources.json  source registry including PeerTube instances

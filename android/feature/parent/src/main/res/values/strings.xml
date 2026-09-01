@@ -1,0 +1,128 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <!-- Dashboard -->
+    <string name="parent_title">Parent area</string>
+    <string name="parent_back_to_kid_mode">Back to kid mode</string>
+    <string name="parent_profiles">Kid profiles</string>
+    <string name="parent_no_profiles">No kid profiles yet</string>
+    <string name="parent_actions">Actions</string>
+    <string name="parent_action_whitelist">Manage approvals</string>
+    <string name="parent_action_whitelist_sub">View and change the approved content of the selected profile</string>
+    <string name="parent_action_browser">Open YouTube</string>
+    <string name="parent_action_browser_sub">Search YouTube and approve content</string>
+    <string name="parent_action_sleep">Sleep mode</string>
+    <string name="parent_action_sleep_sub">Set a sleep timer in the background</string>
+    <string name="parent_action_edit_profile">Edit profile</string>
+    <string name="parent_action_edit_profile_sub">Change name, picture and daily limit</string>
+    <string name="parent_action_stats">Screen time</string>
+    <string name="parent_action_stats_sub">View the watch times of the selected profile</string>
+    <string name="parent_action_backup">Backup and restore</string>
+    <string name="parent_action_backup_sub">Export or import profiles and approvals</string>
+    <string name="parent_action_create_profile">Create profile</string>
+    <string name="parent_action_create_profile_sub">Add a new kid profile</string>
+    <string name="parent_action_pin">Change PIN</string>
+    <string name="parent_action_pin_sub">Protect the parent area with a new PIN</string>
+    <string name="parent_action_about">About the app</string>
+    <string name="parent_action_about_sub">Version, licence and contact</string>
+
+    <!-- Approvals -->
+    <string name="parent_whitelist_title">Approvals</string>
+    <string name="parent_whitelist_empty">No approvals yet</string>
+    <string name="parent_whitelist_empty_hint">Add a YouTube address with +</string>
+    <string name="parent_whitelist_add_title">Add YouTube address</string>
+    <string name="parent_whitelist_add_action">Add address</string>
+    <string name="parent_whitelist_url_label">YouTube address</string>
+    <string name="parent_whitelist_url_hint">Paste the address of a video, subscription or playlist</string>
+    <string name="parent_whitelist_adding">Adding …</string>
+    <string name="parent_whitelist_filter_all">All</string>
+    <string name="parent_whitelist_filter_channels">Subscriptions</string>
+    <string name="parent_whitelist_filter_videos">Videos</string>
+    <string name="parent_whitelist_filter_playlists">Playlists</string>
+
+    <!-- Browser -->
+    <string name="parent_browser_title">YouTube</string>
+    <string name="parent_browser_approve">Approve %1$s</string>
+    <string name="parent_type_video">Video</string>
+    <string name="parent_type_channel">Subscription</string>
+    <string name="parent_type_playlist">Playlist</string>
+
+    <!-- Profile -->
+    <string name="parent_profile_title">Edit profile</string>
+    <string name="parent_profile_name">Name</string>
+    <string name="parent_profile_avatar">Picture address (optional)</string>
+    <string name="parent_profile_limit">Daily limit</string>
+    <string name="parent_profile_limit_enable">Enable limit</string>
+    <string name="parent_profile_limit_value">%1$d minutes per day</string>
+    <string name="parent_profile_delete">Delete profile</string>
+    <string name="parent_profile_delete_confirm">The profile and all its approvals will be deleted permanently. Continue?</string>
+
+    <!-- Screen time -->
+    <string name="parent_stats_title">Screen time – %1$s</string>
+    <string name="parent_stats_period_day">Today</string>
+    <string name="parent_stats_period_week">This week</string>
+    <string name="parent_stats_period_month">This month</string>
+    <string name="parent_stats_watch_time">Watch time</string>
+    <string name="parent_stats_videos">Videos</string>
+    <string name="parent_stats_daily">By day</string>
+    <string name="parent_stats_empty">No watch times for this period</string>
+
+    <!-- Backup -->
+    <string name="parent_backup_title">Backup and restore</string>
+    <string name="parent_backup_export">Backup</string>
+    <string name="parent_backup_export_sub">Write all profiles and approvals into a JSON file.</string>
+    <string name="parent_backup_export_action">Save to file</string>
+    <string name="parent_backup_import">Restore</string>
+    <string name="parent_backup_import_sub">Read profiles and approvals back from a previously saved JSON file.</string>
+    <string name="parent_backup_import_action">Read from file</string>
+    <string name="parent_backup_strategy">When reading</string>
+    <string name="parent_backup_merge">Merge</string>
+    <string name="parent_backup_overwrite">Replace</string>
+    <string name="parent_backup_strategy_hint">Merge adds the read profiles to the existing ones. Replace overwrites all existing profiles.</string>
+    <string name="parent_backup_imported">Read %1$d profiles and %2$d entries</string>
+
+    <!-- About -->
+    <string name="parent_about_title">About the app</string>
+    <string name="parent_about_version">v1.1.0 · based on YouTubeWhitelist</string>
+    <string name="parent_about_description">Free YouTube access for kids, built for key-operated phones. Parents approve subscriptions, videos and playlists — kids only see what is approved.</string>
+    <string name="parent_about_licence">Licence</string>
+    <string name="parent_about_licence_body">GNU General Public License v3.0 (GPLv3)\nFree software, open source</string>
+    <string name="parent_about_privacy">Privacy</string>
+    <string name="parent_about_source">Source code</string>
+    <string name="parent_about_support">Support development</string>
+    <string name="parent_about_support_body">If you find the app useful, you can support its development with a small donation.</string>
+    <string name="parent_about_kofi">Support on Ko-fi</string>
+    <string name="parent_about_footer">Made with love for families</string>
+    <string name="parent_whitelist_added">%1$s approved</string>
+    <string name="parent_backup_imported_skipped">%1$d skipped</string>
+
+    <!-- Bedtime -->
+    <string name="parent_bedtime_title">Quiet hours</string>
+    <string name="parent_bedtime_enabled">Quiet hours</string>
+    <string name="parent_bedtime_from">From</string>
+    <string name="parent_bedtime_to">Until</string>
+    <string name="parent_bedtime_weekend">Later on Friday and Saturday</string>
+    <string name="parent_bedtime_summary">Videos stop at %1$s and are available again at %2$s.</string>
+    <string name="parent_bedtime_summary_weekend">Videos stop at %1$s and are available again at %2$s. On Friday and Saturday from %3$s.</string>
+    <string name="parent_bedtime_summary_off">No quiet hours. Only the daily limit applies.</string>
+    <string name="parent_bedtime_extend">30 minutes longer today</string>
+    <string name="parent_bedtime_skip_today">No quiet hours today</string>
+    <string name="parent_bedtime_resume">Quiet hours again from tonight</string>
+    <string name="parent_channel_search_title">Find subscription</string>
+    <string name="parent_channel_search_placeholder">Channel name …</string>
+    <string name="parent_channel_search_hint">Enter a channel name and start the search. An exact @handle finds the channel directly.</string>
+    <string name="parent_channel_search_empty">No channel found</string>
+    <string name="parent_channel_search_approved">Approved</string>
+    <string name="parent_action_channel_search">Find subscription</string>
+    <string name="parent_action_channel_search_sub">Search YouTube channels by name and approve them</string>
+    <string name="parent_starterpack_action">Starter packs</string>
+    <string name="parent_starterpack_title">Add a starter pack</string>
+    <string name="parent_starterpack_hint">Curated lists checked by hand. Every video is added to this profile; existing ones are kept.</string>
+    <string name="parent_starterpack_count">%1$d videos</string>
+    <string name="parent_starterpack_apply_preset">Also apply the suggested quiet hours</string>
+    <string name="parent_starterpack_importing">Adding …</string>
+    <string name="parent_starterpack_empty">No starter packs found in this build.</string>
+    <string name="parent_starterpack_result">%1$d added, %2$d already there</string>
+    <string name="parent_about_author">Idea and author</string>
+    <string name="parent_about_author_name">Christian-Maximilian Steier — idea, concept and development</string>
+    <string name="parent_about_author_body">SideTube is a SideKids project: born from the wish to give children good videos — without the machinery around them.</string>
+</resources>

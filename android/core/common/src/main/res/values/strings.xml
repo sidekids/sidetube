@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Base language: English. Translations live in values-<language>/strings.xml
+     and are picked by the system at install/start time — no runtime lookup
+     beyond the compiled resource table. -->
+<resources>
+    <string name="common_back">Back</string>
+    <string name="common_cancel">Cancel</string>
+    <string name="common_save">Save</string>
+    <string name="common_delete">Delete</string>
+    <string name="common_remove">Remove</string>
+    <string name="common_add">Add</string>
+    <string name="common_retry">Try again</string>
+    <string name="common_dismiss">Close</string>
+    <string name="common_search">Search</string>
+    <string name="common_clear_search">Clear search</string>
+    <string name="common_parent_area">Parent area</string>
+    <string name="common_next">Next video</string>
+    <string name="common_previous">Previous video</string>
+    <string name="common_unknown_error">Unknown error</string>
+    <string name="common_error_with_message">Error: %1$s</string>
+    <string name="error_video_metadata">Video data could not be loaded from any source</string>
+    <string name="error_channel_metadata">Subscription data could not be loaded from any source</string>
+    <string name="error_playlist_metadata">Playlist data could not be loaded from any source</string>
+    <string name="error_playlist_items">Playlist videos could not be loaded from any source</string>
+    <string name="error_channel_handle">The subscription handle could not be resolved from any source</string>
+    <string name="error_search_failed">Search failed</string>
+    <string name="error_channel_not_found">Subscription not found</string>
+    <string name="error_video_not_found">Video not found</string>
+    <string name="error_playlist_not_found">Playlist not found</string>
+    <string name="error_network">Network error</string>
+    <string name="error_unexpected">Unexpected error</string>
+    <string name="error_uploads_playlist">The uploads playlist of the subscription was not found</string>
+    <string name="error_invalid_url">Not a valid YouTube address</string>
+    <string name="error_already_whitelisted">Already approved</string>
+    <string name="error_export_failed">Backup failed</string>
+    <string name="error_import_failed">Reading the file failed</string>
+    <string name="error_rate_limited">YouTube is limiting requests right now. Please try again in a moment.</string>
+</resources>

@@ -1,0 +1,11 @@
+package io.github.degipe.youtubewhitelist.core.data.repository
+
+import io.github.degipe.youtubewhitelist.core.data.model.AuthState
+import kotlinx.coroutines.flow.StateFlow
+
+interface AuthRepository {
+    val authState: StateFlow<AuthState>
+    suspend fun createLocalAccount()
+    suspend fun signOut()
+    suspend fun checkAuthState()
+}

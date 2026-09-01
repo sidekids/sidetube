@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="cancel">Abbrechen</string>
+    <string name="sign_in_title">Willkommen bei SideTube</string>
+    <string name="sign_in_subtitle">SideTube wird lokal eingerichtet. Ein Google-Konto ist nicht nötig.</string>
+    <string name="local_setup_button">SideTube einrichten</string>
+    <string name="pin_setup_title">Eltern-PIN festlegen</string>
+    <string name="pin_setup_subtitle">4 bis 6 Ziffern schützen den Elternbereich</string>
+    <string name="pin_confirm_title">PIN bestätigen</string>
+    <string name="pin_confirm_subtitle">PIN zur Bestätigung erneut eingeben</string>
+    <string name="pin_entry_title">Eltern-PIN</string>
+    <string name="pin_entry_subtitle">PIN eingeben, um den Elternbereich zu öffnen</string>
+    <string name="pin_change_title">PIN ändern</string>
+    <string name="pin_change_verify_subtitle">Aktuelle PIN eingeben</string>
+    <string name="pin_change_new_subtitle">Neue PIN eingeben</string>
+    <string name="pin_error_wrong">PIN stimmt nicht</string>
+    <string name="pin_error_locked">Bitte %1$d Sekunden warten</string>
+    <string name="pin_error_mismatch">PINs stimmen nicht überein. Erneut versuchen.</string>
+    <string name="pin_error_too_short">Die PIN braucht mindestens %1$d Ziffern</string>
+    <string name="pin_error_change_failed">PIN konnte nicht geändert werden.</string>
+    <string name="pin_keypad_backspace">Zeichen löschen</string>
+    <string name="pin_keypad_submit">Bestätigen</string>
+    <string name="profile_create_title">Kinderprofil anlegen</string>
+    <string name="profile_create_subtitle">Profil für das Kind einrichten</string>
+    <string name="profile_name_label">Profilname</string>
+    <string name="profile_create_button">Profil anlegen</string>
+    <string name="profile_error_name_empty">Name darf nicht leer sein</string>
+    <string name="profile_error_not_found">Profil nicht gefunden</string>
+    <string name="profile_error_no_account">Kein Elternkonto gefunden</string>
+    <string name="profile_selector_title">Wer schaut?</string>
+    <string name="kid_home_title">Meine Videos</string>
+    <string name="kid_home_empty">Noch nichts freigegeben. Die Eltern können Videos hinzufügen.</string>
+    <string name="parent_access_button">Elternbereich</string>
+    <string name="parent_dashboard_title">Elternbereich</string>
+    <string name="parent_dashboard_placeholder">Freigaben und Suche folgen in einer späteren Version.</string>
+    <string name="change_pin_button">PIN ändern</string>
+    <string name="back_to_kid_mode">Zurück zum Kindmodus</string>
+    <string name="pin_dots_description">%1$d von %2$d Ziffern eingegeben</string>
+</resources>

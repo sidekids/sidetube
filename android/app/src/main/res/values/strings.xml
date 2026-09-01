@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Base language: English. German lives in values-de/strings.xml. -->
+<resources>
+    <string name="app_name" translatable="false">SideTube</string>
+
+    <!-- Common -->
+    <string name="cancel">Cancel</string>
+
+    <!-- Sign In -->
+    <string name="sign_in_title">Welcome to SideTube</string>
+    <string name="sign_in_subtitle">SideTube is set up locally. No Google account needed.</string>
+    <string name="local_setup_button">Set up SideTube</string>
+
+    <!-- PIN Setup -->
+    <string name="pin_setup_title">Set parent PIN</string>
+    <string name="pin_setup_subtitle">4 to 6 digits protect the parent area</string>
+    <string name="pin_confirm_title">Confirm PIN</string>
+    <string name="pin_confirm_subtitle">Enter the PIN again to confirm</string>
+
+    <!-- PIN Entry -->
+    <string name="pin_entry_title">Parent PIN</string>
+    <string name="pin_entry_subtitle">Enter the PIN to open the parent area</string>
+
+    <!-- PIN Change -->
+    <string name="pin_change_title">Change PIN</string>
+    <string name="pin_change_verify_subtitle">Enter the current PIN</string>
+    <string name="pin_change_new_subtitle">Enter the new PIN</string>
+
+    <!-- PIN errors -->
+    <string name="pin_error_wrong">That PIN is not right</string>
+    <string name="pin_error_locked">Please wait %1$d seconds</string>
+    <string name="pin_error_mismatch">PINs do not match. Try again.</string>
+    <string name="pin_error_too_short">The PIN needs at least %1$d digits</string>
+    <string name="pin_error_change_failed">The PIN could not be changed.</string>
+    <string name="pin_keypad_backspace">Delete character</string>
+    <string name="pin_keypad_submit">Confirm</string>
+
+    <!-- Profile Creation -->
+    <string name="profile_create_title">Create kid profile</string>
+    <string name="profile_create_subtitle">Set up a profile for the child</string>
+    <string name="profile_name_label">Profile name</string>
+    <string name="profile_create_button">Create profile</string>
+    <string name="profile_error_name_empty">Name must not be empty</string>
+    <string name="profile_error_not_found">Profile not found</string>
+    <string name="profile_error_no_account">No parent account found</string>
+    <string name="profile_selector_title">Who is watching?</string>
+
+    <!-- Kid Home -->
+    <string name="kid_home_title">My videos</string>
+    <string name="kid_home_empty">Nothing approved yet. A parent can add videos.</string>
+    <string name="parent_access_button">Parent area</string>
+
+    <!-- Parent Dashboard -->
+    <string name="parent_dashboard_title">Parent area</string>
+    <string name="parent_dashboard_placeholder">Approvals and search will follow in a later version.</string>
+    <string name="change_pin_button">Change PIN</string>
+    <string name="back_to_kid_mode">Back to kid mode</string>
+    <string name="pin_dots_description">%1$d of %2$d digits entered</string>
+</resources>
