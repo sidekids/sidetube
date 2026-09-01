@@ -1,3 +1,7 @@
+// This Source Code Form is subject to the terms of the Mozilla Public
+// License, v. 2.0. If a copy of the MPL was not distributed with this
+// file, You can obtain one at https://mozilla.org/MPL/2.0/.
+
 import SwiftData
 import SwiftUI
 
@@ -9,6 +13,7 @@ struct WhitelistManagerView: View {
     @State private var showAdd = false
     @State private var showEdit = false
     @State private var showSleep = false
+    @State private var showChannelSearch = false
     @State private var editing: WhitelistItem?
     @State private var seedMessage: String?
     @State private var errorMessage: String?
@@ -56,6 +61,11 @@ struct WhitelistManagerView: View {
                     Label("Freigaben prüfen", systemImage: "checkmark.seal")
                 }
                 Menu {
+                    Button("Abo finden", systemImage: "magnifyingglass") { showChannelSearch = true }
+                    NavigationLink { WatchStatsView(profile: profile) } label: {
+                        Label("Nutzung", systemImage: "chart.bar")
+                    }
+                    Divider()
                     Button("Schlafmodus", systemImage: "moon.zzz") { showSleep = true }
                     Button("Profil bearbeiten", systemImage: "slider.horizontal.3") { showEdit = true }
                     Menu {
@@ -74,6 +84,7 @@ struct WhitelistManagerView: View {
         .sheet(isPresented: $showAdd) { AddWhitelistItemView(profile: profile) }
         .sheet(isPresented: $showEdit) { ProfileEditorView(profile: profile) }
         .sheet(isPresented: $showSleep) { SleepModeSheet(profile: profile) }
+        .sheet(isPresented: $showChannelSearch) { ChannelSearchView(profile: profile) }
         .sheet(item: $editing) { item in
             ReviewDecisionView(item: item, profile: profile,
                                mode: item.approvalStatus == .approved ? .edit : .review)

@@ -12,10 +12,10 @@ src="$root/content"
 
 case "${1:-}" in
   ios)
-    dest="$root/ios/Sources/Resources/content"
+    dest="$root/Sources/Resources/content"
     ;;
   android)
-    repo="${2:-$root/android}"
+    repo="${2:-$root/../SideKidsDev}"
     dest="$repo/app/src/main/assets/content"
     [ -d "$repo" ] || { echo "Android-Repo nicht gefunden: $repo"; exit 1; }
     ;;

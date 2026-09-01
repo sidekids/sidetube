@@ -1,3 +1,7 @@
+// This Source Code Form is subject to the terms of the Mozilla Public
+// License, v. 2.0. If a copy of the MPL was not distributed with this
+// file, You can obtain one at https://mozilla.org/MPL/2.0/.
+
 import Foundation
 import SwiftUI
 
@@ -14,7 +18,7 @@ enum Brand {
     static let websiteURL = URL(string: "https://sidekids.github.io")!
     static let supportURL = URL(string: "https://github.com/sidekids")!
     static let privacyPolicyURL = URL(string: "https://sidekids.github.io/about/privacy.html")!
-    static let sourceURL = URL(string: "https://github.com/sidekids")!
+    static let sourceURL = URL(string: "https://github.com/sidekids/sidetube")!
 }
 
 /// Kanonische Markenfarben der Side-Familie (branding/logo-spec.json). Genau EIN Gelb – fuer SideTube und sideplay identisch.
