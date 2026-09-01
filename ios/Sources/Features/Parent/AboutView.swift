@@ -1,3 +1,7 @@
+// This Source Code Form is subject to the terms of the Mozilla Public
+// License, v. 2.0. If a copy of the MPL was not distributed with this
+// file, You can obtain one at https://mozilla.org/MPL/2.0/.
+
 import SwiftUI
 
 /// FR-15 (ohne Spenden-Karte).
@@ -19,7 +23,7 @@ struct AboutView: View {
                     LabeledContent("App", value: Brand.appName)
                     LabeledContent("Anbieter", value: Brand.publisher)
                     LabeledContent("Version", value: AppConfig.appVersion)
-                    LabeledContent("Lizenz", value: "GPLv3")
+                    LabeledContent("Lizenz", value: "MPL-2.0")
                     LabeledContent("YouTube-API-Schlüssel", value: AppConfig.hasYouTubeAPIKey ? "konfiguriert" : "fehlt")
                 }
                 Section("Idee & Autor") {
@@ -35,8 +39,7 @@ struct AboutView: View {
                     Link("Support", destination: Brand.supportURL)
                 }
                 Section("Quellcode") {
-                    Link("github.com/sidekids", destination: Brand.sourceURL)
-                    Link("Quelltext: github.com/sidekids", destination: URL(string: "https://github.com/sidekids")!)
+                    Link("github.com/sidekids/sidetube", destination: Brand.sourceURL)
                 }
             }
             .navigationTitle("Über SideTube")

@@ -1,3 +1,7 @@
+// This Source Code Form is subject to the terms of the Mozilla Public
+// License, v. 2.0. If a copy of the MPL was not distributed with this
+// file, You can obtain one at https://mozilla.org/MPL/2.0/.
+
 import Foundation
 
 /// Hybride Auflösung wie `HybridYouTubeRepositoryImpl` (Android, „Strategie E"):
@@ -46,6 +50,13 @@ final class YouTubeRepository {
    // MARK: Playlist-Inhalte
 
    /// Erste Seite einer Kanal-Uploads-Playlist (`UU…`) aus dem RSS-Feed (0 Quota), sonst/danach Data API.
+   /// Kanalsuche über die Data API – braucht einen Schlüssel und kostet 100 Kontingenteinheiten je Aufruf.
+    func searchChannels(query: String) async throws -> [ChannelMetadata] {
+        let trimmed = query.trimmingCharacters(in: .whitespacesAndNewlines)
+        guard trimmed.count >= 2 else { return [] }
+        return try await requireAPI().searchChannels(query: trimmed)
+    }
+
     func playlistItems(playlistId: String, pageToken: String? = nil) async throws -> PlaylistPage {
         if pageToken == nil, let channelId = YouTubeIDs.channelId(forUploadsPlaylist: playlistId),
            let videos = try? await rss.channelVideos(channelId: channelId), !videos.isEmpty {

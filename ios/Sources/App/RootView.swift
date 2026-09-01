@@ -1,3 +1,7 @@
+// This Source Code Form is subject to the terms of the Mozilla Public
+// License, v. 2.0. If a copy of the MPL was not distributed with this
+// file, You can obtain one at https://mozilla.org/MPL/2.0/.
+
 import SwiftUI
 
 /// Wurzel: ohne PIN → Einrichtung; sonst Kindermodus als Start, Elternbereich hinter PIN.
@@ -22,11 +26,27 @@ struct RootView: View {
 
     var body: some View {
         content
-            .task { seedLibraryIfRequested(); await seedIfRequested() }
+            .task { seedLibraryIfRequested(); seedWatchTimeIfRequested(); await seedIfRequested() }
             .onOpenURL { url in incomingVideoId = IncomingLink.videoId(from: url) }
             .sheet(isPresented: Binding(get: { incomingVideoId != nil }, set: { if !$0 { incomingVideoId = nil } })) {
                 if let incomingVideoId { IncomingRecommendationView(videoId: incomingVideoId) }
             }
+    }
+
+   /// Nur DEBUG: `-sidetube.devSeedWatchTime 1` legt Sehzeit der letzten Tage an (Statistik prüfen).
+    private func seedWatchTimeIfRequested() {
+        #if DEBUG
+        guard UserDefaults.standard.bool(forKey: "sidetube.devSeedWatchTime") else { return }
+        UserDefaults.standard.removeObject(forKey: "sidetube.devSeedWatchTime")
+        guard let profile = try? ProfileRepository(context: modelContext).all().first else { return }
+        let repo = WatchTimeRepository(context: modelContext)
+        let minutes = [18, 0, 42, 7, 65, 23, 51]
+        for (offset, value) in minutes.enumerated() where value > 0 {
+            let day = Calendar.current.date(byAdding: .day, value: -(minutes.count - 1 - offset), to: .now) ?? .now
+            try? repo.record(videoId: "demo-\(offset)", title: "Beispielvideo \(offset + 1)",
+                             seconds: value * 60, for: profile, at: day)
+        }
+        #endif
     }
 
    /// Nur DEBUG: `-sidetube.devSeedLibrary <Dateiname> [-sidetube.devSeedProfile <Name>]` importiert ein Startpaket

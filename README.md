@@ -144,8 +144,17 @@ Idea, curation and pedagogical concept: Christian-Maximilian Steier.
 
 ## License
 
-Released under the [GNU General Public License v3.0 or later](LICENSE). As a copyleft
-license, the GPL requires that redistributions and modified versions are also licensed under
-the GPL. The Android app originates as a fork of
-[degipe/YouTubeWhitelist](https://github.com/degipe/YouTubeWhitelist) and inherits this
-license; the iOS app is an independent rewrite released under the same terms.
+The two apps have different origins and therefore different licenses; the
+`LICENSE` file in each directory governs.
+
+| Part | License | Why |
+|---|---|---|
+| `ios/` | [MPL-2.0](ios/LICENSE) | Independent implementation. File-level copyleft: changes to these files stay open, while distribution through an app store remains possible. |
+| `android/` | [GPL-3.0-or-later](android/LICENSE) | Fork of [degipe/YouTubeWhitelist](https://github.com/degipe/YouTubeWhitelist); copyleft requires derivatives to stay GPL. |
+| `content/`, `docs/` | see [LICENSE](LICENSE) | Curation data and documentation, not software. |
+| `branding/` | all rights reserved | The code may be reused, the name and signet may not. |
+
+The GPL conflicts with Apple's App Store terms, which is why the iOS app — written
+from scratch and wholly owned by its author — carries a different license. The
+Android app is distributed through F-Droid and Google Play, where the GPL applies
+without friction.

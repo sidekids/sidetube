@@ -1,3 +1,7 @@
+// This Source Code Form is subject to the terms of the Mozilla Public
+// License, v. 2.0. If a copy of the MPL was not distributed with this
+// file, You can obtain one at https://mozilla.org/MPL/2.0/.
+
 import Foundation
 
 /// YouTube Data API v3 – nur die vier Listen-Endpunkte der Android-App. Jeder Aufruf kostet 1 Quota-Einheit.
@@ -69,6 +73,17 @@ struct YouTubeDataAPIClient {
         var snippet: Snippet
     }
 
+    struct SearchItem: Decodable {
+        struct Identifier: Decodable { var channelId: String? }
+        struct Snippet: Decodable {
+            var title: String
+            var description: String?
+            var thumbnails: Thumbnails?
+        }
+        var id: Identifier
+        var snippet: Snippet
+    }
+
    // MARK: Endpunkte
 
     func channel(id: String) async throws -> ChannelMetadata? {
@@ -79,6 +94,23 @@ struct YouTubeDataAPIClient {
     func channel(handle: String) async throws -> ChannelMetadata? {
         let response: ListResponse<ChannelItem> = try await get("channels", ["part": "snippet,contentDetails,statistics", "forHandle": handle])
         return response.items?.first.map(Self.map)
+    }
+
+   /// Kanalsuche. Kostet 100 Kontingenteinheiten je Aufruf (Tagesbudget 10 000) – deshalb nur auf
+   /// ausdrückliche Eingabe der Eltern, nie im Hintergrund und nie im Kindermodus.
+    func searchChannels(query: String, maxResults: Int = 10) async throws -> [ChannelMetadata] {
+        let response: ListResponse<SearchItem> = try await get("search", [
+            "part": "snippet", "type": "channel", "q": query,
+            "maxResults": String(maxResults), "safeSearch": "strict",
+        ])
+        return (response.items ?? []).compactMap { item in
+            guard let id = item.id.channelId else { return nil }
+            return ChannelMetadata(id: id, title: item.snippet.title,
+                                   thumbnailUrl: item.snippet.thumbnails?.best ?? "",
+                                   description: item.snippet.description ?? "",
+                                   subscriberCount: nil, videoCount: nil,
+                                   uploadsPlaylistId: YouTubeIDs.uploadsPlaylistId(forChannel: id))
+        }
     }
 
     func video(id: String) async throws -> VideoMetadata? {
