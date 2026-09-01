@@ -74,3 +74,17 @@ cp branding/sidetube/sidetube-appicon-dark-1024.png Sources/Resources/Assets.xca
 cp branding/sidetube/sidetube-appicon-tinted-1024.png Sources/Resources/Assets.xcassets/AppIcon.appiconset/AppIcon-Tinted.png
 cp branding/sidetube/sidetube-mark.svg Sources/Resources/Assets.xcassets/SideTubeMark.imageset/
 ```
+
+## Android
+
+Das Launcher-Symbol entsteht aus derselben Spezifikation, nicht als Kopie:
+
+```bash
+python3 scripts/generate_brand_assets.py --android=android/app/src/main/res
+```
+
+Geschrieben werden `ic_launcher_foreground.xml` (S-Signet in Markengelb),
+`ic_launcher_background.xml` (Markenschwarz), `ic_launcher_monochrome.xml` für die
+Themed Icons ab Android 13 sowie die beiden Adaptive-Icon-Definitionen. Der 1024er-Entwurf
+dient direkt als `viewport` und wird auf 108 dp abgebildet; eine Verkleinerung auf 90 Prozent
+um den Mittelpunkt hält das Zeichen innerhalb der sicheren Zone runder Masken.
