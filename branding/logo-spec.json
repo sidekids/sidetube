@@ -1,0 +1,60 @@
+{
+  "viewBox": "0 0 1024 1024",
+  "colors": {
+    "yellow": "#FBBB1B",
+    "dark": "#090A0C",
+    "light": "#F6F4EF"
+  },
+  "stroke": {
+    "width": 136,
+    "linecap": "round",
+    "linejoin": "round"
+  },
+  "side_s": {
+    "comment": "SIDE_S_GEOMETRY IS SHARED AND IMMUTABLE – zwei offene Pfade, gemeinsam fuer sidetube und sideplay",
+    "top": "M 750 250 H 370 C 292 250 252 290 252 370 V 430",
+    "bottom": "M 772 594 V 654 C 772 732 732 772 654 772 H 276"
+  },
+  "symbols": {
+    "play": {
+      "comment": "Play-Dreieck, leicht gerundete Ecken, optischer Mittelpunkt ~ 510/510",
+      "path": "M 450 416 Q 426 402 426 435 L 426 585 Q 426 618 450 604 L 590 526 Q 616 511 590 495 Z"
+    },
+    "wave": {
+      "comment": "fuenf vertikale abgerundete Balken, symmetrisch um y = 510 – Balkenbreite 32 nach optischem Abgleich (eingefroren)",
+      "centers_x": [
+        432,
+        472,
+        512,
+        552,
+        592
+      ],
+      "heights": [
+        88,
+        142,
+        210,
+        142,
+        88
+      ],
+      "bar_width": 32,
+      "corner_radius": 15,
+      "center_y": 510
+    }
+  },
+  "products": {
+    "sidetube": {
+      "symbol": "play",
+      "wordmark": [
+        "side",
+        "tube"
+      ]
+    },
+    "sideplay": {
+      "symbol": "wave",
+      "wordmark": [
+        "side",
+        "play"
+      ]
+    }
+  }
+}

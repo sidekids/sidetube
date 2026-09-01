@@ -1,0 +1,21 @@
+.DS_Store
+
+# Secrets
+ios/Config/Secrets.xcconfig
+android/local.properties
+
+# Bauartefakte
+build/
+ios/build/
+ios/*.xcodeproj
+android/.gradle/
+android/build/
+android/*/build/
+android/*/*/build/
+
+# Aus content/ erzeugte Kopien – verbindlich ist content/
+ios/Sources/Resources/content/
+android/app/src/main/assets/content/
+
+# Private Startpakete (übernommene Gerätedaten) bleiben lokal
+content/libraries/private-*.json

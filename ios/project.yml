@@ -1,0 +1,97 @@
+name: sidetube
+options:
+  bundleIdPrefix: xyz.steier
+  developmentLanguage: de
+  deploymentTarget:
+    iOS: "17.0"
+  createIntermediateGroups: true
+  generateEmptyDirectories: true
+configs:
+  Debug: debug
+  Release: release
+settings:
+  base:
+    DEVELOPMENT_TEAM: R26KXFGNN7
+    CODE_SIGN_STYLE: Automatic
+    SWIFT_VERSION: "5.0"
+    SWIFT_DEFAULT_ACTOR_ISOLATION: MainActor
+    SWIFT_APPROACHABLE_CONCURRENCY: YES
+    ENABLE_USER_SCRIPT_SANDBOXING: YES
+    SWIFT_EMIT_LOC_STRINGS: YES
+    LOCALIZATION_PREFERS_STRING_CATALOGS: YES
+targets:
+  sidetube:
+    type: application
+    platform: iOS
+    sources:
+      - path: Sources
+      - path: ../content
+        name: content
+        type: folder
+        buildPhase: resources
+    configFiles:
+      Debug: Config/App.xcconfig
+      Release: Config/App.xcconfig
+    info:
+      path: Sources/Resources/Info.plist
+      properties:
+        CFBundleDisplayName: SideTube
+        CFBundleDevelopmentRegion: de
+        CFBundleLocalizations: [de, en]
+        CFBundleShortVersionString: $(MARKETING_VERSION)
+        CFBundleVersion: $(CURRENT_PROJECT_VERSION)
+        NSHumanReadableCopyright: "© 2026 SideKids · Christian-Maximilian Steier"
+        LSApplicationCategoryType: public.app-category.education
+        UILaunchScreen: {}
+        UISupportedInterfaceOrientations: [UIInterfaceOrientationPortrait, UIInterfaceOrientationLandscapeLeft, UIInterfaceOrientationLandscapeRight]
+        UISupportedInterfaceOrientations~ipad: [UIInterfaceOrientationPortrait, UIInterfaceOrientationPortraitUpsideDown, UIInterfaceOrientationLandscapeLeft, UIInterfaceOrientationLandscapeRight]
+        ITSAppUsesNonExemptEncryption: false
+        LSApplicationQueriesSchemes: [sgnl, sms]
+        CFBundleURLTypes:
+          - CFBundleURLName: xyz.steier.sidetube
+            CFBundleURLSchemes: [sidetube]
+        YouTubeAPIKey: $(YOUTUBE_API_KEY)
+    settings:
+      base:
+        PRODUCT_BUNDLE_IDENTIFIER: xyz.steier.sidetube
+        TARGETED_DEVICE_FAMILY: "1,2"
+        GENERATE_INFOPLIST_FILE: NO
+        MARKETING_VERSION: "0.1.0"
+        CURRENT_PROJECT_VERSION: "1"
+        ASSETCATALOG_COMPILER_APPICON_NAME: AppIcon
+        ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME: AccentColor
+  sidetubeTests:
+    type: bundle.unit-test
+    platform: iOS
+    sources:
+      - path: Tests
+    dependencies:
+      - target: sidetube
+    settings:
+      base:
+        PRODUCT_BUNDLE_IDENTIFIER: xyz.steier.sidetube.tests
+        GENERATE_INFOPLIST_FILE: YES
+  sidetubeUITests:
+    type: bundle.ui-testing
+    platform: iOS
+    sources:
+      - path: UITests
+    dependencies:
+      - target: sidetube
+    settings:
+      base:
+        PRODUCT_BUNDLE_IDENTIFIER: xyz.steier.sidetube.uitests
+        GENERATE_INFOPLIST_FILE: YES
+        TEST_TARGET_NAME: sidetube
+schemes:
+  sidetube:
+    build:
+      targets:
+        sidetube: all
+        sidetubeTests: [test]
+        sidetubeUITests: [test]
+    run:
+      config: Debug
+    test:
+      config: Debug
+      targets: [sidetubeTests, sidetubeUITests]

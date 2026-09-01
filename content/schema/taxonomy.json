@@ -1,0 +1,182 @@
+{
+ "version": 1,
+ "note": "Verbindliche Definition fuer beide Plattformen. Rohwerte sind stabil und duerfen nicht umbenannt werden.",
+ "ageBands": [
+  {
+   "id": "preschool",
+   "title": "Vorschule (3–5)",
+   "age": 3
+  },
+  {
+   "id": "younger",
+   "title": "Jüngere Kinder (6–8)",
+   "age": 6
+  },
+  {
+   "id": "kids",
+   "title": "Kinder (9–11)",
+   "age": 9
+  },
+  {
+   "id": "older",
+   "title": "Ab 12",
+   "age": 12
+  }
+ ],
+ "categories": [
+  {
+   "id": "knowledge",
+   "title": "Wissen",
+   "minimumAge": 0
+  },
+  {
+   "id": "nature",
+   "title": "Natur",
+   "minimumAge": 0
+  },
+  {
+   "id": "technology",
+   "title": "Technik",
+   "minimumAge": 0
+  },
+  {
+   "id": "mediaLiteracy",
+   "title": "Medienkompetenz",
+   "minimumAge": 0
+  },
+  {
+   "id": "news",
+   "title": "Nachrichten",
+   "minimumAge": 0
+  },
+  {
+   "id": "creative",
+   "title": "Kreativ",
+   "minimumAge": 0
+  },
+  {
+   "id": "drawing",
+   "title": "Zeichnen",
+   "minimumAge": 0
+  },
+  {
+   "id": "mangaDrawing",
+   "title": "Manga zeichnen",
+   "minimumAge": 8
+  },
+  {
+   "id": "animeManga",
+   "title": "Anime & Manga",
+   "minimumAge": 12
+  },
+  {
+   "id": "stories",
+   "title": "Geschichten",
+   "minimumAge": 0
+  },
+  {
+   "id": "music",
+   "title": "Musik",
+   "minimumAge": 0
+  },
+  {
+   "id": "humor",
+   "title": "Humor",
+   "minimumAge": 0
+  },
+  {
+   "id": "society",
+   "title": "Gesellschaft",
+   "minimumAge": 0
+  },
+  {
+   "id": "environment",
+   "title": "Umwelt",
+   "minimumAge": 0
+  }
+ ],
+ "sourceTrust": [
+  {
+   "id": "trustedChildSource",
+   "title": "Vertrauenswürdige Kinderquelle",
+   "allowsChannelBrowsing": true
+  },
+  {
+   "id": "trustedSeries",
+   "title": "Vertrauenswürdige Reihe",
+   "allowsChannelBrowsing": false
+  },
+  {
+   "id": "perVideoReview",
+   "title": "Nur einzeln geprüfte Videos",
+   "allowsChannelBrowsing": false
+  },
+  {
+   "id": "parentOnly",
+   "title": "Nur für Eltern",
+   "allowsChannelBrowsing": false
+  },
+  {
+   "id": "blocked",
+   "title": "Gesperrt",
+   "allowsChannelBrowsing": false
+  }
+ ],
+ "approvalStatus": [
+  "discovered",
+  "reviewRequired",
+  "approved",
+  "rejected",
+  "expiredReview"
+ ],
+ "newsStatus": [
+  "safe",
+  "sensitive",
+  "parentReview"
+ ],
+ "sensitiveTopics": [
+  "war",
+  "violence",
+  "death",
+  "disaster",
+  "crime",
+  "fear",
+  "politics",
+  "sexual",
+  "coarseLanguage",
+  "horror",
+  "adultMedia",
+  "advertising",
+  "other"
+ ],
+ "providers": [
+  "youtube",
+  "peertube",
+  "kika",
+  "zdf",
+  "ard",
+  "arte"
+ ],
+ "bedtime": {
+  "note": "Ruhezeiten je Profil, Minuten seit Mitternacht. Fr/Sa verschiebt der Zuschlag den Beginn. Warnung 15 und 5 Minuten vorher; die Eltern-PIN setzt sie bis zum Ende der laufenden Ruhezeit aus.",
+  "defaultStartMinutes": 1200,
+  "defaultEndMinutes": 390,
+  "defaultWeekendOffsetMinutes": 60,
+  "warningLeadMinutes": 15,
+  "warningLastMinutes": 5,
+  "ageSuggestions": [
+   {
+    "label": "6–9 Jahre",
+    "startMinutes": 1140
+   },
+   {
+    "label": "10–12 Jahre",
+    "startMinutes": 1200
+   },
+   {
+    "label": "ab 13",
+    "startMinutes": 1260
+   }
+  ]
+ }
+}
