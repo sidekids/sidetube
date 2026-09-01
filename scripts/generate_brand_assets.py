@@ -39,6 +39,77 @@ def write(path, text):
 def png(svg_path, png_path, size=1024):
     subprocess.run(["rsvg-convert", "-w", str(size), "-h", str(size), "-o", png_path, svg_path], check=True)
 
+
+def android_vector(product, color, scale=0.9):
+    """Adaptive-Icon-Vordergrund als Android-VectorDrawable, aus derselben Geometrie wie die SVGs.
+
+    Der 1024er-Entwurf wird direkt als viewport genutzt und auf 108dp abgebildet; `scale`
+    schrumpft ihn um den Mittelpunkt, damit auch runde Masken nichts vom Signet abschneiden.
+    """
+    sym = SPEC["products"][product]["symbol"]
+    stroke = (f'        android:strokeColor="{color}"\n'
+              f'        android:strokeWidth="{ST["width"]}"\n'
+              f'        android:strokeLineCap="{ST["linecap"]}"\n'
+              f'        android:strokeLineJoin="{ST["linejoin"]}"')
+    paths = (f'        <path\n            android:pathData="{S["top"]}"\n{stroke.replace("        ", "            ")}/>\n'
+             f'        <path\n            android:pathData="{S["bottom"]}"\n{stroke.replace("        ", "            ")}/>\n')
+    if sym == "play":
+        paths += (f'        <path\n            android:pathData="{SPEC["symbols"]["play"]["path"]}"\n'
+                  f'            android:fillColor="{color}"/>\n')
+    else:
+        w = SPEC["symbols"]["wave"]
+        for cx, h in zip(w["centers_x"], w["heights"]):
+            x = cx - w["bar_width"] / 2; y = w["center_y"] - h / 2; r = w["corner_radius"]
+            d = (f'M {x + r:g} {y:g} h {w["bar_width"] - 2 * r:g} a {r} {r} 0 0 1 {r} {r} '
+                 f'v {h - 2 * r:g} a {r} {r} 0 0 1 {-r} {r} h {-(w["bar_width"] - 2 * r):g} '
+                 f'a {r} {r} 0 0 1 {-r} {-r} v {-(h - 2 * r):g} a {r} {r} 0 0 1 {r} {-r} Z')
+            paths += f'        <path\n            android:pathData="{d}"\n            android:fillColor="{color}"/>\n'
+    pivot = 512
+    return ('<?xml version="1.0" encoding="utf-8"?>\n'
+            '<!-- Aus branding/logo-spec.json erzeugt: scripts/generate_brand_assets.py -->\n'
+            '<vector xmlns:android="http://schemas.android.com/apk/res/android"\n'
+            '    android:width="108dp"\n    android:height="108dp"\n'
+            '    android:viewportWidth="1024"\n    android:viewportHeight="1024">\n'
+            f'    <group\n        android:pivotX="{pivot}"\n        android:pivotY="{pivot}"\n'
+            f'        android:scaleX="{scale}"\n        android:scaleY="{scale}">\n'
+            + paths +
+            '    </group>\n</vector>\n')
+
+
+def android_color_drawable(color):
+    return ('<?xml version="1.0" encoding="utf-8"?>\n'
+            '<!-- Aus branding/logo-spec.json erzeugt: scripts/generate_brand_assets.py -->\n'
+            '<vector xmlns:android="http://schemas.android.com/apk/res/android"\n'
+            '    android:width="108dp"\n    android:height="108dp"\n'
+            '    android:viewportWidth="108"\n    android:viewportHeight="108">\n'
+            f'    <path\n        android:pathData="M0,0h108v108h-108z"\n        android:fillColor="{color}"/>\n'
+            '</vector>\n')
+
+
+def android_adaptive_icon(monochrome=True):
+    mono = '    <monochrome android:drawable="@drawable/ic_launcher_monochrome" />\n' if monochrome else ""
+    return ('<?xml version="1.0" encoding="utf-8"?>\n'
+            '<adaptive-icon xmlns:android="http://schemas.android.com/apk/res/android">\n'
+            '    <background android:drawable="@drawable/ic_launcher_background" />\n'
+            '    <foreground android:drawable="@drawable/ic_launcher_foreground" />\n'
+            + mono + '</adaptive-icon>\n')
+
+
+def write_android(res_dir, product="sidetube"):
+    """Schreibt Launcher-Symbol und Markenfarben in ein Android-Ressourcenverzeichnis."""
+    files = {
+        os.path.join(res_dir, "drawable", "ic_launcher_foreground.xml"): android_vector(product, C["yellow"]),
+        os.path.join(res_dir, "drawable", "ic_launcher_background.xml"): android_color_drawable(C["dark"]),
+        # Themed Icons ab Android 13: nur die Form zaehlt, das System faerbt selbst
+        os.path.join(res_dir, "drawable", "ic_launcher_monochrome.xml"): android_vector(product, "#FFFFFFFF"),
+        os.path.join(res_dir, "mipmap-anydpi-v26", "ic_launcher.xml"): android_adaptive_icon(),
+        os.path.join(res_dir, "mipmap-anydpi-v26", "ic_launcher_round.xml"): android_adaptive_icon(),
+    }
+    for path, text in files.items():
+        write(path, text)
+    return sorted(os.path.basename(p) for p in files)
+
+
 def main():
     check = "--check" in sys.argv
     if shutil.which("rsvg-convert") is None:
@@ -64,6 +135,10 @@ def main():
         png(os.path.join(d, f"{product}-icon-tinted.svg"), os.path.join(d, f"{product}-appicon-tinted-1024.png"))
         png(os.path.join(d, f"{product}-mark.svg"), os.path.join(d, f"{product}-mark-1024.png"))
     preview()
+    android_res = next((a.split("=", 1)[1] for a in sys.argv if a.startswith("--android=")), None)
+    if android_res:
+        names = write_android(android_res)
+        print("Android:", ", ".join(names), "→", android_res)
     print("erzeugt:", len(made), "SVGs + PNG-Exporte + docs/assets/side-brand-preview.png")
 
 def preview():
