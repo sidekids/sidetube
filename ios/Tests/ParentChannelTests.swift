@@ -3,12 +3,13 @@
 // file, You can obtain one at https://mozilla.org/MPL/2.0/.
 
 import Foundation
+import Security
 import SwiftData
 import Testing
 @testable import sidetube
 
 /// Elternkanal (ADR 0005): Einrichtungscode, Nachrichtentext, Signatur, Versand.
-struct ParentChannelTests {
+nonisolated struct ParentChannelTests {
     private let secret = String(repeating: "0123456789abcdef", count: 4)
 
     private func code(_ overrides: [String: Any] = [:]) -> String {
@@ -121,7 +122,10 @@ struct ParentChannelWiringTests {
     private let channel = ParentChannel(server: URL(string: "https://wolke.example.org")!, conversation: "abcd2345",
                                         secret: String(repeating: "0123456789abcdef", count: 4), mentions: ["anna"])
 
-    @Test func keychainStoreKeepsAndDeletesChannel() {
+    /// Ohne Signierung (CI: `CODE_SIGNING_ALLOWED=NO`) hat der Simulator-Testlauf keinen Schlüsselbund –
+    /// dann wird übersprungen statt fälschlich rot. Lokal mit Ad-hoc-Signatur läuft der Test.
+    @Test(.enabled(if: KeychainProbe.available, "Schlüsselbund im Testlauf nicht verfügbar (Build ohne Signierung)"))
+    func keychainStoreKeepsAndDeletesChannel() {
         let store = KeychainParentChannelStore()
         store.delete()
         #expect(store.load() == nil)
@@ -217,4 +221,19 @@ struct ParentChannelSetupTests {
         await setup.sendTest()
         #expect(setup.message == "Abgelehnt: Schlüssel oder Bot passen nicht (HTTP 401).")
     }
+}
+
+/// Prüft einmal, ob dieser Testlauf in den Schlüsselbund schreiben darf.
+nonisolated enum KeychainProbe {
+    static let available: Bool = {
+        let query: [String: Any] = [kSecClass as String: kSecClassGenericPassword,
+                                    kSecAttrService as String: "xyz.steier.sidetube.test",
+                                    kSecAttrAccount as String: "probe"]
+        SecItemDelete(query as CFDictionary)
+        var add = query
+        add[kSecValueData as String] = Data("x".utf8)
+        let status = SecItemAdd(add as CFDictionary, nil)
+        SecItemDelete(query as CFDictionary)
+        return status == errSecSuccess
+    }()
 }
