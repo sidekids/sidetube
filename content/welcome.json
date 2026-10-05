@@ -1,0 +1,86 @@
+{
+  "version": 1,
+  "createdAt": "2026-09-08",
+  "note": "Startinhalt für jedes neu angelegte Kinderprofil, damit die App beim ersten Öffnen nicht leer ist: zwei Kanäle (NASA, ESA) und sieben Videos daraus bzw. frei lizenziert. Alles ist ab Werk freigegeben – die einzige Ausnahme von der Regel, dass Inhalte erst nach einer Prüfung sichtbar werden. Deshalb steht hier nur, was ohne Rechtefrage mitgeliefert werden kann und von einer amtlichen Quelle stammt. Eltern können jeden Eintrag entfernen. IDs am 2026-09-08 über oEmbed und den Kanal-Feed geprüft.",
+  "channels": [
+    {
+      "id": "UCLA_DiR1FfKNvjuUpBHmylQ",
+      "title": "NASA",
+      "category": "knowledge",
+      "ageMin": 8,
+      "note": "Amtlicher Kanal der US-Raumfahrtbehörde. Bewusst nicht als vollständig kindorientierte Quelle eingestuft: neben Raketen und Raumstation laufen dort auch Pressekonferenzen und politische Termine. Das Kind sieht deshalb nur die einzeln freigegebenen Videos – siehe sources.json."
+    },
+    {
+      "id": "UCIBaDdAbGlFDeS33shmlD0A",
+      "title": "European Space Agency, ESA",
+      "category": "knowledge",
+      "ageMin": 6,
+      "note": "Amtlicher Kanal der europäischen Raumfahrtbehörde und Heimat der Paxi-Reihe. Wie bei der NASA gilt: daneben laufen Fachbeiträge und Pressetermine für Erwachsene, deshalb sieht das Kind nur die einzeln freigegebenen Videos – siehe sources.json."
+    }
+  ],
+  "videos": [
+    {
+      "id": "aqz-KE-bpKQ",
+      "title": "Big Buck Bunny",
+      "channelId": "UCSMOQeBJ2RAnuFungnQOxLg",
+      "channelTitle": "Blender",
+      "category": "stories",
+      "ageMin": 6,
+      "note": "Kurzfilm der Blender Foundation, Creative Commons BY 3.0. Ohne Sprache, rund zehn Minuten."
+    },
+    {
+      "id": "jHKf1eHp3eQ",
+      "title": "Artemis III: Our Next Step Back to the Moon",
+      "channelId": "UCLA_DiR1FfKNvjuUpBHmylQ",
+      "channelTitle": "NASA",
+      "category": "knowledge",
+      "ageMin": 8,
+      "note": "Wie die nächste Rakete zum Mond fliegt. Englisch, Untertitel vorhanden."
+    },
+    {
+      "id": "6o3m9Bw67Os",
+      "title": "NASA's Nancy Grace Roman Space Telescope Launches",
+      "channelId": "UCLA_DiR1FfKNvjuUpBHmylQ",
+      "channelTitle": "NASA",
+      "category": "knowledge",
+      "ageMin": 8,
+      "note": "Ein echter Raketenstart von Anfang bis Ende. Englisch, Untertitel vorhanden."
+    },
+    {
+      "id": "PqJpgizriFM",
+      "title": "Paxi on the ISS | Natural and artificial satellites",
+      "channelId": "UCIBaDdAbGlFDeS33shmlD0A",
+      "channelTitle": "European Space Agency, ESA",
+      "category": "knowledge",
+      "ageMin": 6,
+      "note": "Offizielles ESA-Paxi-Video für Kinder von etwa 6 bis 12 Jahren. Englisch, Untertitel vorhanden."
+    },
+    {
+      "id": "-uXtNhRr060",
+      "title": "Wer ist Paxi?",
+      "channelId": "UCIBaDdAbGlFDeS33shmlD0A",
+      "channelTitle": "European Space Agency, ESA",
+      "category": "knowledge",
+      "ageMin": 6,
+      "note": "Vorstellung der Paxi-Figur, deutsche Fassung. Guter Einstieg in die Reihe."
+    },
+    {
+      "id": "N7ezarEYKxk",
+      "title": "Paxi – Das Sonnensystem",
+      "channelId": "UCIBaDdAbGlFDeS33shmlD0A",
+      "channelTitle": "European Space Agency, ESA",
+      "category": "knowledge",
+      "ageMin": 6,
+      "note": "Die Planeten unseres Sonnensystems, deutsche Fassung."
+    },
+    {
+      "id": "RyEBETRbccY",
+      "title": "Paxi räumt den Weltraum auf",
+      "channelId": "UCIBaDdAbGlFDeS33shmlD0A",
+      "channelTitle": "European Space Agency, ESA",
+      "category": "knowledge",
+      "ageMin": 6,
+      "note": "Weltraumschrott und wie man ihn beseitigt, deutsche Fassung."
+    }
+  ]
+}

@@ -1,0 +1,33 @@
+# Data storage
+
+| Data | iOS | Android | Retention / remaining checks |
+|---|---|---|---|
+| Profiles, approvals, source trust | SwiftData app container | Room app-private database | Until deletion; test cascade deletion and upgrades on device |
+| Watch history and channel cache | SwiftData | Room | No verified automatic retention limit; profiles/history can contain sensitive interests |
+| Parent PIN | PBKDF2 derivation and salt in Keychain | PBKDF2 derivation in EncryptedSharedPreferences, Android Keystore master key | Never store the PIN itself; persistence failures and recovery need device tests |
+| Lockout state | UserDefaults, separate from the Keychain PIN hash | EncryptedSharedPreferences | Persistent; capped one-hour penalty; clock manipulation remains a threat-model consideration |
+| Children's wishes (ADR 0001) | SwiftData `KidWish` (profile ID, kind, topic or video/channel ID and title, status, optional parent reply, timestamps) | Room table `wishes` (schema 3): same fields; events in `review_events` | Local only; the wish content is never transmitted (with the optional parent notification of ADR 0005 only the number of open wishes leaves the device); deleted with the profile together with the profile's approval-history events, which contain the wish texts (iOS `ProfileRepository.delete`, Android `ProfileRepository.delete` in one transaction); no automatic retention limit yet. Topics typed by a child can reveal interests. History entries name the child generically as „Kind“, never by profile name |
+| Parent notification setup (ADR 0005) | Keychain item `parent_channel` (`AfterFirstUnlockThisDeviceOnly`): server URL, conversation token, user names to mention, bot secret | EncryptedSharedPreferences file `sidetube-elternkanal` (separate from the PIN file, so a PIN reset does not silently disable it), same fields | Until parents remove it („Entfernen“); the iOS UI-test reset deletes it too. The secret is never shown, logged or exported; it only allows posting into that one Talk conversation |
+| Preferences | UserDefaults | Local app preferences / database | No backend sync found |
+| Provider cookies/storage | Nonpersistent WKWebsiteDataStore for both players | Persistent WebView store, cleared at session start and teardown; DOM storage and third-party cookies enabled | Cookies no longer outlive a session, but clearing is code-level only and device-unverified; no parity claim |
+| Metadata HTTP cache | Ephemeral URLSession, 8 MiB memory cache | HttpURLConnection; no explicit shared HTTP cache | iOS cache policy may serve stale responses; cancellation/redirect behavior requires further review |
+| Images | SwiftUI AsyncImage behavior | Limited thumbnail rendering in replacement | Native thumbnail policy tests do not establish decode/memory efficiency on device |
+| Debug diagnostics | DEBUG-gated player file | No comparable native release logger found | Never upload raw diagnostics; inspect produced Release artifacts |
+
+Android declares `allowBackup=false`; OEM/device-to-device transfer behavior and encrypted-preferences restore compatibility still need testing. iOS's ordinary app-container backup behavior has not been disabled or measured; “local” does not imply exclusion from user-controlled OS backups. Verify file protection, device backup, uninstall/reinstall, PIN reset and profile deletion before finalizing retention/deletion promises.
+
+No claim of encryption for every database field is made. OS sandboxing, device encryption and explicit Keychain/Keystore use are distinct protections.
+
+On an iOS watch-history write failure, the coordinator temporarily retains the attempted record (profile/video identifiers, title, seconds and timestamp) in memory while blocking further playback within its lifetime. It is not an additional disk log or network report and is not a durable recovery mechanism. See [failure handling](../release/ios-watch-time-failures.md).
+
+Android schema 2 stores a local interruption marker containing profile ID, random session token and start time. It is written before playback and removed after successful history persistence or explicit parent acknowledgement; profile deletion cascades the marker. It contains no additional video metadata, is never transmitted, and is deliberately not cleared automatically on restart or at midnight. Parent acknowledgement leaves watch-history records intact.
+
+Android schema 3 (2026-10-02, migration 2→3, test `MigrationTest`; not yet released, extended on 2026-10-03 before the first release) adds the `wishes` table and four nullable/defaulted columns to the channel cache: `publishedAt`, `isShort`, `isUpcoming` (feed flags used for „Neu bei deinen Kanälen“ and playlists) and `videoChannelId` (channel of each cached video, needed to check the source of a playlist video offline). Existing rows are untouched; rows without `videoChannelId` count as „channel unknown“ and a playlist video from them plays only with its own approval until the playlist is refreshed. Wishes are local only and are shown to parents behind the PIN.
+
+Approval-history events (`review_events`) carry a nullable `profileId` but no foreign key (source-level events have none). Deleting a profile therefore deletes its events explicitly; profile-independent events (trust level of a source) remain.
+
+iOS stores the equivalent marker as a `PlaybackAdmission` SwiftData record (profile ID, random session token, start time), added to the existing store by SwiftData's automatic lightweight migration rather than an explicit schema-version migration plan. Same write/removal/acknowledgement semantics and same profile-scoped cascade delete as Android; see [interrupted-session recovery](../release/ios-watch-time-failures.md).
+
+iOS adds `KidWish` as a new, relationship-free SwiftData entity; existing stores open unchanged through SwiftData's automatic lightweight migration (covered by the pre-admission upgrade test). Each wish and each parent decision is also written as a `ReviewEvent` (the existing local approval history). Deleting a profile removes its wishes and its `ReviewEvent`s (matched by `profileId`, including the wish texts) explicitly in `ProfileRepository.delete`, since there is no cascade relationship; events without a profile (source trust) remain.
+
+iOS `CachedChannelVideo` gains `videoChannelId` (optional) and the feed flags `isShort`/`isUpcoming` (default `false`), added by automatic lightweight migration (covered by the pre-admission upgrade test). Rows from before have no channel ID; a playlist video from them plays only with its own approval until the playlist is refreshed.

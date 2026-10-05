@@ -1,0 +1,105 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<feed xmlns:yt="http://www.youtube.com/xml/schemas/2015" xmlns:media="http://search.yahoo.com/mrss/" xmlns="http://www.w3.org/2005/Atom">
+ <link rel="self" href="http://www.youtube.com/feeds/videos.xml?playlist_id=PLav47HAVZMjnTFVZL-aImCQIC0uLZtNCz"/>
+ <id>yt:playlist:PLav47HAVZMjnTFVZL-aImCQIC0uLZtNCz</id>
+ <yt:playlistId>PLav47HAVZMjnTFVZL-aImCQIC0uLZtNCz</yt:playlistId>
+ <yt:channelId>UCz75RVbH8q2jdBJ4SnwuZZQ</yt:channelId>
+ <title>Blender Open Movies</title>
+ <author>
+  <name>Blender Studio</name>
+  <uri>https://www.youtube.com/channel/UCz75RVbH8q2jdBJ4SnwuZZQ</uri>
+ </author>
+ <published>2015-02-01T14:34:02+00:00</published>
+  <entry>
+  <id>yt:video:u9lj-c29dxI</id>
+  <yt:videoId>u9lj-c29dxI</yt:videoId>
+  <yt:channelId>UCz75RVbH8q2jdBJ4SnwuZZQ</yt:channelId>
+  <title>WING IT! - Blender Open Movie</title>
+  <link rel="alternate" href="https://www.youtube.com/watch?v=u9lj-c29dxI"/>
+  <author>
+   <name>Blender Studio</name>
+   <uri>https://www.youtube.com/channel/UCz75RVbH8q2jdBJ4SnwuZZQ</uri>
+  </author>
+  <published>2023-09-12T15:11:22+00:00</published>
+  <updated>2026-08-31T15:33:51+00:00</updated>
+  <media:group>
+   <media:title>WING IT! - Blender Open Movie</media:title>
+   <media:content url="https://www.youtube.com/v/u9lj-c29dxI?version=3" type="application/x-shockwave-flash" width="640" height="390"/>
+   <media:thumbnail url="https://i2.ytimg.com/vi/u9lj-c29dxI/hqdefault.jpg" width="480" height="360"/>
+   <media:description>Gekürzt für den Test.</media:description>
+   <media:community>
+    <media:starRating count="60008" average="5.00" min="1" max="5"/>
+    <media:statistics views="1183672"/>
+   </media:community>
+  </media:group>
+ </entry>
+ <entry>
+  <id>yt:video:WhWc3b3KhnY</id>
+  <yt:videoId>WhWc3b3KhnY</yt:videoId>
+  <yt:channelId>UCz75RVbH8q2jdBJ4SnwuZZQ</yt:channelId>
+  <title>Spring - Blender Open Movie</title>
+  <link rel="alternate" href="https://www.youtube.com/watch?v=WhWc3b3KhnY"/>
+  <author>
+   <name>Blender Studio</name>
+   <uri>https://www.youtube.com/channel/UCz75RVbH8q2jdBJ4SnwuZZQ</uri>
+  </author>
+  <published>2019-04-04T14:57:49+00:00</published>
+  <updated>2026-08-31T14:52:01+00:00</updated>
+  <media:group>
+   <media:title>Spring - Blender Open Movie</media:title>
+   <media:content url="https://www.youtube.com/v/WhWc3b3KhnY?version=3" type="application/x-shockwave-flash" width="640" height="390"/>
+   <media:thumbnail url="https://i4.ytimg.com/vi/WhWc3b3KhnY/hqdefault.jpg" width="480" height="360"/>
+   <media:description>Gekürzt für den Test.</media:description>
+   <media:community>
+    <media:starRating count="381638" average="5.00" min="1" max="5"/>
+    <media:statistics views="10914950"/>
+   </media:community>
+  </media:group>
+ </entry>
+ <entry>
+  <id>yt:video:SkVqJ1SGeL0</id>
+  <yt:videoId>SkVqJ1SGeL0</yt:videoId>
+  <yt:channelId>UCSMOQeBJ2RAnuFungnQOxLg</yt:channelId>
+  <title>Caminandes 3: Llamigos</title>
+  <link rel="alternate" href="https://www.youtube.com/watch?v=SkVqJ1SGeL0"/>
+  <author>
+   <name>Blender</name>
+   <uri>https://www.youtube.com/channel/UCSMOQeBJ2RAnuFungnQOxLg</uri>
+  </author>
+  <published>2016-01-30T00:05:27+00:00</published>
+  <updated>2026-09-30T20:20:47+00:00</updated>
+  <media:group>
+   <media:title>Caminandes 3: Llamigos</media:title>
+   <media:content url="https://www.youtube.com/v/SkVqJ1SGeL0?version=3" type="application/x-shockwave-flash" width="640" height="390"/>
+   <media:thumbnail url="https://i4.ytimg.com/vi/SkVqJ1SGeL0/hqdefault.jpg" width="480" height="360"/>
+   <media:description>Gekürzt für den Test.</media:description>
+   <media:community>
+    <media:starRating count="13313" average="5.00" min="1" max="5"/>
+    <media:statistics views="1071973"/>
+   </media:community>
+  </media:group>
+ </entry>
+ <entry>
+  <id>yt:video:Z4C82eyhwgU</id>
+  <yt:videoId>Z4C82eyhwgU</yt:videoId>
+  <yt:channelId>UCSMOQeBJ2RAnuFungnQOxLg</yt:channelId>
+  <title>&quot;Caminandes 2: Gran Dillama&quot; - Blender Animated Short</title>
+  <link rel="alternate" href="https://www.youtube.com/watch?v=Z4C82eyhwgU"/>
+  <author>
+   <name>Blender</name>
+   <uri>https://www.youtube.com/channel/UCSMOQeBJ2RAnuFungnQOxLg</uri>
+  </author>
+  <published>2013-11-22T16:27:49+00:00</published>
+  <updated>2026-08-27T04:49:55+00:00</updated>
+  <media:group>
+   <media:title>&quot;Caminandes 2: Gran Dillama&quot; - Blender Animated Short</media:title>
+   <media:content url="https://www.youtube.com/v/Z4C82eyhwgU?version=3" type="application/x-shockwave-flash" width="640" height="390"/>
+   <media:thumbnail url="https://i3.ytimg.com/vi/Z4C82eyhwgU/hqdefault.jpg" width="480" height="360"/>
+   <media:description>Gekürzt für den Test.</media:description>
+   <media:community>
+    <media:starRating count="12015" average="5.00" min="1" max="5"/>
+    <media:statistics views="1311118"/>
+   </media:community>
+  </media:group>
+ </entry>
+</feed>

@@ -1,0 +1,16 @@
+*.iml
+.gradle/
+build/
+local.properties
+.idea/
+.DS_Store
+captures/
+.externalNativeBuild/
+.cxx/
+
+# Aus dem gemeinsamen content/ synchronisiert (Bauartefakt, verbindlich ist die Quelle)
+app/src/main/assets/content/
+
+# Gemeinsame Kuratierungsdaten fuer die Tests: Kopie aus content/, verbindlich ist die Quelle
+core/src/test/resources/content/
+.kotlin/

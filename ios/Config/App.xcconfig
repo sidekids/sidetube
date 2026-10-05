@@ -1,0 +1,4 @@
+// Ziel-spezifische Einstellungen der App. Secrets kommen aus Secrets.xcconfig (gitignored).
+#include "../../version.properties"
+#include? "Secrets.xcconfig"
+YOUTUBE_API_KEY = $(inherited)

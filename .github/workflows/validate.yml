@@ -1,0 +1,116 @@
+name: Validate native clients
+on:
+  pull_request:
+  push:
+    branches: [main]
+  workflow_dispatch:
+permissions:
+  contents: read
+concurrency:
+  group: validate-${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  changes:
+    runs-on: ubuntu-latest
+    outputs:
+      ios: ${{ steps.paths.outputs.ios }}
+      android: ${{ steps.paths.outputs.android }}
+    steps:
+      - uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683 # v4.2.2
+        with:
+          fetch-depth: 0
+          persist-credentials: false
+      - id: paths
+        env:
+          BASE_SHA: ${{ github.event.pull_request.base.sha || github.event.before }}
+          EVENT_NAME: ${{ github.event_name }}
+        shell: bash
+        run: |
+          set -euo pipefail
+          if [[ "$EVENT_NAME" == workflow_dispatch || -z "$BASE_SHA" || "$BASE_SHA" =~ ^0+$ ]]; then
+            echo 'ios=true' >> "$GITHUB_OUTPUT"
+            echo 'android=true' >> "$GITHUB_OUTPUT"
+            exit 0
+          fi
+          changed=$(git diff --name-only "$BASE_SHA" HEAD --)
+          common='^(content/|shared/|scripts/|branding/|version.properties$|\.github/)'
+          for platform in ios android; do
+            if echo "$changed" | grep -Eq "$common|^$platform/"; then
+              echo "$platform=true" >> "$GITHUB_OUTPUT"
+            else
+              echo "$platform=false" >> "$GITHUB_OUTPUT"
+            fi
+          done
+
+  security-and-content:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683
+        with:
+          fetch-depth: 0
+          persist-credentials: false
+      - uses: actions/setup-node@49933ea5288caeca8642d1e84afbd3f7d6820020 # v4.4.0
+        with:
+          node-version: '22'
+      - run: node scripts/validate-content.mjs
+      - run: node --test scripts/player-lifecycle.test.mjs
+      - name: Full history and available objects
+        shell: bash
+        run: |
+          set -euo pipefail
+          go install github.com/zricethezav/gitleaks/v8@v8.30.1
+          scanner="$(go env GOPATH)/bin/gitleaks"
+          "$scanner" git . --log-opts='--all --full-history' --redact=100 --ignore-gitleaks-allow --no-banner
+          git fsck --full
+          git cat-file --batch-all-objects --batch | "$scanner" stdin --redact=100 --ignore-gitleaks-allow --no-banner
+          "$scanner" dir . --redact=100 --ignore-gitleaks-allow --no-banner
+
+  android:
+    needs: changes
+    if: needs.changes.outputs.android == 'true'
+    runs-on: ubuntu-latest
+    timeout-minutes: 30
+    steps:
+      - uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683
+        with:
+          persist-credentials: false
+      - uses: actions/setup-java@c5195efecf7bdfc987ee8bae7a71cb8b11521c00 # v4.7.1
+        with:
+          distribution: temurin
+          java-version: '17'
+      - uses: actions/setup-node@49933ea5288caeca8642d1e84afbd3f7d6820020
+        with:
+          node-version: '22'
+      - run: sdkmanager 'platforms;android-36' 'build-tools;35.0.0'
+      - working-directory: android
+        run: ./gradlew --no-daemon assembleDebug assembleRelease bundleRelease testDebugUnitTest lintDebug lintRelease
+      - name: Verify bundled public policy
+        shell: bash
+        run: |
+          set -euo pipefail
+          package_dir=$(mktemp -d)
+          unzip -q android/app/build/outputs/apk/release/app-release-unsigned.apk 'assets/content/*' -d "$package_dir"
+          node scripts/validate-content.mjs "$package_dir/assets/content"
+
+  ios:
+    needs: changes
+    if: needs.changes.outputs.ios == 'true'
+    runs-on: macos-26
+    timeout-minutes: 30
+    steps:
+      - uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683
+        with:
+          persist-credentials: false
+      - uses: actions/setup-node@49933ea5288caeca8642d1e84afbd3f7d6820020
+        with:
+          node-version: '22'
+      - run: brew install xcodegen
+      - run: xcodebuild -version
+      - working-directory: ios
+        run: xcodegen generate
+      - working-directory: ios
+        run: xcodebuild test -project sidetube.xcodeproj -scheme sidetube -destination 'platform=iOS Simulator,name=iPhone 17' -only-testing:sidetubeTests -derivedDataPath build/DerivedData CODE_SIGNING_ALLOWED=NO
+      - working-directory: ios
+        run: xcodebuild build -project sidetube.xcodeproj -scheme sidetube -configuration Release -destination 'generic/platform=iOS' -derivedDataPath build/DerivedData CODE_SIGNING_ALLOWED=NO
+      - run: node scripts/validate-content.mjs ios/build/DerivedData/Build/Products/Release-iphoneos/sidetube.app/content

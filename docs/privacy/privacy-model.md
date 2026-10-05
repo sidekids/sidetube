@@ -1,0 +1,13 @@
+# Privacy model
+
+The reviewed source contains no SideTube account server, analytics SDK, advertising SDK or crash uploader. This is a statement about SideTube's native integration, not a guarantee about YouTube/Google or PeerTube's processing.
+
+Local profiles, watch history, preferences and approvals are personal data even without an account. Provider requests expose an IP address and requested media. WebViews execute third-party code and may send identifiers, cookies, playback context and client information. `youtube-nocookie.com` and a nonpersistent store do not prove unlinkability. Native metadata and image requests also need disclosure.
+
+iOS players use nonpersistent WebKit storage. Android enables first-party and third-party cookies plus DOM storage in the platform WebView's persistent store, but clears that store when a player session begins and again on teardown, so cookies no longer outlive a session; third-party acceptance and the privacy-enhanced embed host are device-unverified. This difference is a release blocker until provider compatibility, child-directed obligations, retention and store declarations are resolved. No untested cookie-blocking workaround is introduced to claim compliance.
+
+Children's wishes ([ADR 0001](../adr/0001-wuensche-von-kindern.md)) stay on the device; topics a child types can reveal interests. „Neu bei deinen Kanälen" fetches the public feeds of channels the parents already trust; no wish data is sent. The optional parent notification ([ADR 0005](../adr/0005-eltern-ueber-wuensche-benachrichtigen.md)) is off by default; once parents set it up, each new wish sends one HTTPS request to the parents' own Nextcloud with their user names and the number of open wishes – no child name, topic or title – and the server sees the device's IP address and the time. Its setup secret lives in the Keychain / EncryptedSharedPreferences. Scanning the setup code uses the camera in the parent settings only; frames are analysed on the device and not stored.
+
+Incoming iOS recommendation links can resolve video metadata before PIN confirmation; saving/opening an external destination requires the parent gate. That initial network disclosure must be assessed. Parent areas relock on background transition. Apps cannot promise OS-level kiosk protection.
+
+Release requires an observed network trace, data inventory, approved public privacy notice, accurate App Privacy/Data Safety forms and review of the child audience/provider combination. A static source audit cannot enumerate every endpoint selected by remote provider scripts or certify worldwide legal compliance.

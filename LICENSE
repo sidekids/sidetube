@@ -1,0 +1,30 @@
+SideTube — Lizenzen / Licenses
+==============================
+
+Beide Apps stehen unter derselben Lizenz. Maßgeblich ist jeweils die
+LICENSE-Datei im betreffenden Verzeichnis.
+
+Both apps share the same license. The LICENSE file in the respective
+directory governs.
+
+  ios/       Mozilla Public License 2.0   → ios/LICENSE
+             Eigenständige Neuentwicklung von Christian-Maximilian Steier.
+             Independent implementation by Christian-Maximilian Steier.
+
+  android/   Mozilla Public License 2.0   → android/LICENSE
+             Eigenständige Neuentwicklung von Christian-Maximilian Steier,
+             seit September 2026 anstelle des früheren Forks von
+             https://github.com/degipe/YouTubeWhitelist (GPL-3.0).
+             Independent implementation by Christian-Maximilian Steier,
+             replacing the earlier fork of the above (GPL-3.0) as of
+             September 2026.
+
+Gemeinsame Bestandteile / shared parts:
+
+  content/, docs/   Kuratierungsdaten und Dokumentation, Copyright (c)
+                    Christian-Maximilian Steier. Keine Softwarelizenz;
+                    Nutzung auf Anfrage. No software license; ask before reuse.
+
+  branding/         Marke SideTube und SidePlay, alle Rechte vorbehalten.
+                    Der Quelltext darf verwendet werden, Name und Signet nicht.
+                    Trademark-like: code may be reused, the name and mark may not.

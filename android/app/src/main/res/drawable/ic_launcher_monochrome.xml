@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Aus branding/logo-spec.json erzeugt: scripts/generate_brand_assets.py -->
+<vector xmlns:android="http://schemas.android.com/apk/res/android"
+    android:width="108dp"
+    android:height="108dp"
+    android:viewportWidth="1024"
+    android:viewportHeight="1024">
+    <group
+        android:pivotX="512"
+        android:pivotY="512"
+        android:scaleX="0.9"
+        android:scaleY="0.9">
+        <path
+            android:pathData="M 750 250 H 370 C 292 250 252 290 252 370 V 430"
+            android:strokeColor="#FFFFFFFF"
+            android:strokeWidth="136"
+            android:strokeLineCap="round"
+            android:strokeLineJoin="round"/>
+        <path
+            android:pathData="M 772 594 V 654 C 772 732 732 772 654 772 H 276"
+            android:strokeColor="#FFFFFFFF"
+            android:strokeWidth="136"
+            android:strokeLineCap="round"
+            android:strokeLineJoin="round"/>
+        <path
+            android:pathData="M 450 416 Q 426 402 426 435 L 426 585 Q 426 618 450 604 L 590 526 Q 616 511 590 495 Z"
+            android:fillColor="#FFFFFFFF"/>
+    </group>
+</vector>

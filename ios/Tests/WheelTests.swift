@@ -1,0 +1,171 @@
+// This Source Code Form is subject to the terms of the Mozilla Public
+// License, v. 2.0. If a copy of the MPL was not distributed with this
+// file, You can obtain one at https://mozilla.org/MPL/2.0/.
+
+import Foundation
+import Testing
+@testable import sidetube
+
+struct WheelRotationTrackerTests {
+    @Test func clockwiseStepsAccumulate() {
+        var tracker = WheelRotationTracker(stepAngle: 24)
+        tracker.begin(at: 10)
+        #expect(tracker.update(to: 20) == 0)     // 10° gesammelt
+        #expect(tracker.update(to: 40) == 1)     // 30° → 1 Schritt, Rest 6°
+        #expect(tracker.update(to: 58) == 1)     // 6+18 = 24 → 1 Schritt, Rest 0
+        #expect(tracker.update(to: 130) == 3)    // 72° → 3 Schritte
+    }
+
+    @Test func counterClockwiseIsNegative() {
+        var tracker = WheelRotationTracker(stepAngle: 24)
+        tracker.begin(at: 100)
+        #expect(tracker.update(to: 50) == -2)
+    }
+
+    @Test func wrapAroundAtZeroDegrees() {
+        var tracker = WheelRotationTracker(stepAngle: 24)
+        tracker.begin(at: 350)
+        #expect(tracker.update(to: 20) == 1)     // +30°, nicht −330°
+        tracker.begin(at: 5)
+        #expect(tracker.update(to: 340) == -1)   // −25°, nicht +335°
+    }
+
+    @Test func firstUpdateWithoutBeginOnlyPrimes() {
+        var tracker = WheelRotationTracker()
+        #expect(tracker.update(to: 90) == 0)
+        #expect(tracker.update(to: 150) == 2)
+    }
+}
+
+struct ClickWheelGeometryTests {
+    let center = CGPoint(x: 100, y: 100)
+
+    @Test func angleIsClockwiseFromRight() {
+        #expect(ClickWheelGeometry.angle(of: CGPoint(x: 150, y: 100), center: center) == 0)
+        #expect(ClickWheelGeometry.angle(of: CGPoint(x: 100, y: 150), center: center) == 90)   // unten
+        #expect(ClickWheelGeometry.angle(of: CGPoint(x: 50, y: 100), center: center) == 180)
+        #expect(ClickWheelGeometry.angle(of: CGPoint(x: 100, y: 50), center: center) == 270)   // oben
+    }
+
+    @Test func segments() {
+        func seg(_ x: CGFloat, _ y: CGFloat) -> ClickWheelGeometry.Segment? {
+            ClickWheelGeometry.segment(at: CGPoint(x: x, y: y), center: center, outerRadius: 100, innerRadius: 34)
+        }
+        #expect(seg(100, 100) == .center)
+        #expect(seg(110, 110) == .center)
+        #expect(seg(100, 30) == .menu)
+        #expect(seg(100, 170) == .playPause)
+        #expect(seg(30, 100) == .previous)
+        #expect(seg(170, 100) == .next)
+        #expect(seg(250, 250) == nil)
+    }
+}
+
+struct WheelMenuModelTests {
+    @Test func movementClampsAtEnds() {
+        let model = WheelMenuModel(count: 3)
+        model.move(by: -1)
+        #expect(model.selectedIndex == 0)
+        model.move(by: 5)
+        #expect(model.selectedIndex == 2)
+        model.move(by: -1)
+        #expect(model.selectedIndex == 1)
+    }
+
+    @Test func countChangeKeepsIndexValid() {
+        let model = WheelMenuModel(count: 5, selectedIndex: 4)
+        model.setCount(2)
+        #expect(model.selectedIndex == 1)
+        model.setCount(0)
+        #expect(model.selectedIndex == 0)
+        model.move(by: 1)
+        #expect(model.selectedIndex == 0)
+    }
+}
+
+/// SideUI-Ring außerhalb des Players (ADR 0006/0014): hoch/runter = Reihe, links/rechts und Drehen = Objekt, kein Umlauf.
+struct WheelRowNavigationTests {
+    /// Startseite: Weiterschauen (1) · Kanäle (4 nebeneinander) · zwei Zeilen untereinander.
+    private func home() -> WheelMenuModel {
+        let model = WheelMenuModel(count: 0)
+        model.setLayout(rows: [1, 4, 1, 1])
+        return model
+    }
+
+    @Test func upDownChangeRowAndKeepColumn() {
+        let model = home()
+        model.moveRow(by: 1)
+        #expect(model.position.row == 1 && model.position.column == 0)
+        model.moveInRow(by: 3)
+        #expect(model.selectedIndex == 4)
+        model.moveRow(by: 1)
+        #expect(model.selectedIndex == 5, "Zeile darunter hat nur einen Eintrag")
+        model.moveRow(by: -1)
+        #expect(model.selectedIndex == 1, "zurück in die Kanalreihe, Spalte so weit sie reicht")
+    }
+
+    @Test func leftRightStayInRowWithoutWrap() {
+        let model = home()
+        model.select(1)
+        model.moveInRow(by: -1)
+        #expect(model.selectedIndex == 1, "Anschlag am Reihenanfang, kein Sprung in die Reihe davor")
+        model.moveInRow(by: 10)
+        #expect(model.selectedIndex == 4, "Anschlag am Reihenende, kein Umlauf")
+        model.moveInRow(by: 1)
+        #expect(model.selectedIndex == 4)
+    }
+
+    @Test func singleItemRowsLetLeftRightMoveDownTheList() {
+        let model = WheelMenuModel(count: 0)
+        model.setLayout(rows: [1, 1, 1])
+        model.moveInRow(by: 1)
+        #expect(model.selectedIndex == 1)
+        model.moveInRow(by: 5)
+        #expect(model.selectedIndex == 2, "Anschlag am Listenende")
+        model.moveInRow(by: -9)
+        #expect(model.selectedIndex == 0)
+    }
+
+    @Test func singleRowLetsUpDownMoveTheObject() {
+        let model = WheelMenuModel(count: 3)
+        model.moveRow(by: 1)
+        #expect(model.selectedIndex == 1)
+        model.moveRow(by: 5)
+        #expect(model.selectedIndex == 2)
+    }
+
+    @Test func gridRowsFollowColumns() {
+        #expect(LibraryModel.gridRows(count: 5, columns: 2) == [2, 2, 1])
+        #expect(LibraryModel.gridRows(count: 0, columns: 3) == [])
+        #expect(LibraryModel.adaptiveColumns(width: 361, minimum: 150, spacing: 12) == 2)
+        #expect(LibraryModel.adaptiveColumns(width: 361, minimum: 96, spacing: 12) == 3)
+        #expect(LibraryModel.adaptiveColumns(width: 50, minimum: 150, spacing: 12) == 1)
+    }
+}
+
+/// Elternschalter und Zurück-Taste der Fernbedienung (ADR 0007–0010).
+struct RemoteSwitchTests {
+    @Test func wheelIsOffByDefaultPerProfile() {
+        let profile = KidProfile(name: "Kim")
+        #expect(profile.remoteWheelEnabled == false)
+        #expect(RemoteController().isEnabled == false)
+    }
+
+    @Test func switchingOffClosesTheWheel() {
+        let remote = RemoteController()
+        remote.isEnabled = true
+        remote.isPresented = true
+        remote.isEnabled = false
+        #expect(remote.isPresented == false)
+    }
+
+    @Test func backShortGoesOneLevelLongGoesHome() {
+        let remote = RemoteController()
+        var calls: [String] = []
+        remote.goBack = { calls.append("back") }
+        remote.goHome = { calls.append("home") }
+        remote.back(long: false)
+        remote.back(long: true)
+        #expect(calls == ["back", "home"])
+    }
+}

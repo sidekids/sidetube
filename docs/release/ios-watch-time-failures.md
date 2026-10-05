@@ -1,0 +1,51 @@
+# iOS watch-time write failures — partial hardening
+
+Follow-up: 2026-09-10. The previous player cleared its accumulated time and used `try?` for the history write. Failure could therefore be silently ignored while the next video loaded.
+
+## Changed behavior
+
+- `PlayerModel` clears accumulated time only after a successful write. On failure it stops playback, detaches engine events and enters an explicit storage-error state.
+- Next/previous, queue selection, replay, recommendation playback, autoplay/end, error skipping and close all use the same checked write path. A failed write prevents further loads/resume attempts on that model.
+- `PlayerCoordinator` retains a failure latch across player close/reopen within its lifetime. It retains the failed record's video ID, title, profile ID, seconds and timestamp as a value, not as a retained player/WebView.
+- The child view shows a storage-error overlay with parent PIN access. This is not presented as exhausted daily allowance or as a network error. The PIN action does not explicitly clear the latch.
+- No automatic save retry or context rollback is performed: a failed save can have an ambiguous outcome, and blind retry risks double-booking or damaging unrelated edits. No record values are logged or transmitted.
+
+## Evidence and limits
+
+The accounting follow-up separates clocks: production playback duration uses monotonic system uptime; calendar dates still timestamp history entries. Tests may inject either clock independently. Buffering, unstarted and cued states pause accounting. Existing position callbacks reconcile a missing playing/paused callback without resetting a running interval; they do not introduce a new timer. Late playing signals after end/failure cannot revive accounting until an explicit reload. Partial seconds are rounded up conservatively, so repeatedly closing very short videos cannot discard all viewing time. Provider API failure and foreign-video rejection preserve elapsed time under the originally requested video, never under the foreign identifier.
+
+An injected recorder throws on save in tests. Eight player-transition cases verify playback stop, unchanged queue/load behavior, retained uncommitted time, ignored late events and no repeated write attempt. A coordinator test verifies that closing and starting a new player does not clear its latch or discard the retained record. Existing successful-history tests remain applicable.
+
+This is an in-memory, coordinator-lifetime safeguard, **not a durable recovery journal**. Recreating the child coordinator (for example after navigation through the parent area) or restarting the process can discard it. Real SwiftData disk-full/corruption/transaction failures, relationship-read failures, process termination, midnight allocation and reconciled recovery still require fault-injection and device testing. A retained failed record cannot safely be replayed until the store's actual committed state is established. These remain release blockers.
+
+## Interrupted-session recovery (2026-09-10)
+
+The gap above is about an in-memory latch; this is the separate, durable gap it deliberately left open: `PlayerModel` only persists watch time at a clean transition (`flushWatchTime()` on next/previous/jump/replay/end/error/close). If the process is killed or crashes while `state == .playing`, the accumulated-but-unflushed seconds for that session are lost, and nothing on disk stops the child from immediately opening a fresh session — repeatable indefinitely. This mirrors the Android admission-marker fix already shipped (schema 2, `c91a4cd`); the same policy is applied here in SwiftData terms.
+
+A new `PlaybackAdmission` model (see `Models.swift`) is a durable marker, not a second watch-history log: profile ID, a random session token, start timestamp. `PlayerCoordinator.playUnchecked` writes it (`context.save()`) before an engine/player is created. A clean `close()` removes only that session's own marker, and only after `player?.close()` has already flushed watch time successfully — a storage failure leaves the marker in place instead of clearing it on an uncertain exit. A subsequent play attempt for that profile checks for a leftover marker first; if one exists, no player is created and `interruptedSessionProfileID` is set instead, which `KidRootView` surfaces as a new full-screen `.interruptedSession` overlay ("Wiedergabe unterbrochen"). Clearing it requires the parent PIN (`acknowledgeInterruptedSession`), which deletes only the marker — it never touches `WatchHistoryEntry` rows and never estimates the missing remainder. Other profiles are never affected: every check and write is scoped to one `profileID`, and deleting a profile cascade-deletes its own marker only.
+
+Two implementation choices differ from the Android original by necessity or by consistency with this app's own conventions, not by accident:
+
+- **"At most one marker per profile" is enforced in `PlaybackAdmissionRepository` (check-then-insert), not by a store-level uniqueness constraint.** SwiftData's `.unique` attribute conflict behavior on insert was not something this change relied on without an observed, verified failure mode; Room's `OnConflictStrategy.ABORT` on the Android side does not have a directly equivalent, verified SwiftData primitive here.
+- **The parent PIN entry is itself the confirmation**, matching how this app already dismisses the existing `storageError`/`timeUp` overlays (PIN then `parentDismissedOverlay()`), rather than adding a second confirmation dialog the way the Android profile-list `AlertDialog` does. This is a deliberate UX consistency choice, not a claim that it is equally deliberate/effortful — flagged here as an assumption, not hidden.
+- **No proactive parent-dashboard indicator** (Android's `interruptedProfiles` badge in the profile list) was added; the marker is only surfaced reactively, when the child next attempts to play. `interruptedProfileIDs()` exists on the repository for this if a future pass wants it.
+
+Adding `PlaybackAdmission` and its profile relationship relies on automatic SwiftData migration. **The original migration claim was incorrect:** the old test used the current `KidProfile`, whose relationship already pulls `PlaybackAdmission` into the schema. Its explicit assertion and renamed test now identify it as current-schema reopening only.
+
+The subsequent `preAdmissionSchemaMigratesProfilesApprovalsAndHistory` test uses the six frozen model declarations from `78986679123828c0378ee79b85fd516ec912ce3e:ios/Sources/Domain/Models.swift`, preserved in `ios/Tests/PreAdmissionModels.swift`. Only imports, a namespace wrapper and boundary whitespace differ. The fixture must not be updated alongside production models. The test asserts six old entities with no `PlaybackAdmission`, creates a synthetic on-disk store, releases the old container and opens the store with the current seven-entity schema. Profile identity/settings, approved/review-required/rejected items, 30 seconds of history, source/cache records and review linkage survive. No interruption marker is fabricated; new marker begin/finish works. No production migration plan, dependency or shipped model change was introduced for this test.
+
+This migration passes under iOS 26.5 and 26.4 in isolated simulators, with all 183 unit tests passing on each. It is not an install/update test, a cross-OS store upgrade, or proof for every supported iOS version. iOS 17 is not installed locally. Minimum-supported-OS and signed-app upgrade testing remain release requirements; see the [compatibility matrix](ios-compatibility.md). Never use a real child's database as a public fixture.
+
+### Automated evidence
+
+Repository tests cover duplicate-admission rejection, stale-token isolation, profile-scoped cascade delete, current-schema reopening and the frozen-old-schema migration above. The disk recovery test creates a marker and history, releases the container, opens the same store to verify the block and acknowledge it, then opens a third container to verify that acknowledgement persisted and saved history remains. This is separate-container, same-process evidence, not an actual process-kill test. A parameterized test exercises both normal finish and parent acknowledgement while unrelated profile edits are pending: neither operation saves or discards those edits, and a subsequent explicit save does not recreate the marker. Coordinator tests cover clean close, interrupted-session refusal, parent recovery, cross-profile isolation and injected storage errors. The full suite now passes 183 tests in 41 suites; production code is unchanged by this test-only follow-up.
+
+### Recovery storage-error follow-up (2026-09-10)
+
+An admission read error now refuses playback without attempting a new admission. Parent acknowledgement returns success only after the repository operation succeeds; on failure the profile identifier and blocking overlay remain in place for a PIN-authorized retry. Marker deletion uses a separate, non-autosaving context, so a failed save cannot leave a pending deletion in the shared UI context or require rolling back unrelated parent edits. Two injected-recorder tests cover read failure and failed acknowledgement followed by successful retry. All 180 iOS tests pass after this correction. These are not physical disk-full or parent-PIN UI tests.
+
+### Remaining device validation
+
+A prepared-interruption UI test now passes on iOS 26.5: app termination/relaunch without reset preserves the block, wrong PIN/cancellation do not remove it, and correct acknowledgement persists through a further relaunch. This uses a Debug-simulator-only synthetic fixture, not a forced kill during real playback. See [exact UI scope](ios-compatibility.md#interrupted-session-ui-test).
+
+Real force-stop/kill and parent-PIN-recovery UI testing on a physical device or a live simulator interaction is not covered by these file-backed tests, the same limitation the Android original states for itself. Calendar-day splitting (a session crossing midnight still uses its start-time day) is unrelated and remains separately open. The in-memory `hasWatchTimeFailure` latch above is still not durable across a relaunch — this change does not extend durability to that failure path, only to the "was a session left running" check.

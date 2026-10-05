@@ -1,0 +1,166 @@
+<!doctype html>
+<!-- This Source Code Form is subject to the terms of the Mozilla Public
+   - License, v. 2.0. If a copy of the MPL was not distributed with this
+   - file, You can obtain one at https://mozilla.org/MPL/2.0/. -->
+<html>
+<head>
+<meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no">
+<style>
+  html, body { margin: 0; padding: 0; background: #000; height: 100%; overflow: hidden; }
+  #player { width: 100%; height: 100%; }
+</style>
+</head>
+<body>
+<div id="player"></div>
+<script>
+  // Brücke zur App: window.webkit.messageHandlers.player (siehe YouTubePlayerBridge.swift)
+  var player = null;
+  var pendingVideoId = null;
+  // Das Video, das die App zuletzt angefordert hat. Spielt der IFrame ein anderes (Endscreen-Karte,
+  // „Weitere Videos“ beim Pausieren), wird sofort gestoppt und die App informiert.
+  var expectedVideoId = null;
+
+  function post(message) {
+    if (window.webkit && window.webkit.messageHandlers && window.webkit.messageHandlers.player) {
+      window.webkit.messageHandlers.player.postMessage(message);
+    }
+  }
+
+  var tag = document.createElement('script');
+  tag.src = 'https://www.youtube.com/iframe_api';
+  tag.onerror = function () { post({ event: 'apiFailed' }); };
+  document.head.appendChild(tag);
+
+  var playing = false;
+  var timeTimer = null;
+  var positionTimer = null;
+  function reportPosition() {
+    if (!player || !player.getCurrentTime) { return; }
+    post({ event: 'position', value: Math.floor(player.getCurrentTime() || 0),
+      duration: Math.floor((player.getDuration && player.getDuration()) || 0), playing: playing });
+  }
+  function setPlaying(value) {
+    playing = value;
+    if (timeTimer !== null) { clearInterval(timeTimer); timeTimer = null; }
+    if (positionTimer !== null) { clearInterval(positionTimer); positionTimer = null; }
+    if (playing) {
+      timeTimer = setInterval(function () {
+        if (!player || !player.getCurrentTime || guardForeignVideo()) { return; }
+        post({ event: 'time', value: Math.floor(player.getCurrentTime()) });
+      }, 5000);
+      positionTimer = setInterval(reportPosition, 500);
+    }
+    reportPosition();
+  }
+
+  function currentVideoId() {
+    try {
+      var data = player && player.getVideoData ? player.getVideoData() : null;
+      return data && data.video_id ? String(data.video_id) : null;
+    } catch (e) { return null; }
+  }
+
+  // true, wenn der IFrame gerade ein Video hält, das die App nicht angefordert hat.
+  function guardForeignVideo() {
+    var id = currentVideoId();
+    if (!id || !expectedVideoId || id === expectedVideoId) { return false; }
+    if (player && player.stopVideo) { player.stopVideo(); }
+    post({ event: 'foreign', value: id });
+    return true;
+  }
+
+  function onYouTubeIframeAPIReady() {
+    player = new YT.Player('player', {
+      width: '100%',
+      height: '100%',
+      videoId: pendingVideoId || '',
+      // youtube-nocookie: keine dauerhaften Cookies/Profile für das Kind (Privacy-Enhanced Mode).
+      host: 'https://www.youtube-nocookie.com',
+      playerVars: {
+        // controls: 0 – die Steuerung baut die App selbst: große Ziele, ein breiter Balken zum
+        // Spulen, und beim Pausieren blendet YouTube keine fremden Vorschläge mehr ein.
+        autoplay: 1, playsinline: 1, rel: 0, controls: 0, fs: 0,
+        modestbranding: 1, iv_load_policy: 3, disablekb: 1,
+        // Bevorzugte Sprache der Untertitel; ein- und ausgeschaltet wird über das Captions-Modul.
+        cc_lang_pref: 'de',
+        origin: '__ORIGIN__'
+      },
+      events: {
+        onReady: function () {
+          post({ event: 'ready' });
+          if (pendingVideoId) { player.loadVideoById(pendingVideoId); }
+          // Nur bei laufender Wiedergabe melden. Bei Pause aendert sich die Position nicht, jede
+          // Meldung waere ein Weckvorgang ohne Nutzen. Der Takt bleibt bei fuenf Sekunden, damit die
+          // Positionsanzeige fluessig bleibt - waehrend der Wiedergabe ist das Geraet ohnehin wach.
+          // Stelle und Dauer für den eigenen Fortschrittsbalken (nur Anzeige; die Sehzeit
+          // buchen weiterhin die Zustandswechsel und der 5-Sekunden-Takt oben).
+        },
+        onStateChange: function (e) {
+          // Nur bei Wiedergabe/Puffern prüfen: nach stopVideo() meldet getVideoData() noch das alte Video.
+          if ((e.data === 1 || e.data === 3) && guardForeignVideo()) { return; }
+          setPlaying(e.data === 1);
+          post({ event: 'state', value: e.data });
+          if (e.data === 1) {
+            // Die Spurliste steht erst, wenn das Video läuft; kurz warten und dann melden.
+            player.loadModule('captions');
+            setTimeout(reportCaptions, 800);
+          }
+        },
+        // Fehlercodes: 2 ungültige ID, 5 HTML5-Fehler, 100 nicht gefunden, 101/150 nicht einbettbar, 153 fehlender Referer
+        onError: function (e) { post({ event: 'error', value: e.data }); }
+      }
+    });
+  }
+
+  function loadVideo(id) {
+    pendingVideoId = id;
+    expectedVideoId = id;
+    if (player && player.loadVideoById) { player.loadVideoById(id); }
+  }
+  function stopVideo() { pendingVideoId = null; setPlaying(false); if (player && player.stopVideo) { player.stopVideo(); } }
+  function playVideo() { if (player && player.playVideo) { player.playVideo(); } }
+  function pauseVideo() { setPlaying(false); if (player && player.pauseVideo) { player.pauseVideo(); } }
+  function togglePlayback() {
+    if (!player || !player.getPlayerState) { return; }
+    var s = player.getPlayerState();
+    if (s === 1 || s === 3) { player.pauseVideo(); } else { player.playVideo(); }
+  }
+  function setVolume(percent) { if (player && player.setVolume) { player.setVolume(Math.max(0, Math.min(100, percent))); } }
+  // Untertitel. YouTube liefert sie als Modul: laden schaltet ein, eine leere Spur schaltet aus.
+  // Nicht jedes Video hat welche – deshalb meldet die Seite, ob überhaupt eine Spur da ist.
+  function setCaptions(on) {
+    if (!player || !player.loadModule) { return; }
+    try {
+      if (on) {
+        player.loadModule('captions');
+        player.setOption('captions', 'track', { languageCode: 'de' });
+      } else {
+        player.setOption('captions', 'track', {});
+        player.unloadModule('captions');
+      }
+    } catch (e) { /* Modul noch nicht bereit – der nächste Versuch greift */ }
+    reportCaptions();
+  }
+
+  function reportCaptions() {
+    var available = false, enabled = false;
+    try {
+      var list = player.getOption('captions', 'tracklist') || [];
+      var track = player.getOption('captions', 'track') || {};
+      available = list.length > 0;
+      enabled = !!track.languageCode;
+    } catch (e) { /* ohne geladenes Modul weiß die Seite es noch nicht */ }
+    post({ event: 'captions', available: available, enabled: enabled });
+  }
+
+  function seekTo(seconds) {
+    if (player && player.seekTo) { player.seekTo(Math.max(0, seconds), true); }
+  }
+  function seekBy(seconds) {
+    if (player && player.getCurrentTime) {
+      player.seekTo(Math.max(0, player.getCurrentTime() + seconds), true);
+    }
+  }
+</script>
+</body>
+</html>

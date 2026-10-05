@@ -1,0 +1,15 @@
+# SideTube privacy notice — review draft
+
+Updated 2026-09-09; parent notification added 2026-10-05. This draft describes the audited source and is not an approved worldwide legal notice.
+
+SideTube stores profiles, approvals, watch history, preferences and children's wishes (topics or videos a child asks the parents for, with the parents' optional reply) locally. There is no SideTube-operated backend, analytics SDK or crash-upload integration in the reviewed clients.
+
+Using YouTube, thumbnail servers or PeerTube sends requests to those providers. They receive IP addresses, request content, client headers and potentially cookies and playback events. Embedded pages can contact additional provider infrastructure. The absence of a SideTube analytics SDK does not establish that the provider performs no tracking.
+
+**Optional parent notification ([ADR 0005](adr/0005-eltern-ueber-wuensche-benachrichtigen.md)).** Off unless parents set it up behind the PIN. When set up, each newly created wish (not duplicates, at most three per profile and day) makes the app send one HTTPS request to the Nextcloud server the parents entered – their own server, never one chosen or operated by SideTube. The request posts a short chat message into one Nextcloud Talk conversation: the parents' user names as mentions and the number of open wishes (for example „@anna SideTube: neuer Wunsch (2 offen)“). It contains no child name, no wish topic, no video title and no device identifier; the server learns the device's IP address and the time. The setup (server address, conversation token, user names to mention, bot secret) is stored in the iOS Keychain / Android EncryptedSharedPreferences on the child's device. Nextcloud then notifies the parents' phones through Nextcloud's push proxy and Apple/Google; that payload is encrypted for the receiving device (see the Nextcloud push documentation). To scan the setup code the app asks for camera access in the parent settings; camera frames are analysed on the device and not stored. Removing the setup deletes the stored secret immediately.
+
+iOS uses nonpersistent WebKit stores for both players. Android uses the platform WebView's persistent cookie/DOM storage with third-party cookies enabled, but erases the cookie store at the start and end of every player session. See the [network inventory](privacy/network-services.md) and [storage inventory](privacy/data-storage.md) for limitations and evidence.
+
+Before publication the operator must supply an approved controller/contact identity, lawful processing basis, applicable child-data handling, retention/deletion explanation, provider disclosures and a public support/privacy URL. Existing website notices and store declarations have not been verified as covering these apps. Do not submit this draft as a completed policy.
+
+Provider references: [Google privacy policy](https://policies.google.com/privacy), [YouTube terms](https://www.youtube.com/t/terms), [YouTube developer policies](https://developers.google.com/youtube/terms/developer-policies). These policies require review for the actual child-directed integration.

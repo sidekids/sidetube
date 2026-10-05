@@ -1,0 +1,131 @@
+<!doctype html>
+<!-- This Source Code Form is subject to the terms of the Mozilla Public
+   - License, v. 2.0. If a copy of the MPL was not distributed with this
+   - file, You can obtain one at https://mozilla.org/MPL/2.0/. -->
+<html>
+<head>
+<meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no">
+<style>
+  html, body { margin: 0; padding: 0; background: #000; height: 100%; overflow: hidden; }
+  #player { width: 100%; height: 100%; }
+</style>
+</head>
+<body>
+<div id="player"></div>
+<script>
+  // Brücke zur App: window.SideTube.onPlayerEvent (siehe PlayerBridge.kt)
+  var player = null;
+  var pendingVideoId = null;
+  // Das Video, das die App zuletzt angefordert hat. Spielt der IFrame ein anderes (Endscreen-Karte,
+  // „Weitere Videos" beim Pausieren), wird sofort gestoppt und die App informiert.
+  var expectedVideoId = null;
+
+  function post(message) {
+    // Die Bruecke nimmt Text entgegen; Objekte kommen ueber JSON.
+    if (window.SideTube && window.SideTube.onPlayerEvent) {
+      window.SideTube.onPlayerEvent(JSON.stringify(message));
+    }
+  }
+
+  var tag = document.createElement('script');
+  tag.src = 'https://www.youtube.com/iframe_api';
+  tag.onerror = function () { post({ event: 'apiFailed' }); };
+  document.head.appendChild(tag);
+
+  function currentVideoId() {
+    try {
+      var data = player && player.getVideoData ? player.getVideoData() : null;
+      return data && data.video_id ? String(data.video_id) : null;
+    } catch (e) { return null; }
+  }
+
+  // true, wenn der IFrame gerade ein Video haelt, das die App nicht angefordert hat.
+  function guardForeignVideo() {
+    var id = currentVideoId();
+    if (!id || !expectedVideoId || id === expectedVideoId) { return false; }
+    if (player && player.stopVideo) { player.stopVideo(); }
+    post({ event: 'foreign', value: id });
+    return true;
+  }
+
+  var playing = false;
+  var timeTimer = null;
+  function setPlaying(value) {
+    playing = value;
+    if (timeTimer !== null) { clearInterval(timeTimer); timeTimer = null; }
+    if (playing) {
+      timeTimer = setInterval(function () {
+        if (!player || !player.getCurrentTime || guardForeignVideo()) { return; }
+        post({ event: 'time', value: Math.floor(player.getCurrentTime()) });
+      }, 5000);
+    }
+  }
+
+  function onYouTubeIframeAPIReady() {
+    player = new YT.Player('player', {
+      width: '100%',
+      height: '100%',
+      videoId: pendingVideoId || '',
+      // youtube-nocookie: keine dauerhaften Cookies/Profile für das Kind
+      // (Privacy-Enhanced Mode), dieselbe Herkunft wie in der iOS-Fassung.
+      // PlayerNavigationPolicy.allowSubFrame laesst diesen Host bereits zu.
+      host: 'https://www.youtube-nocookie.com',
+      playerVars: {
+        autoplay: 1, playsinline: 1, rel: 0, controls: 1, fs: 0, enablejsapi: 1,
+        modestbranding: 1, iv_load_policy: 3, disablekb: 1,
+        origin: '__ORIGIN__',
+        // YouTube antwortet seit Ende 2025 mit Fehler 153, wenn kein Referer mitkommt. Ein
+        // Dokument ohne echte Herkunft - hier die Seite aus den Assets - sendet keinen. Beides
+        // zusammen, widget_referrer und referrerpolicy am iframe, macht die Einbettung wieder
+        // abspielbar; dieselbe Stelle brach bei H5P.Video.
+        widget_referrer: '__ORIGIN__'
+      },
+      events: {
+        onReady: function () {
+          fixReferrer();
+          post({ event: 'ready' });
+          if (pendingVideoId) { player.loadVideoById(pendingVideoId); }
+          // Nur bei laufender Wiedergabe melden. Bei Pause aendert sich die Position nicht, jede
+          // Meldung waere ein Weckvorgang ohne Nutzen. Der Takt bleibt bei fuenf Sekunden, damit die
+          // Positionsanzeige fluessig bleibt - waehrend der Wiedergabe ist das Geraet ohnehin wach.
+        },
+        onStateChange: function (e) {
+          // Nur bei Wiedergabe/Puffern pruefen: nach stopVideo() meldet getVideoData() noch das alte Video.
+          if ((e.data === 1 || e.data === 3) && guardForeignVideo()) { return; }
+          setPlaying(e.data === 1);
+          post({ event: 'state', value: e.data });
+        },
+        // Fehlercodes: 2 ungültige ID, 5 HTML5-Fehler, 100 nicht gefunden, 101/150 nicht einbettbar, 153 fehlender Referer
+        onError: function (e) { post({ event: 'error', value: e.data }); }
+      }
+    });
+  }
+
+  // Das iframe legt die YouTube-API selbst an; die Richtlinie laesst sich erst danach setzen.
+  function fixReferrer() {
+    var frame = document.querySelector('iframe');
+    if (frame) { frame.setAttribute('referrerpolicy', 'strict-origin-when-cross-origin'); }
+  }
+
+  function loadVideo(id) {
+    pendingVideoId = id;
+    expectedVideoId = id;
+    if (player && player.loadVideoById) { player.loadVideoById(id); }
+  }
+  function stopVideo() { pendingVideoId = null; setPlaying(false); if (player && player.stopVideo) { player.stopVideo(); } }
+  function playVideo() { if (player && player.playVideo) { player.playVideo(); } }
+  function pauseVideo() { setPlaying(false); if (player && player.pauseVideo) { player.pauseVideo(); } }
+  function togglePlayback() {
+    if (!player || !player.getPlayerState) { return; }
+    var s = player.getPlayerState();
+    if (s === 1 || s === 3) { player.pauseVideo(); } else { player.playVideo(); }
+  }
+  function setVolume(percent) { if (player && player.setVolume) { player.setVolume(Math.max(0, Math.min(100, percent))); } }
+  function seekBy(seconds) {
+    if (player && player.getCurrentTime) {
+      player.seekTo(Math.max(0, player.getCurrentTime() + seconds), true);
+    }
+  }
+</script>
+</body>
+</html>

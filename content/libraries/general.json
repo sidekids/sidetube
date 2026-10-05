@@ -1,0 +1,342 @@
+{
+ "version": 1,
+ "createdAt": "2026-08-31",
+ "note": "Startbibliothek: 20–40 sorgfältig ausgewählte Kandidaten. ALLE beginnen als REVIEW_REQUIRED – Eltern prüfen und geben frei. IDs am 2026-08-31 über RSS/oEmbed verifiziert.",
+ "videos": [
+  {
+   "id": "FUqvKx6cE3M",
+   "title": "Wieso ist ein Regenbogen rund? | Die Maus | WDR",
+   "channelId": "UCRWSxXBnz9IRS4SgRhG2wpQ",
+   "channelTitle": "Die Maus",
+   "category": "knowledge",
+   "ageMin": 5
+  },
+  {
+   "id": "SpoAs67tpBw",
+   "title": "Warum stauben Brennnesseln? | Die Maus | WDR",
+   "channelId": "UCRWSxXBnz9IRS4SgRhG2wpQ",
+   "channelTitle": "Die Maus",
+   "category": "nature",
+   "ageMin": 5
+  },
+  {
+   "id": "DfB5TYnguvo",
+   "title": "Wie entstehen Ebbe und Flut? | Die Maus | WDR",
+   "channelId": "UCRWSxXBnz9IRS4SgRhG2wpQ",
+   "channelTitle": "Die Maus",
+   "category": "nature",
+   "ageMin": 5
+  },
+  {
+   "id": "RlOEuPkdgr0",
+   "title": "Wieso laufen Krabben seitwärts? | Die Maus | WDR",
+   "channelId": "UCRWSxXBnz9IRS4SgRhG2wpQ",
+   "channelTitle": "Die Maus",
+   "category": "nature",
+   "ageMin": 5
+  },
+  {
+   "id": "o62u_ER0qFk",
+   "title": "Wie kommt das Salz ins Meer? | Die Maus | WDR",
+   "channelId": "UCRWSxXBnz9IRS4SgRhG2wpQ",
+   "channelTitle": "Die Maus",
+   "category": "knowledge",
+   "ageMin": 5
+  },
+  {
+   "id": "aJ6TsCCXNec",
+   "title": "Woher kommt das Wasser in einem Bach? | Die Maus | WDR",
+   "channelId": "UCRWSxXBnz9IRS4SgRhG2wpQ",
+   "channelTitle": "Die Maus",
+   "category": "environment",
+   "ageMin": 5
+  },
+  {
+   "id": "UMFsWTNfOhk",
+   "title": "Wie funktioniert eine Rückspiegel-Kamera im Lkw? | Die Maus | WDR",
+   "channelId": "UCRWSxXBnz9IRS4SgRhG2wpQ",
+   "channelTitle": "Die Maus",
+   "category": "technology",
+   "ageMin": 5
+  },
+  {
+   "id": "TZO2aLHfNXE",
+   "title": "Wie wird Kreide hergestellt? | Die Maus | WDR",
+   "channelId": "UCRWSxXBnz9IRS4SgRhG2wpQ",
+   "channelTitle": "Die Maus",
+   "category": "technology",
+   "ageMin": 5
+  },
+  {
+   "id": "1MJGowWKDls",
+   "title": "Wie wird ein Strandball hergestellt? | Die Maus | WDR",
+   "channelId": "UCRWSxXBnz9IRS4SgRhG2wpQ",
+   "channelTitle": "Die Maus",
+   "category": "technology",
+   "ageMin": 5
+  },
+  {
+   "id": "eU0X_Ou_W8w",
+   "title": "Wie macht man eine Kappe mit Geheimfach? | Die Maus | WDR",
+   "channelId": "UCRWSxXBnz9IRS4SgRhG2wpQ",
+   "channelTitle": "Die Maus",
+   "category": "creative",
+   "ageMin": 5
+  },
+  {
+   "id": "sXuYoUWinq8",
+   "title": "Warum wurde die Berliner Mauer gebaut? | Die Maus | WDR",
+   "channelId": "UCRWSxXBnz9IRS4SgRhG2wpQ",
+   "channelTitle": "Die Maus",
+   "category": "society",
+   "ageMin": 8,
+   "sensitiveTopics": [
+    "politics"
+   ],
+   "note": "Geschichte/Politik – Eltern prüfen"
+  },
+  {
+   "id": "8pwO0ujbCDU",
+   "title": "Der Zahlen-Check | Reportage für Kinder | Checker Tobi | BR",
+   "channelId": "UCQtsd17U8NOM1VRI8oxdwiQ",
+   "channelTitle": "CHECKER WELT",
+   "category": "knowledge",
+   "ageMin": 8
+  },
+  {
+   "id": "sFaT7qvgaX8",
+   "title": "Der Töpfer-Check | Reportage für Kinder | Checker Tobi | BR",
+   "channelId": "UCQtsd17U8NOM1VRI8oxdwiQ",
+   "channelTitle": "CHECKER WELT",
+   "category": "creative",
+   "ageMin": 8
+  },
+  {
+   "id": "0hLbrAcn9JQ",
+   "title": "Der Blumen-Check | Reportage für Kinder | Checkerin Marina | BR",
+   "channelId": "UCQtsd17U8NOM1VRI8oxdwiQ",
+   "channelTitle": "CHECKER WELT",
+   "category": "nature",
+   "ageMin": 8
+  },
+  {
+   "id": "bEhkjJitP4A",
+   "title": "Der Küsten-Check | Reportage für Kinder | Checkerin Marina | BR",
+   "channelId": "UCQtsd17U8NOM1VRI8oxdwiQ",
+   "channelTitle": "CHECKER WELT",
+   "category": "environment",
+   "ageMin": 8
+  },
+  {
+   "id": "_mT8feZshLA",
+   "title": "Der Güterverkehrs-Check | Reportage für Kinder | Checkerin Marina | BR",
+   "channelId": "UCQtsd17U8NOM1VRI8oxdwiQ",
+   "channelTitle": "CHECKER WELT",
+   "category": "technology",
+   "ageMin": 8
+  },
+  {
+   "id": "plpsNidso5I",
+   "title": "Der Wasserrettungs-Check | Reportage für Kinder | Checkerin Marina | BR",
+   "channelId": "UCQtsd17U8NOM1VRI8oxdwiQ",
+   "channelTitle": "CHECKER WELT",
+   "category": "society",
+   "ageMin": 8,
+   "sensitiveTopics": [
+    "fear"
+   ],
+   "note": "Notfall-Thema – Eltern prüfen"
+  },
+  {
+   "id": "_cATPNss0Hc",
+   "title": "Immer mehr Kinobesuche: Wie findet ihr Kino? | logo!-Nachrichten vom 30.08.26",
+   "channelId": "UCuziK4bUFRr3z62bE7FMDPQ",
+   "channelTitle": "logo!",
+   "category": "news",
+   "ageMin": 8,
+   "isNews": true,
+   "newsStatus": "safe"
+  },
+  {
+   "id": "BpOqMAAwGdc",
+   "title": "gamescom 2026: Das sind eure Highlights | logo!-Nachrichten vom 29.08.26",
+   "channelId": "UCuziK4bUFRr3z62bE7FMDPQ",
+   "channelTitle": "logo!",
+   "category": "news",
+   "ageMin": 8,
+   "isNews": true,
+   "newsStatus": "safe"
+  },
+  {
+   "id": "aCoh44Nzxt4",
+   "title": "70 Jahre Bravo: So entwickelte sich die Kult-Zeitschrift | logo!-Nachrichten vom 26.08.26",
+   "channelId": "UCuziK4bUFRr3z62bE7FMDPQ",
+   "channelTitle": "logo!",
+   "category": "mediaLiteracy",
+   "ageMin": 8,
+   "isNews": true,
+   "newsStatus": "safe"
+  },
+  {
+   "id": "Lh4BnIri0Hs",
+   "title": "Frankreich: Steigende Meerestemperaturen gefährden Seepferdchen | logo!-Nachrichten vom 21.08.26",
+   "channelId": "UCuziK4bUFRr3z62bE7FMDPQ",
+   "channelTitle": "logo!",
+   "category": "environment",
+   "ageMin": 8,
+   "isNews": true,
+   "newsStatus": "safe"
+  },
+  {
+   "id": "MuJkZAWjAUc",
+   "title": "Nach Erdrutsch in Nepal: So wird den Menschen geholfen | logo!-Nachrichten vom 28.08.26",
+   "channelId": "UCuziK4bUFRr3z62bE7FMDPQ",
+   "channelTitle": "logo!",
+   "category": "news",
+   "ageMin": 8,
+   "isNews": true,
+   "newsStatus": "sensitive",
+   "sensitiveTopics": [
+    "disaster"
+   ],
+   "note": "Beispiel NEWS_SENSITIVE – nicht auf Home"
+  },
+  {
+   "id": "pjPGY-gg8hc",
+   "title": "Elmo - Und du so? mit Evelyn Weigert | Video-Podcast | NDR",
+   "channelId": "UCkYs7CD2fGjsrHyBafws02w",
+   "channelTitle": "Sesamstraße",
+   "category": "stories",
+   "ageMin": 3
+  },
+  {
+   "id": "keHXu_YHeFU",
+   "title": "Ernie und Bert: der neue Wecker | Sesamstraße | NDR",
+   "channelId": "UCkYs7CD2fGjsrHyBafws02w",
+   "channelTitle": "Sesamstraße",
+   "category": "stories",
+   "ageMin": 3
+  },
+  {
+   "id": "7-O5Fzm1PJ4",
+   "title": "Wolle & Pferd: Was passiert im Komposthaufen? | Sesamstraße | NDR",
+   "channelId": "UCkYs7CD2fGjsrHyBafws02w",
+   "channelTitle": "Sesamstraße",
+   "category": "environment",
+   "ageMin": 3
+  },
+  {
+   "id": "qa4A-jDDKNo",
+   "title": "Siegfried & Joy zaubern Abby glücklich",
+   "channelId": "UCkYs7CD2fGjsrHyBafws02w",
+   "channelTitle": "Sesamstraße",
+   "category": "humor",
+   "ageMin": 3
+  },
+  {
+   "id": "9RwlyJjogmo",
+   "title": "Wissen mit Johnny gegen Ben – Wer weiß mehr? | KiKA LIVE",
+   "channelId": "UCxFvLj7FDoMChztQTSRDAbw",
+   "channelTitle": "KiKA von ARD und ZDF",
+   "category": "knowledge",
+   "ageMin": 9
+  },
+  {
+   "id": "U_smgVZk7Bo",
+   "title": "Krass Nass Buzz #challenge #kika",
+   "channelId": "UCxFvLj7FDoMChztQTSRDAbw",
+   "channelTitle": "KiKA von ARD und ZDF",
+   "category": "humor",
+   "ageMin": 6,
+   "isShort": true,
+   "note": "vermutlich Short – nur mit Shorts-Erlaubnis"
+  },
+  {
+   "id": "INSRwdxGb1E",
+   "title": "Manga Figuren zeichnen lernen: Meine 4 Schritte Methode!",
+   "channelId": "UCArSticZ19uxwbcFNdF-uuw",
+   "channelTitle": "KritzelPixel",
+   "category": "mangaDrawing",
+   "ageMin": 8,
+   "note": "Seed aus Vorrecherche; auf Werbung/Patreon/Discord prüfen"
+  },
+  {
+   "id": "9hTFHOmOxag",
+   "title": "Mit Mii's zeichnen lernen?!",
+   "channelId": "UCArSticZ19uxwbcFNdF-uuw",
+   "channelTitle": "KritzelPixel",
+   "category": "mangaDrawing",
+   "ageMin": 8
+  },
+  {
+   "id": "DjNFMvMBRPY",
+   "title": "Layout und Bildaufteilung helfen, deinen Kunstwerken so zu wirken, wie du es möchtest!",
+   "channelId": "UCArSticZ19uxwbcFNdF-uuw",
+   "channelTitle": "KritzelPixel",
+   "category": "drawing",
+   "ageMin": 9
+  },
+  {
+   "id": "6mQdqS3Mv0c",
+   "title": "Wie ich Zeichnen gelernt habe",
+   "channelId": "UCIUmF5e2-BRVx31HDxExQoA",
+   "channelTitle": "Drawinglikeasir",
+   "category": "mangaDrawing",
+   "ageMin": 9,
+   "note": "Seed aus Vorrecherche"
+  },
+  {
+   "id": "aVH0O_AEiWQ",
+   "title": "5 Fehler, die JEDER Manga-Zeichner macht | DrawinglikeaSir",
+   "channelId": "UCIUmF5e2-BRVx31HDxExQoA",
+   "channelTitle": "Drawinglikeasir",
+   "category": "mangaDrawing",
+   "ageMin": 9
+  },
+  {
+   "id": "HmE3c2POwUI",
+   "title": "Fluchtpunkt einfach erklärt - Perspektive zeichnen lernen in 60 Sekunden | Drawinglikeasir",
+   "channelId": "UCIUmF5e2-BRVx31HDxExQoA",
+   "channelTitle": "Drawinglikeasir",
+   "category": "drawing",
+   "ageMin": 9
+  },
+  {
+   "id": "FOu-UEC8Avo",
+   "title": "Der beste Trick, um Perspektive zu zeichnen",
+   "channelId": "UCIUmF5e2-BRVx31HDxExQoA",
+   "channelTitle": "Drawinglikeasir",
+   "category": "drawing",
+   "ageMin": 9
+  },
+  {
+   "id": "shgjF1rpMiA",
+   "title": "Besser zeichnen mit nur 10 Minuten täglich (ÜBBUNGSPLAN) | DrawinglikeaSir",
+   "channelId": "UCIUmF5e2-BRVx31HDxExQoA",
+   "channelTitle": "Drawinglikeasir",
+   "category": "drawing",
+   "ageMin": 9
+  },
+  {
+   "id": "WnORxtRt8EQ",
+   "title": "Lasst uns zusammen einen ersten Blick in »Der kleine Hai - Auf Entdeckungsreise« werfen 🦈| TOKYOPOP",
+   "channelId": "UCFoppwUhGs5Q_-n7UJTqrcw",
+   "channelTitle": "TOKYOPOP Deutschland",
+   "category": "animeManga",
+   "ageMin": 12,
+   "note": "Ersatz für das nicht mehr auffindbare Video „Die besten Kinderbücher aus Japan“; Verlagsvideo → Werbung prüfen Kategorie Anime & Manga wird erst ab 12 gezeigt."
+  },
+  {
+   "id": "zdf:tanoshii-pokemon-creator-special",
+   "provider": "zdf",
+   "title": "Tanoshii – Pokémon Creator Special",
+   "channelId": "zdf:tanoshii",
+   "channelTitle": "Tanoshii – Das Anime- und MangaVerse",
+   "category": "animeManga",
+   "ageMin": 12,
+   "sourceUrl": "https://www.zdf.de/video/shows/tanoshii-102/pokemon-creator-special-100",
+   "durationSeconds": 1440,
+   "note": "ZDF/KiKA, offiziell ab 12; nur extern in der Mediathek abspielbar"
+  }
+ ]
+}
