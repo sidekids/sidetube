@@ -22,6 +22,10 @@ Bildschirmfotos mit fremden Logos und Vorschaubildern sowie private Namen und Se
 2. **Künftige Stände** kommen als weitere Einzel-Commits oben auf den GitHub-`main` (Inhalt = jeweiliger
    bereinigter Entwicklungs-`main`, Vorgänger = bisheriger GitHub-`main`) – kein weiterer Force-Push. Vor
    jedem Stand: Geheimnis-Scan, Suche nach privaten Angaben und fremden Medien, Tests beider Plattformen.
+   Autor und Committer dieser Commits: „Christian-Maximilian Steier <christian@x-berg.de>“ – die Adresse ist
+   dem GitHub-Konto `christiansteier` zugeordnet. Am 05.10.2026 wurden die bis dahin vorhandenen GitHub-Commits
+   (zwei auf `main`, vier unter dem Archiv-Tag) mit unverändertem Inhalt, Text und Datum auf diese Adresse
+   umgeschrieben.
 3. **Herkunft:** Die Frage, ob der Android-Client vom früheren GPL-Fork (degipe/YouTubeWhitelist)
    unabhängig ist, trägt Christian; veröffentlicht wird unter MPL-2.0, das Originalprojekt bleibt in
    `README.md` und `LICENSE` genannt. Ein Vergleich am 05.10.2026 fand keinen übernommenen Code, aber

@@ -82,7 +82,8 @@ jobs:
       - uses: actions/setup-node@49933ea5288caeca8642d1e84afbd3f7d6820020
         with:
           node-version: '22'
-      - run: sdkmanager 'platforms;android-36' 'build-tools;35.0.0'
+      # sdkmanager liegt auf den aktuellen Ubuntu-Abbildern nicht mehr im PATH (Exit 127 am 05.10.2026).
+      - run: yes | "$ANDROID_HOME/cmdline-tools/latest/bin/sdkmanager" 'platforms;android-36' 'build-tools;35.0.0' > /dev/null
       - working-directory: android
         run: ./gradlew --no-daemon assembleDebug assembleRelease bundleRelease testDebugUnitTest lintDebug lintRelease
       - name: Verify bundled public policy
