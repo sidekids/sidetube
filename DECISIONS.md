@@ -9,3 +9,4 @@
 | [0003](docs/adr/0003-kanal-beim-hinzufuegen-einstufen.md) | Einen Kanal beim Hinzufügen gleich einstufen (Stufe, Alter, Kategorie) | angenommen 04.10.2026 |
 | [0004](docs/adr/0004-mehrere-auf-einmal-pruefen.md) | Mehrere Einträge auf einmal prüfen | angenommen 04.10.2026 |
 | [0005](docs/adr/0005-eltern-ueber-wuensche-benachrichtigen.md) | Eltern über neue Wünsche benachrichtigen (Nextcloud Talk, sonst ntfy; nur eigener Server) | angenommen 04.10.2026 |
+| [0006](docs/adr/0006-zwischenstand-veroeffentlichen.md) | Zwischenstand öffentlich machen: Quelltext ohne Historie, Test-APK als Vorabversion | angenommen 05.10.2026 |
