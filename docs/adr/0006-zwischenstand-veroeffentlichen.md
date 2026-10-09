@@ -56,3 +56,14 @@ Bildschirmfotos mit fremden Logos und Vorschaubildern sowie private Namen und Se
 - Die Kinderschutz-Punkte auf Android bleiben vor einer Fassung „für Familien“ Pflicht.
 - Store-Angaben (App Privacy, Data Safety) müssen Kamera und Nextcloud-Aufruf nennen, sobald es um
   Stores geht.
+
+## Nachtrag (09.10.2026)
+
+Zweiter Zwischenstand nach demselben Verfahren: GitHub-`main` = `692ea32` (Einzel-Commit mit dem Baum
+des Entwicklungs-`main` vom 09.10.2026, Vorgänger `f55fcb5`), Tag `v0.1.0-test.2`, Vorabversion mit
+`SideTube-0.1.0-test.2.apk` (Build-Nummer 2, SHA-256 `cf753e4a…e2494`, gleiches Zertifikat) und
+`SHA256SUMS.txt`. Scans vorher: gitleaks ohne Fund, keine privaten Hosts oder Namen, keine fremden
+Medien. Stolperstein: Legt `gh release create` ein Release an, bevor der Tag gepusht ist, setzt GitHub
+den Tag auf den alten `main`; der Tag musste einmal gelöscht und neu gesetzt werden, das Release wurde
+dabei kurz zum Entwurf und danach wieder veröffentlicht. Künftig: erst Commit und Tag pushen, dann das
+Release anlegen. Freigabe durch Christian am 09.10.2026 (ADR 0009).

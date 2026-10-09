@@ -111,7 +111,7 @@ jobs:
       - working-directory: ios
         run: xcodegen generate
       - working-directory: ios
-        run: xcodebuild test -project sidetube.xcodeproj -scheme sidetube -destination 'platform=iOS Simulator,name=iPhone 17' -only-testing:sidetubeTests -derivedDataPath build/DerivedData CODE_SIGNING_ALLOWED=NO
+        run: xcodebuild test -project sidetube.xcodeproj -scheme sidetube -destination 'platform=iOS Simulator,name=iPhone 17' -only-testing:sidetubeTests -testLanguage de -testRegion DE -derivedDataPath build/DerivedData CODE_SIGNING_ALLOWED=NO
       - working-directory: ios
         run: xcodebuild build -project sidetube.xcodeproj -scheme sidetube -configuration Release -destination 'generic/platform=iOS' -derivedDataPath build/DerivedData CODE_SIGNING_ALLOWED=NO
       - run: node scripts/validate-content.mjs ios/build/DerivedData/Build/Products/Release-iphoneos/sidetube.app/content

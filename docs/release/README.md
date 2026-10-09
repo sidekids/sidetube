@@ -18,7 +18,7 @@ cd android
 ```sh
 cd ios
 xcodegen generate
-xcodebuild test -project sidetube.xcodeproj -scheme sidetube -destination 'platform=iOS Simulator,name=iPhone 17' -only-testing:sidetubeTests CODE_SIGN_IDENTITY=-
+xcodebuild test -project sidetube.xcodeproj -scheme sidetube -destination 'platform=iOS Simulator,name=iPhone 17' -only-testing:sidetubeTests -testLanguage de -testRegion DE CODE_SIGN_IDENTITY=-
 xcodebuild build -project sidetube.xcodeproj -scheme sidetube -configuration Release -destination 'generic/platform=iOS' CODE_SIGNING_ALLOWED=NO
 ```
 
