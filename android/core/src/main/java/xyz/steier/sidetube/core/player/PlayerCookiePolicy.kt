@@ -26,17 +26,15 @@ interface CookieStore {
  */
 object PlayerCookiePolicy {
     /**
-     * Drittanbieter-Cookies bleiben vorerst zugelassen.
+     * Drittanbieter-Cookies sind aus.
      *
-     * Die Beobachtung, die sie erzwang ("ohne sie laedt der Player, spielt aber nicht"), stammt aus
-     * einer Einbettung ueber `www.youtube.com`. Seit die Einbettung wie auf iOS ueber
-     * `www.youtube-nocookie.com` laeuft, ist offen, ob sie ueberhaupt noch noetig sind. Das
-     * entscheidet eine Messung am Geraet, nicht eine Annahme hier: auf `false` setzen, ein Video
-     * starten, und zwar auf einem Geraet mit alter WebView-Fassung. Bis dahin bleibt der Wert
-     * zugelassen, damit die Wiedergabe nicht ungeprueft bricht - er ist die letzte offene Haelfte
-     * der Cookie-Isolierung, siehe docs/release/pre-release-audit.md.
+     * Die Beobachtung, die sie einst erzwang ("ohne sie laedt der Player, spielt aber nicht"),
+     * stammte aus einer Einbettung ueber `www.youtube.com`. Mit `www.youtube-nocookie.com` wurde am
+     * 08.10.2026 am Emulator SP-01 (API 31, aktuelle WebView) gemessen: Wiedergabe startet und
+     * laeuft ohne Drittanbieter-Cookies. Auf einem Geraet mit alter WebView-Fassung steht die
+     * Messung noch aus (docs/release/android-device-verification.md).
      */
-    const val ACCEPT_THIRD_PARTY = true
+    const val ACCEPT_THIRD_PARTY = false
 
     /** Leeren, bevor ueberhaupt etwas geschrieben werden darf. */
     fun beginSession(store: CookieStore) {

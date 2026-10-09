@@ -13,10 +13,10 @@ enum AgeBand: String, Codable, CaseIterable, Identifiable, Sendable {
 
     var title: String {
         switch self {
-        case .preschool: "Vorschule (3–5)"
-        case .younger: "Jüngere Kinder (6–8)"
-        case .kids: "Kinder (9–11)"
-        case .older: "Ab 12"
+        case .preschool: String(localized: "Vorschule (3–5)")
+        case .younger: String(localized: "Jüngere Kinder (6–8)")
+        case .kids: String(localized: "Kinder (9–11)")
+        case .older: String(localized: "Ab 12")
         }
     }
 
@@ -39,20 +39,20 @@ enum ContentCategory: String, Codable, CaseIterable, Identifiable, Sendable {
 
     var title: String {
         switch self {
-        case .knowledge: "Wissen"
-        case .nature: "Natur"
-        case .technology: "Technik"
-        case .mediaLiteracy: "Medienkompetenz"
-        case .news: "Nachrichten"
-        case .creative: "Kreativ"
-        case .drawing: "Zeichnen"
-        case .mangaDrawing: "Manga zeichnen"
-        case .animeManga: "Anime & Manga"
-        case .stories: "Geschichten"
-        case .music: "Musik"
-        case .humor: "Humor"
-        case .society: "Gesellschaft"
-        case .environment: "Umwelt"
+        case .knowledge: String(localized: "Wissen")
+        case .nature: String(localized: "Natur")
+        case .technology: String(localized: "Technik")
+        case .mediaLiteracy: String(localized: "Medienkompetenz")
+        case .news: String(localized: "Nachrichten")
+        case .creative: String(localized: "Kreativ")
+        case .drawing: String(localized: "Zeichnen")
+        case .mangaDrawing: String(localized: "Manga zeichnen")
+        case .animeManga: String(localized: "Anime & Manga")
+        case .stories: String(localized: "Geschichten")
+        case .music: String(localized: "Musik")
+        case .humor: String(localized: "Humor")
+        case .society: String(localized: "Gesellschaft")
+        case .environment: String(localized: "Umwelt")
         }
     }
 
@@ -92,11 +92,11 @@ enum SourceTrust: String, Codable, CaseIterable, Identifiable, Sendable {
 
     var title: String {
         switch self {
-        case .trustedChildSource: "Vertrauenswürdige Kinderquelle"
-        case .trustedSeries: "Vertrauenswürdige Reihe"
-        case .perVideoReview: "Nur einzeln geprüfte Videos"
-        case .parentOnly: "Nur für Eltern"
-        case .blocked: "Gesperrt"
+        case .trustedChildSource: String(localized: "Vertrauenswürdige Kinderquelle")
+        case .trustedSeries: String(localized: "Vertrauenswürdige Reihe")
+        case .perVideoReview: String(localized: "Nur einzeln geprüfte Videos")
+        case .parentOnly: String(localized: "Nur für Eltern")
+        case .blocked: String(localized: "Gesperrt")
         }
     }
 
@@ -111,11 +111,11 @@ enum ApprovalStatus: String, Codable, CaseIterable, Identifiable, Sendable {
 
     var title: String {
         switch self {
-        case .discovered: "Gefunden"
-        case .reviewRequired: "Prüfung nötig"
-        case .approved: "Freigegeben"
-        case .rejected: "Abgelehnt"
-        case .expiredReview: "Prüfung abgelaufen"
+        case .discovered: String(localized: "Gefunden")
+        case .reviewRequired: String(localized: "Prüfung nötig")
+        case .approved: String(localized: "Freigegeben")
+        case .rejected: String(localized: "Abgelehnt")
+        case .expiredReview: String(localized: "Prüfung abgelaufen")
         }
     }
 }
@@ -126,9 +126,9 @@ enum NewsStatus: String, Codable, CaseIterable, Sendable {
 
     var title: String {
         switch self {
-        case .safe: "Nachricht: unbedenklich"
-        case .sensitive: "Nachricht: belastend"
-        case .parentReview: "Nachricht: Eltern prüfen"
+        case .safe: String(localized: "Nachricht: unbedenklich")
+        case .sensitive: String(localized: "Nachricht: belastend")
+        case .parentReview: String(localized: "Nachricht: Eltern prüfen")
         }
     }
 }
@@ -145,19 +145,19 @@ enum SensitiveTopic: String, Codable, CaseIterable, Identifiable, Sendable {
 
     var title: String {
         switch self {
-        case .war: "Krieg"
-        case .violence: "Gewalt"
-        case .death: "Tod"
-        case .disaster: "Katastrophe"
-        case .crime: "Verbrechen"
-        case .fear: "Angst"
-        case .politics: "Politik"
-        case .sexual: "Sexualisierung"
-        case .coarseLanguage: "Derbe Sprache"
-        case .horror: "Horror"
-        case .adultMedia: "Medien ab 16/18"
-        case .advertising: "Werbung"
-        case .other: "Sonstiges"
+        case .war: String(localized: "Krieg")
+        case .violence: String(localized: "Gewalt")
+        case .death: String(localized: "Tod")
+        case .disaster: String(localized: "Katastrophe")
+        case .crime: String(localized: "Verbrechen")
+        case .fear: String(localized: "Angst")
+        case .politics: String(localized: "Politik")
+        case .sexual: String(localized: "Sexualisierung")
+        case .coarseLanguage: String(localized: "Derbe Sprache")
+        case .horror: String(localized: "Horror")
+        case .adultMedia: String(localized: "Medien ab 16/18")
+        case .advertising: String(localized: "Werbung")
+        case .other: String(localized: "Sonstiges")
         }
     }
 }
@@ -189,17 +189,17 @@ enum ReviewDecision: String, Codable, Sendable {
     /// So steht die Entscheidung im Verlauf (wie Android `ParentLabels.decision`).
     var title: String {
         switch self {
-        case .discovered: "Aufgenommen"
-        case .approved: "Freigegeben"
-        case .rejected: "Abgelehnt"
-        case .deferred: "Zurückgestellt"
-        case .blockedSource: "Quelle gesperrt"
-        case .autoRejected: "Vom Filter abgelehnt"
-        case .statusExpired: "Prüfung fällig"
-        case .wished: "Gewünscht"
-        case .wishFulfilled: "Wunsch erfüllt"
-        case .wishRejected: "Wunsch: nicht jetzt"
-        case .wishDiscuss: "Wunsch: besprechen"
+        case .discovered: String(localized: "Aufgenommen")
+        case .approved: String(localized: "Freigegeben")
+        case .rejected: String(localized: "Abgelehnt")
+        case .deferred: String(localized: "Zurückgestellt")
+        case .blockedSource: String(localized: "Quelle gesperrt")
+        case .autoRejected: String(localized: "Vom Filter abgelehnt")
+        case .statusExpired: String(localized: "Prüfung fällig")
+        case .wished: String(localized: "Gewünscht")
+        case .wishFulfilled: String(localized: "Wunsch erfüllt")
+        case .wishRejected: String(localized: "Wunsch: nicht jetzt")
+        case .wishDiscuss: String(localized: "Wunsch: besprechen")
         }
     }
 }

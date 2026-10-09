@@ -50,6 +50,27 @@ class PlaybackModelTest {
     }
 
     @Test
+    fun `nach dem Ende aendern Zustaende und Stellen des Players nichts mehr an der Endkarte`() {
+        val clock = Clock()
+        val model = PlaybackModel(queue, now = clock)
+        model.start(); model.onState(1); clock.advance(10); model.onTime(10)
+        assertThat(model.onState(0)).containsExactly(PlaybackModel.Command.Record(queue[0], 10),
+            PlaybackModel.Command.Stop).inOrder()
+        // stopVideo() meldet -1 und 5; mit controls: 0 geht YouTube nach dem Ende von selbst auf „bereit".
+        for (state in listOf(-1, 5, 3, 2)) {
+            assertThat(model.onState(state)).isEmpty()
+            assertThat(model.state.status).isEqualTo(PlaybackStatus.Ended)
+        }
+        assertThat(model.onTime(0)).isEmpty()
+        assertThat(model.state.positionSeconds).isEqualTo(10)
+        // Spielt der Player dennoch wieder, wird gestoppt – und nichts gebucht.
+        assertThat(model.onState(1)).containsExactly(PlaybackModel.Command.Stop)
+        clock.advance(30)
+        assertThat(model.close()).containsExactly(PlaybackModel.Command.Stop)
+        assertThat(model.state.status).isEqualTo(PlaybackStatus.Ended)
+    }
+
+    @Test
     fun `Nochmal laedt dasselbe Video neu und zaehlt weiter gegen das Budget`() {
         val clock = Clock()
         val model = PlaybackModel(queue, startIndex = 1, now = clock, budgetSeconds = 30)

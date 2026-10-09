@@ -50,14 +50,20 @@
 
   var playing = false;
   var timeTimer = null;
+  function postTime() {
+    if (!player || !player.getCurrentTime || guardForeignVideo()) { return; }
+    post({ event: 'time', value: Math.floor(player.getCurrentTime()) });
+  }
+  // Der Takt laeuft, solange das Video laeuft oder puffert. Jedes Puffern zwischendurch (3 -> 1)
+  // startete ihn frueher neu, und auf einem langsamen Geraet kam so minutenlang keine Stelle an;
+  // die Anzeige blieb bei 0:00. Beim Start einmal sofort melden, danach alle fuenf Sekunden.
   function setPlaying(value) {
+    if (value === playing) { return; }
     playing = value;
     if (timeTimer !== null) { clearInterval(timeTimer); timeTimer = null; }
     if (playing) {
-      timeTimer = setInterval(function () {
-        if (!player || !player.getCurrentTime || guardForeignVideo()) { return; }
-        post({ event: 'time', value: Math.floor(player.getCurrentTime()) });
-      }, 5000);
+      postTime();
+      timeTimer = setInterval(postTime, 5000);
     }
   }
 
@@ -71,7 +77,9 @@
       // PlayerNavigationPolicy.allowSubFrame laesst diesen Host bereits zu.
       host: 'https://www.youtube-nocookie.com',
       playerVars: {
-        autoplay: 1, playsinline: 1, rel: 0, controls: 1, fs: 0, enablejsapi: 1,
+        // controls: 0 wie auf iOS – die Steuerung baut die App selbst (PlayerView, Ring). YouTubes
+        // Leiste brachte Kanal-Link, Teilen, Einstellungen und Logo als antippbare Wege nach draussen.
+        autoplay: 1, playsinline: 1, rel: 0, controls: 0, fs: 0, enablejsapi: 1,
         modestbranding: 1, iv_load_policy: 3, disablekb: 1,
         origin: '__ORIGIN__',
         // YouTube antwortet seit Ende 2025 mit Fehler 153, wenn kein Referer mitkommt. Ein
@@ -92,7 +100,7 @@
         onStateChange: function (e) {
           // Nur bei Wiedergabe/Puffern pruefen: nach stopVideo() meldet getVideoData() noch das alte Video.
           if ((e.data === 1 || e.data === 3) && guardForeignVideo()) { return; }
-          setPlaying(e.data === 1);
+          setPlaying(e.data === 1 || e.data === 3);
           post({ event: 'state', value: e.data });
         },
         // Fehlercodes: 2 ungültige ID, 5 HTML5-Fehler, 100 nicht gefunden, 101/150 nicht einbettbar, 153 fehlender Referer

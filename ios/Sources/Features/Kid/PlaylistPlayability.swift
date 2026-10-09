@@ -17,7 +17,7 @@ enum PlaylistPlayability {
         }
         guard profile.sleepPlaylistId == playlistId else { return nil }
         // Nur ein Prüfling für die Regel – wird nie in den Store eingefügt.
-        return WhitelistItem(type: .playlist, youtubeId: playlistId, title: "Schlaf-Playlist",
+        return WhitelistItem(type: .playlist, youtubeId: playlistId, title: String(localized: "Schlaf-Playlist"),
                              thumbnailUrl: "", approvalStatus: .approved)
     }
 

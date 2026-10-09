@@ -4,6 +4,12 @@
 
 package xyz.steier.sidetube.parent
 
+import androidx.compose.ui.res.pluralStringResource
+import androidx.compose.ui.res.stringResource
+import xyz.steier.sidetube.LocalTexte
+import xyz.steier.sidetube.R
+import xyz.steier.sidetube.Texte
+
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.PaddingValues
@@ -50,10 +56,10 @@ fun ProfileEditorScreen(
     Scaffold(
         topBar = {
             TopAppBar(
-                title = { Text("Profil bearbeiten", maxLines = 1) },
-                navigationIcon = { TextButton(onClick = onCancel) { Text("Abbrechen") } },
+                title = { Text(stringResource(R.string.profil_bearbeiten), maxLines = 1) },
+                navigationIcon = { TextButton(onClick = onCancel) { Text(stringResource(R.string.abbrechen)) } },
                 actions = {
-                    TextButton(onClick = { onSave(draft) }, enabled = draft.canSave) { Text("Sichern") }
+                    TextButton(onClick = { onSave(draft) }, enabled = draft.canSave) { Text(stringResource(R.string.sichern)) }
                 }
             )
         }
@@ -69,43 +75,44 @@ fun ProfileEditorScreen(
                 colors = xyz.steier.sidetube.sideTextFieldColors(),
                 value = draft.name,
                 onValueChange = { draft = draft.copy(name = it) },
-                label = { Text("Name") },
+                label = { Text(stringResource(R.string.name)) },
                 singleLine = true,
                 keyboardOptions = KeyboardOptions(capitalization = KeyboardCapitalization.Words),
                 modifier = Modifier.fillMaxWidth()
             )
 
-            SectionTitle("Altersprofil")
+            SectionTitle(stringResource(R.string.altersprofil))
             AgeBandPicker(draft.ageBand) { draft = draft.copy(ageBand = it) }
-            Footnote("Inhalte mit höherem Mindestalter bleiben unsichtbar. Manga zeichnen ab 8, Anime & Manga ab 12.")
+            Footnote(stringResource(R.string.altersprofil_hinweis))
 
-            SectionTitle("Inhalte")
-            SwitchRow("Nachrichten (logo!)", draft.allowNews) { draft = draft.copy(allowNews = it) }
-            SwitchRow("Manga zeichnen", draft.allowManga) { draft = draft.copy(allowManga = it) }
+            SectionTitle(stringResource(R.string.inhalte))
+            SwitchRow(stringResource(R.string.inhalt_nachrichten), draft.allowNews) { draft = draft.copy(allowNews = it) }
+            SwitchRow(stringResource(R.string.inhalt_manga_zeichnen), draft.allowManga) { draft = draft.copy(allowManga = it) }
             SwitchRow(
-                "Anime & Manga (ab 12)",
+                stringResource(R.string.inhalt_anime_manga),
                 draft.allowMangaEntertainment && draft.mangaEntertainmentSelectable,
                 enabled = draft.mangaEntertainmentSelectable
             ) { draft = draft.copy(allowMangaEntertainment = it) }
-            SwitchRow("Shorts erlauben", draft.allowShorts) { draft = draft.copy(allowShorts = it) }
-            SwitchRow("Nächstes Video automatisch", draft.autoplayNext) { draft = draft.copy(autoplayNext = it) }
+            SwitchRow(stringResource(R.string.shorts_erlauben), draft.allowShorts) { draft = draft.copy(allowShorts = it) }
+            SwitchRow(stringResource(R.string.naechstes_automatisch), draft.autoplayNext) { draft = draft.copy(autoplayNext = it) }
 
-            SectionTitle("Ruhezeit")
-            SwitchRow("Ruhezeit", draft.bedtimeEnabled) { draft = draft.copy(bedtimeEnabled = it) }
+            SectionTitle(stringResource(R.string.ruhezeit))
+            SwitchRow(stringResource(R.string.ruhezeit), draft.bedtimeEnabled) { draft = draft.copy(bedtimeEnabled = it) }
             if (draft.bedtimeEnabled) {
-                StepperRow("Beginn ${ParentLabels.clock(draft.bedtimeStartMinutes)}", "Beginn") {
+                StepperRow(stringResource(R.string.ruhezeit_beginn, ParentLabels.clock(draft.bedtimeStartMinutes)), stringResource(R.string.beginn)) {
                     draft = draft.stepBedtimeStart(it)
                 }
-                StepperRow("Ende ${ParentLabels.clock(draft.bedtimeEndMinutes)}", "Ende") {
+                StepperRow(stringResource(R.string.ruhezeit_ende, ParentLabels.clock(draft.bedtimeEndMinutes)), stringResource(R.string.ende)) {
                     draft = draft.stepBedtimeEnd(it)
                 }
-                StepperRow("Fr/Sa ${draft.bedtimeWeekendOffsetMinutes} min später", "Wochenende") {
+                StepperRow(stringResource(R.string.ruhezeit_wochenende, draft.bedtimeWeekendOffsetMinutes), stringResource(R.string.wochenende)) {
                     draft = draft.stepWeekendOffset(it)
                 }
-                Text("Vorschlag", style = MaterialTheme.typography.bodySmall,
+                Text(stringResource(R.string.vorschlag), style = MaterialTheme.typography.bodySmall,
                     color = MaterialTheme.colorScheme.onSurface.copy(alpha = 0.7f))
                 Row(horizontalArrangement = Arrangement.spacedBy(4.dp)) {
-                    ProfileDraft.BEDTIME_SUGGESTIONS.forEach { (label, start) ->
+                    ProfileDraft.BEDTIME_SUGGESTIONS.forEach { (labelRes, start) ->
+                        val label = stringResource(labelRes)
                         OutlinedButton(
                             onClick = { draft = draft.copy(bedtimeStartMinutes = start) },
                             contentPadding = PaddingValuesCompact
@@ -114,21 +121,21 @@ fun ProfileEditorScreen(
                 }
                 draft.bedtimeSkipUntil?.let(Instant::ofEpochMilli)?.takeIf { it.isAfter(Instant.now()) }?.let { until ->
                     Row(verticalAlignment = Alignment.CenterVertically) {
-                        Text("Ausnahme bis ${ParentFormat.time(until)}",
+                        Text(stringResource(R.string.ausnahme_bis, ParentFormat.time(until)),
                             color = MaterialTheme.colorScheme.tertiary,
                             modifier = Modifier.weight(1f))
-                        TextButton(onClick = { draft = draft.clearBedtimeSkip() }) { Text("Aufheben") }
+                        TextButton(onClick = { draft = draft.clearBedtimeSkip() }) { Text(stringResource(R.string.aufheben)) }
                     }
                 }
             }
-            Footnote("In der Ruhezeit ist der Kindermodus gesperrt; 15 und 5 Minuten vorher gibt es einen Hinweis. Die PIN hebt die Sperre bis zum Ende der Ruhezeit auf.")
+            Footnote(stringResource(R.string.ruhezeit_hinweis))
 
-            SectionTitle("Tageslimit")
-            SwitchRow("Tageslimit", draft.limitEnabled) { draft = draft.copy(limitEnabled = it) }
+            SectionTitle(stringResource(R.string.tageslimit))
+            SwitchRow(stringResource(R.string.tageslimit), draft.limitEnabled) { draft = draft.copy(limitEnabled = it) }
             if (draft.limitEnabled) {
-                StepperRow("${draft.limitMinutes} Minuten pro Tag", "Tageslimit") { draft = draft.stepLimit(it) }
+                StepperRow(pluralStringResource(R.plurals.tageslimit_minuten, draft.limitMinutes, draft.limitMinutes), stringResource(R.string.tageslimit)) { draft = draft.stepLimit(it) }
             }
-            Footnote("Ohne Limit darf unbegrenzt geschaut werden. Die Zeit wird um Mitternacht zurückgesetzt.")
+            Footnote(stringResource(R.string.tageslimit_hinweis))
             Spacer(Modifier.height(16.dp))
         }
     }
@@ -173,12 +180,14 @@ private fun Modifier.toggleableRow(checked: Boolean, enabled: Boolean, onChange:
 /** Wert mit „−“ und „+“ - wie der iOS-Stepper, ohne Zahlentastatur. */
 @Composable
 private fun StepperRow(label: String, what: String, onStep: (Int) -> Unit) {
+    val weniger = stringResource(R.string.stepper_weniger, what)
+    val mehr = stringResource(R.string.stepper_mehr, what)
     Row(Modifier.fillMaxWidth(), verticalAlignment = Alignment.CenterVertically) {
         Text(label, modifier = Modifier.weight(1f))
         FilledTonalIconButton(onClick = { onStep(-1) },
-            modifier = Modifier.semantics { contentDescription = "$what weniger" }) { Text("−") }
+            modifier = Modifier.semantics { contentDescription = weniger }) { Text("−") }
         FilledTonalIconButton(onClick = { onStep(1) },
-            modifier = Modifier.semantics { contentDescription = "$what mehr" }) { Text("+") }
+            modifier = Modifier.semantics { contentDescription = mehr }) { Text("+") }
     }
 }
 

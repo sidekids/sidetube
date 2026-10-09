@@ -25,6 +25,8 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.res.stringResource
+import xyz.steier.sidetube.R
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.text.font.FontWeight
@@ -75,13 +77,13 @@ fun KidView(
                 val treffer = state.rows.any { !it.action.istWunschZeile }
                 RadEingabe(state.rad.anzeige)
                 Buchstabenrad(state.rad, hasHits = state.rows.isNotEmpty(), onTap = onWheelKey,
-                    unten = if (treffer) "Treffer" else "Wunsch")
+                    unten = stringResource(if (treffer) R.string.kid_rad_treffer else R.string.kid_rad_wunsch))
             }
         }
         if (state.screen is KidScreen.ThemaWunsch) {
             // Das freie Rad: alle Buchstaben, auch wenn es dazu noch nichts gibt.
             RadEingabe(state.rad.anzeige)
-            Buchstabenrad(state.rad, hasHits = true, onTap = onWheelKey, unten = "schicken")
+            Buchstabenrad(state.rad, hasHits = true, onTap = onWheelKey, unten = stringResource(R.string.kid_rad_schicken))
         }
         (state.screen as? KidScreen.NeueFolgeAnsicht)?.let { FolgenKopf(it.folge) }
 
@@ -91,7 +93,7 @@ fun KidView(
 
             state.rows.isEmpty() -> Box(Modifier.fillMaxSize().padding(24.dp), Alignment.Center) {
                 Text(
-                    emptyText(state),
+                    stringResource(emptyText(state)),
                     style = MaterialTheme.typography.bodyMedium,
                     color = MaterialTheme.colorScheme.onSurface.copy(alpha = 0.7f)
                 )
@@ -101,7 +103,7 @@ fun KidView(
                 if (leerHinweis) {
                     item(key = "home-empty") {
                         Text(
-                            "Hier ist noch nichts. Deine Eltern können Videos freigeben – oder du wünschst dir etwas.",
+                            stringResource(R.string.kid_leer_startseite_wunsch),
                             style = MaterialTheme.typography.bodyMedium,
                             color = MaterialTheme.colorScheme.onSurface.copy(alpha = 0.7f),
                             modifier = Modifier.padding(24.dp)
@@ -139,7 +141,7 @@ fun KidView(
                 if (state.screen is KidScreen.Library && state.rows.size == 1) {
                     item(key = "library-empty") {
                         Text(
-                            "Hier ist noch nichts. Deine Eltern können etwas aussuchen.",
+                            stringResource(R.string.kid_leer_mediathek),
                             style = MaterialTheme.typography.bodyMedium,
                             color = MaterialTheme.colorScheme.onSurface.copy(alpha = 0.7f),
                             modifier = Modifier.padding(24.dp)
@@ -151,14 +153,14 @@ fun KidView(
     }
 }
 
-private fun emptyText(state: KidState): String = when {
+private fun emptyText(state: KidState): Int = when {
     state.screen is KidScreen.Search && T9.istZiffernfolge(state.query) && !T9.hatInhalt(state.query) ->
-        "Tippe mit den Zahlen. Auf der 2 stehen a, b und c."
-    state.screen is KidScreen.Search && T9.istZiffernfolge(state.query) -> "Dazu gibt es nichts."
-    state.screen is KidScreen.Search && state.query.isEmpty() -> "Wähle mit dem Rad den ersten Buchstaben."
-    state.screen is KidScreen.Search -> "Dazu gibt es nichts."
-    state.screen is KidScreen.Playlist -> "Hier ist gerade nichts zu sehen. Ist das Internet an?"
-    else -> "Hier ist noch nichts. Deine Eltern können Videos freigeben."
+        R.string.kid_leer_t9_anleitung
+    state.screen is KidScreen.Search && T9.istZiffernfolge(state.query) -> R.string.kid_leer_nichts_gefunden
+    state.screen is KidScreen.Search && state.query.isEmpty() -> R.string.kid_leer_rad_anleitung
+    state.screen is KidScreen.Search -> R.string.kid_leer_nichts_gefunden
+    state.screen is KidScreen.Playlist -> R.string.kid_leer_playlist_offline
+    else -> R.string.kid_leer_startseite
 }
 
 @OptIn(ExperimentalFoundationApi::class)
@@ -186,7 +188,7 @@ private fun Header(
         }
         Box(Modifier.weight(1f)) {
             Text(
-                state.title.ifBlank { "SideTube" },
+                state.title.ifBlank { stringResource(R.string.app_name) },
                 style = MaterialTheme.typography.titleMedium,
                 maxLines = 1,
                 overflow = TextOverflow.Ellipsis,
@@ -212,18 +214,18 @@ private fun Header(
             }
         }
         state.remainingMinutes?.let {
-            Text("$it min", style = MaterialTheme.typography.labelMedium,
+            Text(stringResource(R.string.kid_restminuten, it), style = MaterialTheme.typography.labelMedium,
                 color = MaterialTheme.colorScheme.onSurface.copy(alpha = 0.75f))
             Spacer(Modifier.width(8.dp))
         }
         // Die Lupe ist der Weg fuer den Finger; am SP-01 fuehrt die Taste rechts dorthin.
         if (state.screen !is KidScreen.Search) {
             IconButton(onClick = onSearch, modifier = Modifier.size(36.dp)) {
-                Icon(Icons.Default.Search, contentDescription = "Suchen", tint = MaterialTheme.colorScheme.onSurface)
+                Icon(Icons.Default.Search, contentDescription = stringResource(R.string.kid_suchen), tint = MaterialTheme.colorScheme.onSurface)
             }
         }
         IconButton(onClick = onParent, modifier = Modifier.size(36.dp)) {
-            Icon(Icons.Default.Lock, contentDescription = "Einstellungen", tint = MaterialTheme.colorScheme.onSurface)
+            Icon(Icons.Default.Lock, contentDescription = stringResource(R.string.kid_einstellungen), tint = MaterialTheme.colorScheme.onSurface)
         }
     }
 }
@@ -282,7 +284,7 @@ private fun WunschZeile(row: KidRow, focused: Boolean, onClick: () -> Unit, onFo
                 VorschauKachel(row.thumbnailUrl, istKanal = false, breite = 64.dp, hoehe = 36.dp)
                 if (row.action is KidAction.OpenNeueFolge) {
                     // Gesperrt: sichtbar, aber nicht abspielbar.
-                    Icon(Icons.Default.Lock, contentDescription = "Gesperrt",
+                    Icon(Icons.Default.Lock, contentDescription = stringResource(R.string.kid_gesperrt),
                         tint = Color.White, modifier = Modifier.align(Alignment.Center).size(18.dp)
                             .background(Color.Black.copy(alpha = 0.55f), RoundedCornerShape(4.dp)).padding(2.dp))
                 }
@@ -309,14 +311,14 @@ private fun FolgenKopf(folge: xyz.steier.sidetube.core.curation.NeueFolge) {
     Column(Modifier.fillMaxWidth().padding(horizontal = 16.dp, vertical = 4.dp), horizontalAlignment = Alignment.CenterHorizontally) {
         Box {
             VorschauKachel(Vorschaubilder.fuerVideo(folge.videoId), istKanal = false, breite = 208.dp)
-            Icon(Icons.Default.Lock, contentDescription = "Gesperrt", tint = Color.White,
+            Icon(Icons.Default.Lock, contentDescription = stringResource(R.string.kid_gesperrt), tint = Color.White,
                 modifier = Modifier.align(Alignment.Center).size(36.dp)
                     .background(Color.Black.copy(alpha = 0.55f), RoundedCornerShape(8.dp)).padding(6.dp))
         }
         Spacer(Modifier.height(6.dp))
         Text(folge.title, style = MaterialTheme.typography.titleSmall, maxLines = 2, overflow = TextOverflow.Ellipsis,
             textAlign = TextAlign.Center)
-        Text("Neu bei ${folge.channelTitle} · erst nach Freigabe abspielbar",
+        Text(stringResource(R.string.kid_neue_folge_hinweis, folge.channelTitle),
             style = MaterialTheme.typography.bodySmall, textAlign = TextAlign.Center,
             color = MaterialTheme.colorScheme.onSurface.copy(alpha = 0.7f))
     }
@@ -378,7 +380,7 @@ private fun SegmentRow(selected: LibrarySegment, focused: Boolean, onSelect: (Li
                 contentAlignment = Alignment.Center
             ) {
                 Text(
-                    segment.title,
+                    stringResource(segment.titleRes),
                     style = MaterialTheme.typography.labelLarge,
                     fontWeight = if (active) FontWeight.Bold else FontWeight.Normal,
                     color = if (active) MaterialTheme.colorScheme.onPrimary else MaterialTheme.colorScheme.onSurface,
@@ -411,7 +413,7 @@ private fun SearchDisplay(query: String) {
             Spacer(Modifier.width(8.dp))
             when {
                 query.isEmpty() -> Text(
-                    "Tippe mit den Zahlen: 2 = abc …",
+                    stringResource(R.string.kid_t9_hinweis),
                     style = MaterialTheme.typography.bodyMedium,
                     color = MaterialTheme.colorScheme.onSurface.copy(alpha = 0.6f),
                     maxLines = 2
@@ -423,7 +425,7 @@ private fun SearchDisplay(query: String) {
         }
         if (T9.istZiffernfolge(query)) {
             Text(
-                "0 = Lücke · Zurück löscht",
+                stringResource(R.string.kid_t9_luecke_hinweis),
                 style = MaterialTheme.typography.labelSmall,
                 color = MaterialTheme.colorScheme.onSurface.copy(alpha = 0.6f),
                 modifier = Modifier.padding(start = 32.dp, top = 2.dp)

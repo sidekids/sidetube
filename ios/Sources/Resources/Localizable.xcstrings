@@ -2,12 +2,462 @@
   "sourceLanguage": "de",
   "version": "1.0",
   "strings": {
+    " Profil auf „%@“ gesetzt.": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": " Profile set to “%@”."
+          }
+        }
+      }
+    },
+    " SideTube: Test der Benachrichtigung": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": " SideTube: notification test"
+          }
+        }
+      }
+    },
+    "%@ (%lld)": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "%@ (%lld)"
+          }
+        }
+      }
+    },
+    "%@ eine Einzelprüfung: ": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "%@ an individual review: "
+          }
+        }
+      }
+    },
+    "%@ · %@": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "%@ · %@"
+          }
+        }
+      }
+    },
+    "%@ · %lld×": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "%@ · %lld×"
+          }
+        }
+      }
+    },
+    "%@: %lld Kandidaten zur Prüfung für %@ übernommen, %lld bereits vorhanden, %lld aus gesperrten Quellen übersprungen.%@ Freigabe unter „Freigaben prüfen“.": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "%@: %lld candidates added for review for %@, %lld already present, %lld skipped from blocked sources.%@ Approve under “Review approvals”."
+          }
+        }
+      }
+    },
+    "%lld %@": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "%lld %@"
+          }
+        }
+      }
+    },
+    "%lld Einträge abgelehnt": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "%lld entries declined"
+          }
+        }
+      }
+    },
+    "%lld Einträge ablehnen": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Decline %lld entries"
+          }
+        }
+      }
+    },
+    "%lld Einträge ablehnen?": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Decline %lld entries?"
+          }
+        }
+      }
+    },
+    "%lld Einträge freigeben": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Approve %lld entries"
+          }
+        }
+      }
+    },
+    "%lld Einträge freigegeben": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "%lld entries approved"
+          }
+        }
+      }
+    },
+    "%lld Einträge verwerfen": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Discard %lld entries"
+          }
+        }
+      }
+    },
+    "%lld Einträge werden freigegeben.": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "%lld entries will be approved."
+          }
+        }
+      }
+    },
+    "%lld Minuten": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "%lld minutes"
+          }
+        }
+      }
+    },
+    "%lld Minuten pro Tag": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "%lld minutes per day"
+          }
+        }
+      }
+    },
+    "%lld brauchen": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "%lld need"
+          }
+        }
+      }
+    },
+    "%lld frei": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "%lld approved"
+          }
+        }
+      }
+    },
+    "%lld h %lld min": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "%lld h %lld min"
+          }
+        }
+      }
+    },
+    "%lld min": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "%lld min"
+          }
+        }
+      }
+    },
+    "%lld min heute": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "%lld min today"
+          }
+        }
+      }
+    },
+    "%lld prüfen": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "%lld to review"
+          }
+        }
+      }
+    },
+    "%lld von %lld Ziffern eingegeben": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "%lld of %lld digits entered"
+          }
+        }
+      }
+    },
+    "%lld/%lld min heute": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "%lld/%lld min today"
+          }
+        }
+      }
+    },
+    ", %lld Wünsche erfüllt": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": ", %lld wishes fulfilled"
+          }
+        }
+      }
+    },
+    ", 1 Wunsch erfüllt": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": ", 1 wish fulfilled"
+          }
+        }
+      }
+    },
+    "1 Eintrag abgelehnt": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "1 entry declined"
+          }
+        }
+      }
+    },
+    "1 Eintrag ablehnen": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Decline 1 entry"
+          }
+        }
+      }
+    },
+    "1 Eintrag ablehnen?": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Decline 1 entry?"
+          }
+        }
+      }
+    },
+    "1 Eintrag braucht": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "1 entry needs"
+          }
+        }
+      }
+    },
+    "1 Eintrag freigeben": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Approve 1 entry"
+          }
+        }
+      }
+    },
+    "1 Eintrag freigegeben": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "1 entry approved"
+          }
+        }
+      }
+    },
+    "1 Eintrag wird freigegeben.": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "1 entry will be approved."
+          }
+        }
+      }
+    },
+    "10 Sekunden vor": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "10 seconds forward"
+          }
+        }
+      }
+    },
+    "10 Sekunden zurück": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "10 seconds back"
+          }
+        }
+      }
+    },
+    "10–12 Jahre": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "10–12 years"
+          }
+        }
+      }
+    },
+    "30 Tage": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "30 days"
+          }
+        }
+      }
+    },
+    "6–9 Jahre": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "6–9 years"
+          }
+        }
+      }
+    },
+    "7 Tage": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "7 days"
+          }
+        }
+      }
+    },
+    "; %lld bleiben zur Einzelprüfung": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "; %lld remain for individual review"
+          }
+        }
+      }
+    },
+    "Ab %lld Jahren": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "From age %lld"
+          }
+        }
+      }
+    },
+    "Ab 12": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "From 12"
+          }
+        }
+      }
+    },
     "Abbrechen": {
       "localizations": {
         "en": {
           "stringUnit": {
             "state": "translated",
             "value": "Cancel"
+          }
+        }
+      }
+    },
+    "Abgelehnt": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Declined"
+          }
+        }
+      }
+    },
+    "Abgelehnt: Schlüssel oder Bot passen nicht (HTTP 401).": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Declined: key or bot do not match (HTTP 401)."
           }
         }
       }
@@ -22,6 +472,86 @@
         }
       }
     },
+    "Ablehnen (%lld)": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Decline (%lld)"
+          }
+        }
+      }
+    },
+    "Ablehnen („nicht jetzt“)": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Decline (“not now”)"
+          }
+        }
+      }
+    },
+    "Abo finden": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Find subscription"
+          }
+        }
+      }
+    },
+    "Abspielen": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Play"
+          }
+        }
+      }
+    },
+    "Abspielen: %@%@": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Play: %@%@"
+          }
+        }
+      }
+    },
+    "Adresse, z. B. tube.example.org": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Address, e.g. tube.example.org"
+          }
+        }
+      }
+    },
+    "Aktuelle PIN": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Current PIN"
+          }
+        }
+      }
+    },
+    "Aktuelle PIN falsch (noch %lld Versuche).": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Current PIN wrong (%lld attempts left)."
+          }
+        }
+      }
+    },
     "Alle": {
       "localizations": {
         "en": {
@@ -32,12 +562,52 @@
         }
       }
     },
+    "Alle Kanäle anzeigen": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Show all channels"
+          }
+        }
+      }
+    },
     "Alle Videos": {
       "localizations": {
         "en": {
           "stringUnit": {
             "state": "translated",
             "value": "All videos"
+          }
+        }
+      }
+    },
+    "Alle auswählen": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Select all"
+          }
+        }
+      }
+    },
+    "Alle offenen Kandidaten verwerfen?": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Discard all open candidates?"
+          }
+        }
+      }
+    },
+    "Alle verwerfen": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Discard all"
           }
         }
       }
@@ -62,12 +632,72 @@
         }
       }
     },
+    "Alter und Kategorie": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Age and category"
+          }
+        }
+      }
+    },
+    "Altersprofil": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Age profile"
+          }
+        }
+      }
+    },
+    "Altersprofile": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Age profiles"
+          }
+        }
+      }
+    },
+    "Am Ring drehen, um die Auswahl zu bewegen; Mitte tippen zum Oeffnen oder fuer Play/Pause; oben/unten Auswahl bzw. Lautstaerke, links/rechts Video wechseln.": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Turn the ring to move the selection; tap the center to open or for play/pause; up/down for selection or volume, left/right to switch videos."
+          }
+        }
+      }
+    },
+    "Am meisten gesehen": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Most watched"
+          }
+        }
+      }
+    },
     "Anbieter": {
       "localizations": {
         "en": {
           "stringUnit": {
             "state": "translated",
             "value": "Publisher"
+          }
+        }
+      }
+    },
+    "Angst": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Fear"
           }
         }
       }
@@ -82,12 +712,472 @@
         }
       }
     },
+    "Anime & Manga (ab 12)": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Anime & manga (from 12)"
+          }
+        }
+      }
+    },
+    "Anlass im Original ansehen (Eltern)": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Watch the original (parents)"
+          }
+        }
+      }
+    },
+    "Anmerkung für die Familie (optional)": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Note for the family (optional)"
+          }
+        }
+      }
+    },
+    "Anschauen": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Watch"
+          }
+        }
+      }
+    },
+    "Antwort an %@ (freiwillig)": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Reply to %@ (optional)"
+          }
+        }
+      }
+    },
+    "Antwort von YouTube war unlesbar.": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "The answer from YouTube was unreadable."
+          }
+        }
+      }
+    },
+    "Antwort: %@": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Reply: %@"
+          }
+        }
+      }
+    },
     "App": {
       "localizations": {
         "en": {
           "stringUnit": {
             "state": "translated",
             "value": "App"
+          }
+        }
+      }
+    },
+    "Aufgenommen": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Added"
+          }
+        }
+      }
+    },
+    "Aufheben": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Remove"
+          }
+        }
+      }
+    },
+    "Aus der Suche": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "From search"
+          }
+        }
+      }
+    },
+    "Aus der Whitelist übernommen und von Eltern eingestuft.": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Taken from the whitelist and rated by parents."
+          }
+        }
+      }
+    },
+    "Ausgewählt: %@": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Selected: %@"
+          }
+        }
+      }
+    },
+    "Ausnahme bis %@": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Exception until %@"
+          }
+        }
+      }
+    },
+    "Auswählen": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Select"
+          }
+        }
+      }
+    },
+    "Autoplay ist aus: Nach einem Video entscheidet euer Kind selbst, ob es weitergeht. Tageslimit und Schlaf-Timer setzen einen Rahmen, den die App ruhig durchsetzt – ohne Tricks, mit klaren Bildschirmen und der PIN als Ausweg. Die Fernbedienung mit Rad ist bewusst langsam und haptisch: Auswählen wird zur Handlung, nicht zum Wischen.": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Autoplay is off: after a video, your child decides whether to continue. Daily limit and sleep timer set a frame that the app enforces calmly – without tricks, with clear screens and the PIN as the way out. The remote with its wheel is deliberately slow and tactile: choosing becomes an action, not a swipe."
+          }
+        }
+      }
+    },
+    "Bearbeiten": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Edit"
+          }
+        }
+      }
+    },
+    "Bedienung": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Controls"
+          }
+        }
+      }
+    },
+    "Beginn": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Start"
+          }
+        }
+      }
+    },
+    "Bei %lld Einträgen hebt die Kategorie das Mindestalter an – dort gilt das höhere.": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "For %lld entries the category raises the minimum age – the higher one applies there."
+          }
+        }
+      }
+    },
+    "Bei 1 Eintrag hebt die Kategorie das Mindestalter an – dort gilt das höhere.": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "For 1 entry the category raises the minimum age – the higher one applies there."
+          }
+        }
+      }
+    },
+    "Bei jedem neuen Wunsch schreibt SideTube eine kurze Nachricht in ein Gespräch auf der eigenen Nextcloud – ohne Namen und ohne Titel. Die Nextcloud-App meldet sie auf dem Telefon der Eltern.": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "For every new wish, SideTube writes a short message to a conversation on the family’s own Nextcloud – without names and without titles. The Nextcloud app reports it on the parents’ phone."
+          }
+        }
+      }
+    },
+    "Beim Aufnehmen entscheidet ihr Stufe, Alter und Kategorie; „Gesperrt“ nimmt den Kanal nicht auf. „Vertrauenswürdige Reihe“ zeigt neue Folgen gesperrt zum Wünschen.": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "When adding, you decide level, age and category; “Blocked” does not add the channel. “Trusted series” shows new episodes locked, available for wishes."
+          }
+        }
+      }
+    },
+    "Benachrichtigung entfernen?": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Remove notification?"
+          }
+        }
+      }
+    },
+    "Bereich": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Section"
+          }
+        }
+      }
+    },
+    "Besprechen": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Discuss"
+          }
+        }
+      }
+    },
+    "Bis %lld Jahre": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Up to age %lld"
+          }
+        }
+      }
+    },
+    "Bitte das Video ausreichend ansehen. Der automatische Filter ist nur ein Hinweis.": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Please watch enough of the video. The automatic filter is only a hint."
+          }
+        }
+      }
+    },
+    "Bitte eine Adresse wie tube.example.org eingeben.": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Please enter an address like tube.example.org."
+          }
+        }
+      }
+    },
+    "Bitte starte die App erneut. Deine Freigaben bleiben gespeichert.": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Please restart the app. Your approvals remain saved."
+          }
+        }
+      }
+    },
+    "Bleiben in der Prüfliste": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Stay in the review list"
+          }
+        }
+      }
+    },
+    "Code scannen": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Scan code"
+          }
+        }
+      }
+    },
+    "Dafür wird der YouTube-API-Schlüssel gebraucht (Playlists ohne oEmbed, Ausweichweg für Videos). Er fehlt in Config/Secrets.xcconfig.": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "This needs the YouTube API key (playlists without oEmbed, fallback for videos). It is missing in Config/Secrets.xcconfig."
+          }
+        }
+      }
+    },
+    "Das Kind darf im Kanal stöbern; neue Videos erscheinen ohne Einzelprüfung, nur mit Risikofilter.": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "The child may browse the channel; new videos appear without individual review, only with the risk filter."
+          }
+        }
+      }
+    },
+    "Das Kind hat nur ein Stichwort geschickt und dabei nichts Fremdes gesehen.": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "The child only sent a keyword and saw nothing unfamiliar."
+          }
+        }
+      }
+    },
+    "Das Kind möchte mehr wie dieses freigegebene Video.": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "The child wants more like this approved video."
+          }
+        }
+      }
+    },
+    "Das Kind sieht nur Videos dieses Kanals, die ihr einzeln freigegeben habt.": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "The child sees only videos of this channel that you approved individually."
+          }
+        }
+      }
+    },
+    "Das Video lädt nicht. Ist das Internet an?": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "The video does not load. Is the internet on?"
+          }
+        }
+      }
+    },
+    "Das geht leider nicht.": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Sorry, that is not possible."
+          }
+        }
+      }
+    },
+    "Das ging nicht: Der Wunsch ist schon entschieden.": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "That did not work: the wish has already been decided."
+          }
+        }
+      }
+    },
+    "Das hast du dir schon gewünscht. Deine Eltern schauen es sich an.": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "You already wished for that. Your parents are looking at it."
+          }
+        }
+      }
+    },
+    "Das hat nicht geklappt. Ist das Internet an?": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "That did not work. Is the internet on?"
+          }
+        }
+      }
+    },
+    "Das hat nicht geklappt. Sag deinen Eltern Bescheid.": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "That did not work. Tell your parents."
+          }
+        }
+      }
+    },
+    "Das ist kein YouTube-Link.": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "This is not a YouTube link."
+          }
+        }
+      }
+    },
+    "Das ist kein unterstützter Link. Möglich: YouTube (Kanal, Video, Playlist) oder PeerTube (Video, Kanal).": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "This link is not supported. Possible: YouTube (channel, video, playlist) or PeerTube (video, channel)."
+          }
+        }
+      }
+    },
+    "Das klappt gerade nicht. Sag deinen Eltern Bescheid.": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "This is not working right now. Tell your parents."
+          }
+        }
+      }
+    },
+    "Daten konnten nicht geladen werden": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Data could not be loaded"
           }
         }
       }
@@ -102,12 +1192,292 @@
         }
       }
     },
+    "Datenschutz: Alles bleibt auf dem Gerät. Keine Konten, keine Werbung, kein Tracking. Die App richtet sich auch an Kinder unter 13 und erhebt keine personenbezogenen Daten von ihnen.": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Privacy: everything stays on the device. No accounts, no ads, no tracking. The app is also meant for children under 13 and collects no personal data from them."
+          }
+        }
+      }
+    },
     "Datenschutzerklärung": {
       "localizations": {
         "en": {
           "stringUnit": {
             "state": "translated",
             "value": "Privacy policy"
+          }
+        }
+      }
+    },
+    "Dauer": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Duration"
+          }
+        }
+      }
+    },
+    "Dazu gibt es kein Video.": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "There is no video for that."
+          }
+        }
+      }
+    },
+    "Dein Wunsch ist bei deinen Eltern. ": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Your wish is with your parents. "
+          }
+        }
+      }
+    },
+    "Deine Eltern haben noch nichts ausgesucht.": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Your parents have not picked anything yet."
+          }
+        }
+      }
+    },
+    "Deine Eltern haben von hier noch kein Video ausgesucht.": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Your parents have not picked a video from here yet."
+          }
+        }
+      }
+    },
+    "Deine Eltern können hier %@ für dich aussuchen.": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Your parents can pick %@ for you here."
+          }
+        }
+      }
+    },
+    "Deine Eltern können hier Kanäle für dich aussuchen.": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Your parents can pick channels for you here."
+          }
+        }
+      }
+    },
+    "Deine Eltern richten SideTube erst noch ein.": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Your parents are still setting up SideTube."
+          }
+        }
+      }
+    },
+    "Deine Eltern: „%@“": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Your parents: “%@”"
+          }
+        }
+      }
+    },
+    "Deine Zeit für heute ist um. Morgen geht es weiter.": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Your time for today is up. It continues tomorrow."
+          }
+        }
+      }
+    },
+    "Den Code erzeugt das Skript `talk-wunschkanal.sh` auf dem Server der Familie (Nextcloud mit Talk).": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "The code is created by the script `talk-wunschkanal.sh` on the family’s server (Nextcloud with Talk)."
+          }
+        }
+      }
+    },
+    "Der Einrichtungscode passt nicht.": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "The setup code does not match."
+          }
+        }
+      }
+    },
+    "Der Filter hat eindeutig nicht kindgerechte Begriffe erkannt – keine Freigabe möglich.": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "The filter found clearly unsuitable terms – approval is not possible."
+          }
+        }
+      }
+    },
+    "Der Filter hat eindeutig nicht kindgerechte Begriffe im Titel erkannt – keine Freigabe möglich.": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "The filter found clearly unsuitable terms in the title – approval is not possible."
+          }
+        }
+      }
+    },
+    "Der Kanal kommt nicht in die Liste; künftige Links dieses Kanals werden abgewiesen.": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "The channel is not added to the list; future links from this channel are rejected."
+          }
+        }
+      }
+    },
+    "Der Schlüssel wird von diesem Gerät gelöscht. Bot und Gespräch auf der Nextcloud bleiben.": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "The key is deleted from this device. Bot and conversation on the Nextcloud remain."
+          }
+        }
+      }
+    },
+    "Der eingebettete YouTube-Player kann am Ende oder in der Pause Vorschläge aus demselben Kanal zeigen; das lässt sich technisch nicht abschalten. Deshalb gilt: Für das freie Stöbern nur vollständig kindorientierte Quellen, alles andere Video für Video. Und: Kein Filter ersetzt das Gespräch. Schaut hin und wieder gemeinsam.": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "The embedded YouTube player may show suggestions from the same channel at the end or while paused; this cannot be switched off technically. So: for free browsing only fully child-oriented sources, everything else video by video. And: no filter replaces the conversation. Watch together now and then."
+          }
+        }
+      }
+    },
+    "Derbe Sprache": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Coarse language"
+          }
+        }
+      }
+    },
+    "Die Eingaben stimmen nicht überein. Bitte erneut beginnen.": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "The entries do not match. Please start again."
+          }
+        }
+      }
+    },
+    "Die Einträge verschwinden aus der Whitelist von %@. Freigegebene Inhalte bleiben unberührt; ein Startpaket lässt sich jederzeit erneut laden.": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "The entries disappear from the whitelist of %@. Approved content is untouched; a starter pack can be loaded again at any time."
+          }
+        }
+      }
+    },
+    "Die Instanz wird mit der Stufe „nur einzeln geprüfte Videos“ angelegt. Für eine eigene Familien-Instanz kann die Stufe danach erhöht werden.": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "The instance is created with the level “individually reviewed videos only”. For your own family instance the level can be raised afterwards."
+          }
+        }
+      }
+    },
+    "Die PIN konnte nicht sicher gespeichert werden. Bitte versuche es erneut.": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "The PIN could not be saved securely. Please try again."
+          }
+        }
+      }
+    },
+    "Die PIN schützt den Elternbereich. Mindestens %lld Ziffern.": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "The PIN protects the parent area. At least %lld digits."
+          }
+        }
+      }
+    },
+    "Die PIN schützt die Einstellungen. Mindestens %lld Ziffern.": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "The PIN protects the settings. At least %lld digits."
+          }
+        }
+      }
+    },
+    "Die Schlafzeit ist da. Bis morgen!": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "It’s sleep time. See you tomorrow!"
+          }
+        }
+      }
+    },
+    "Die Sehzeit konnte nicht gespeichert werden. Bitte die Eltern fragen.": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Watch time could not be saved. Please ask your parents."
+          }
+        }
+      }
+    },
+    "Die Suche nutzt das YouTube-Kontingent. Für einzelne Kanäle ist „Link hinzufügen“ sparsamer.": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Search uses the YouTube quota. For single channels, “Add link” is more economical."
           }
         }
       }
@@ -122,52 +1492,202 @@
         }
       }
     },
-    "Eltern können in den Einstellungen Kanäle freigeben.": {
+    "Die letzte Wiedergabe wurde nicht sicher beendet. Bereits gespeicherte Sehzeit bleibt erhalten; fehlende Zeit wird nicht geschätzt. Bitte die Eltern fragen.": {
       "localizations": {
         "en": {
           "stringUnit": {
             "state": "translated",
-            "value": "Parents can approve channels in Settings."
+            "value": "The last playback was not ended safely. Watch time already saved is kept; missing time is not estimated. Please ask your parents."
           }
         }
       }
     },
-    "Eltern legen in den Einstellungen ein Profil und eine Whitelist an.": {
+    "Die neue PIN konnte nicht sicher gespeichert werden.": {
       "localizations": {
         "en": {
           "stringUnit": {
             "state": "translated",
-            "value": "Parents create a profile and a whitelist in Settings."
+            "value": "The new PIN could not be saved securely."
           }
         }
       }
     },
-    "PIN für die Einstellungen": {
+    "Die neue PIN stimmte nicht überein. Bitte erneut eingeben.": {
       "localizations": {
         "en": {
           "stringUnit": {
             "state": "translated",
-            "value": "PIN for Settings"
+            "value": "The new PIN did not match. Please enter it again."
           }
         }
       }
     },
-    "PIN eingeben": {
+    "Diese Kanäle stehen in einer Whitelist, aber nicht im Quellenregister – etwa von einem anderen Gerät übernommen. Ohne Einstufung zeigt SideTube daraus nur einzeln freigegebene Videos.": {
       "localizations": {
         "en": {
           "stringUnit": {
             "state": "translated",
-            "value": "Enter PIN"
+            "value": "These channels are on a whitelist but not in the source registry – for example taken over from another device. Without a rating, SideTube shows only individually approved videos from them."
           }
         }
       }
     },
-    "PIN festlegen": {
+    "Diese PeerTube-Instanz ist nicht freigegeben. Eltern können sie unter „Quellen & Sicherheitsstufen“ ergänzen.": {
       "localizations": {
         "en": {
           "stringUnit": {
             "state": "translated",
-            "value": "Set PIN"
+            "value": "This PeerTube instance is not approved. Parents can add it under “Sources & safety levels”."
+          }
+        }
+      }
+    },
+    "Diese Playlist ist leer.": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "This playlist is empty."
+          }
+        }
+      }
+    },
+    "Diese Quelle ist für Kinder gesperrt.": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "This source is blocked for children."
+          }
+        }
+      }
+    },
+    "Diese Sendung haben deine Eltern nicht ausgesucht.": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Your parents did not pick this show."
+          }
+        }
+      }
+    },
+    "Diese Videos gehen gerade nicht.": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "These videos are not working right now."
+          }
+        }
+      }
+    },
+    "Dieser Kanal ist nicht im SideTube-Quellenregister. Mit einem API-Schlüssel kann die allgemeine YouTube-Suche verwendet werden; sonst bitte die Kanaladresse einfügen.": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "This channel is not in the SideTube source registry. With an API key the general YouTube search can be used; otherwise please paste the channel address."
+          }
+        }
+      }
+    },
+    "Dieses Video ist auf der Instanz als nicht jugendfrei gekennzeichnet.": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "This video is marked as not suitable for minors on the instance."
+          }
+        }
+      }
+    },
+    "Drehen, links und rechts: Auswahl in der Reihe. Oben und unten: Reihe wechseln. Mitte: öffnen.": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Turn, left and right: move within the row. Up and down: switch rows. Center: open."
+          }
+        }
+      }
+    },
+    "Ein Drehrad zum Auswählen mit dem Daumen, wie am Sidephone. Ist es aus, gibt es im Kindermodus weder Griff noch Knopf dafür.": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "A wheel for choosing with the thumb, like on the Sidephone. When it is off, kid mode shows neither handle nor button for it."
+          }
+        }
+      }
+    },
+    "Ein Kandidat erscheint erst nach eurer Freigabe in der Prüfliste für das Kind. „Vertrauenswürdige Reihe“ zeigt neue Folgen gesperrt zum Wünschen.": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "A candidate appears for the child only after your approval in the review list. “Trusted series” shows new episodes locked, available for wishes."
+          }
+        }
+      }
+    },
+    "Eine neue Folge": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "A new episode"
+          }
+        }
+      }
+    },
+    "Eingerichtet": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Set up"
+          }
+        }
+      }
+    },
+    "Eingerichtet. Mit „Test senden“ prüfen, ob die Meldung ankommt.": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Set up. Use “Send test” to check that the message arrives."
+          }
+        }
+      }
+    },
+    "Einordnung": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Classification"
+          }
+        }
+      }
+    },
+    "Einrichten": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Set up"
+          }
+        }
+      }
+    },
+    "Einrichtungscode scannen": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Scan setup code"
           }
         }
       }
@@ -192,12 +1712,192 @@
         }
       }
     },
+    "Einstufen": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Rate"
+          }
+        }
+      }
+    },
+    "Einstufen und aufnehmen": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Rate and add"
+          }
+        }
+      }
+    },
+    "Eltern benachrichtigen": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Notify parents"
+          }
+        }
+      }
+    },
+    "Eltern können in den Einstellungen Kanäle freigeben.": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Parents can approve channels in Settings."
+          }
+        }
+      }
+    },
+    "Eltern legen in den Einstellungen ein Profil und eine Whitelist an.": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Parents create a profile and a whitelist in Settings."
+          }
+        }
+      }
+    },
+    "Eltern stellen pro Kind eine Whitelist aus YouTube-Kanälen, -Videos und -Playlists zusammen. Im Kindermodus gibt es nur diese Inhalte – ohne Empfehlungen, Kommentare oder Werbung-Links. Alles bleibt auf diesem Gerät.": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Parents build a whitelist of YouTube channels, videos and playlists for each child. Kid mode shows only these – no recommendations, comments or ad links. Everything stays on this device."
+          }
+        }
+      }
+    },
+    "Eltern-PIN eingeben": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Enter parent PIN"
+          }
+        }
+      }
+    },
+    "Eltern-PIN festlegen": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Set parent PIN"
+          }
+        }
+      }
+    },
+    "Elternbereich": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Parent area"
+          }
+        }
+      }
+    },
+    "Elternbereich öffnen": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Open parent area"
+          }
+        }
+      }
+    },
     "Empfehlen": {
       "localizations": {
         "en": {
           "stringUnit": {
             "state": "translated",
             "value": "Recommend"
+          }
+        }
+      }
+    },
+    "Empfehlung": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Recommendation"
+          }
+        }
+      }
+    },
+    "Empfohlenes Video": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Recommended video"
+          }
+        }
+      }
+    },
+    "Ende": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "End"
+          }
+        }
+      }
+    },
+    "Entfernen": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Remove"
+          }
+        }
+      }
+    },
+    "Entfernt. SideTube meldet keine Wünsche mehr.": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Removed. SideTube no longer reports wishes."
+          }
+        }
+      }
+    },
+    "Erledigt": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Done"
+          }
+        }
+      }
+    },
+    "Erst im Elternbereich ein Profil anlegen.": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Create a profile in the parent area first."
+          }
+        }
+      }
+    },
+    "Erst in den Einstellungen ein Profil anlegen.": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Create a profile in Settings first."
           }
         }
       }
@@ -212,12 +1912,72 @@
         }
       }
     },
+    "Erwähnt": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Mentions"
+          }
+        }
+      }
+    },
+    "Falsche PIN. Noch %lld Versuche.": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Wrong PIN. %lld attempts left."
+          }
+        }
+      }
+    },
+    "Falsche PIN. Noch 1 Versuch.": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Wrong PIN. 1 attempt left."
+          }
+        }
+      }
+    },
+    "Fehler": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Error"
+          }
+        }
+      }
+    },
     "Fernbedienung": {
       "localizations": {
         "en": {
           "stringUnit": {
             "state": "translated",
             "value": "Remote"
+          }
+        }
+      }
+    },
+    "Fernbedienung mit Scrollrad": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Remote with click wheel"
+          }
+        }
+      }
+    },
+    "Fernbedienung öffnen": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Open remote"
           }
         }
       }
@@ -242,6 +2002,36 @@
         }
       }
     },
+    "Filter": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Filter"
+          }
+        }
+      }
+    },
+    "Filtertreffer": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "filter hit"
+          }
+        }
+      }
+    },
+    "Fr/Sa %lld min später": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Fri/Sat %lld min later"
+          }
+        }
+      }
+    },
     "Freigaben prüfen": {
       "localizations": {
         "en": {
@@ -262,12 +2052,132 @@
         }
       }
     },
+    "Freigeben (%lld)": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Approve (%lld)"
+          }
+        }
+      }
+    },
+    "Freigegeben": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Approved"
+          }
+        }
+      }
+    },
+    "Freigegebene Kategorie": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Approved category"
+          }
+        }
+      }
+    },
+    "Freigegebenes Video desselben Kanals": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Approved video from the same channel"
+          }
+        }
+      }
+    },
+    "Füge YouTube-Kanäle, -Videos oder -Playlists per Link hinzu.": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Add YouTube channels, videos or playlists by link."
+          }
+        }
+      }
+    },
     "Für Eltern": {
       "localizations": {
         "en": {
           "stringUnit": {
             "state": "translated",
             "value": "For parents"
+          }
+        }
+      }
+    },
+    "Für heute sind alle %lld Wünsche verbraucht. Morgen geht es weiter.": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "All %lld wishes for today are used up. It continues tomorrow."
+          }
+        }
+      }
+    },
+    "Für wen?": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "For whom?"
+          }
+        }
+      }
+    },
+    "Für „%@“ gibt es keinen Treffer. Probiere ein anderes Wort.": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "No results for “%@”. Try another word."
+          }
+        }
+      }
+    },
+    "Gefunden": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Found"
+          }
+        }
+      }
+    },
+    "Geführter Zugriff": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Guided Access"
+          }
+        }
+      }
+    },
+    "Geht gerade nicht": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Not working right now"
+          }
+        }
+      }
+    },
+    "Gemeinsam freigeben": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Approve together"
           }
         }
       }
@@ -292,12 +2202,192 @@
         }
       }
     },
+    "Gesendet. Die Meldung erscheint in der Nextcloud-App.": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Sent. The message appears in the Nextcloud app."
+          }
+        }
+      }
+    },
+    "Gesperrt": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Blocked"
+          }
+        }
+      }
+    },
+    "Gesperrt für %lld s.": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Locked for %lld s."
+          }
+        }
+      }
+    },
+    "Gesperrt – neu einstufen": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Blocked – rate again"
+          }
+        }
+      }
+    },
+    "Gesperrt – noch %lld s": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Locked – %lld s left"
+          }
+        }
+      }
+    },
+    "Gewalt": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Violence"
+          }
+        }
+      }
+    },
+    "Gewünscht": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Wished"
+          }
+        }
+      }
+    },
+    "Gezählt wird die tatsächlich gespielte Zeit, nicht die Länge der Videos.": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Counted is the time actually played, not the length of the videos."
+          }
+        }
+      }
+    },
+    "Gilt für alle ausgewählten Einträge.": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Applies to all selected entries."
+          }
+        }
+      }
+    },
+    "Gilt für den Kanal und als Vorgabe für neue Videos daraus.": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Applies to the channel and as the default for new videos from it."
+          }
+        }
+      }
+    },
     "Gute Nacht!": {
       "localizations": {
         "en": {
           "stringUnit": {
             "state": "translated",
             "value": "Good night!"
+          }
+        }
+      }
+    },
+    "Heute": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Today"
+          }
+        }
+      }
+    },
+    "Heute gehen noch %lld Wünsche.": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "%lld more wishes today."
+          }
+        }
+      }
+    },
+    "Heute geht kein Wunsch mehr.": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "No more wishes today."
+          }
+        }
+      }
+    },
+    "Heute geht noch 1 Wunsch.": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "1 more wish today."
+          }
+        }
+      }
+    },
+    "Hier ist gerade nichts für dich dabei.": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "There is nothing for you here right now."
+          }
+        }
+      }
+    },
+    "Hier ist gerade nichts zu sehen.": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Nothing to see here right now."
+          }
+        }
+      }
+    },
+    "Hier sind nur die Videos, die deine Eltern ausgesucht haben.": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Here are only the videos your parents picked."
+          }
+        }
+      }
+    },
+    "Hinweis": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Note"
           }
         }
       }
@@ -312,6 +2402,16 @@
         }
       }
     },
+    "Horror": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Horror"
+          }
+        }
+      }
+    },
     "Humor": {
       "localizations": {
         "en": {
@@ -322,12 +2422,32 @@
         }
       }
     },
+    "Höchstalter": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Maximum age"
+          }
+        }
+      }
+    },
     "Idee & Autor": {
       "localizations": {
         "en": {
           "stringUnit": {
             "state": "translated",
             "value": "Idea & author"
+          }
+        }
+      }
+    },
+    "Idee und Autor: %@ · ein SideKids-Projekt": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Idea and author: %@ · a SideKids project"
           }
         }
       }
@@ -352,6 +2472,126 @@
         }
       }
     },
+    "Import fehlgeschlagen: %@": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Import failed: %@"
+          }
+        }
+      }
+    },
+    "In deinen Inhalten": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "In your content"
+          }
+        }
+      }
+    },
+    "In den iOS-Einstellungen unter SideTube → Kamera erlauben, oder den Code als Text einfügen.": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Allow the camera in iOS Settings under SideTube → Camera, or paste the code as text."
+          }
+        }
+      }
+    },
+    "In der Ruhezeit ist der Kindermodus gesperrt; 15 und 5 Minuten vorher gibt es einen Hinweis. Die Eltern-PIN hebt die Sperre bis zum Morgen auf.": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "During quiet hours kid mode is locked; a notice appears 15 and 5 minutes before. The parent PIN lifts the lock until the morning."
+          }
+        }
+      }
+    },
+    "In der Ruhezeit ist der Kindermodus gesperrt; 15 und 5 Minuten vorher gibt es einen Hinweis. Die PIN hebt die Sperre bis zum Morgen auf.": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "During quiet hours kid mode is locked; a notice appears 15 and 5 minutes before. The PIN lifts the lock until the morning."
+          }
+        }
+      }
+    },
+    "In der Suche, am Ende eines Videos und bei neuen Folgen kannst du dir etwas wünschen.": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "You can make a wish in search, at the end of a video and for new episodes."
+          }
+        }
+      }
+    },
+    "In diesem Zeitraum wurde kein Video abgespielt.": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "No video was played in this period."
+          }
+        }
+      }
+    },
+    "Inhalte": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Content"
+          }
+        }
+      }
+    },
+    "Inhalte mit höherem Mindestalter bleiben unsichtbar. Manga zeichnen ab 8, Anime & Manga ab 12.": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Content with a higher minimum age stays hidden. Manga drawing from 8, anime & manga from 12."
+          }
+        }
+      }
+    },
+    "Jeder Eintrag behält sein vorgeschlagenes Alter.": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Each entry keeps its suggested age."
+          }
+        }
+      }
+    },
+    "Jeder Eintrag bekommt einen eigenen Verlaufseintrag (Eltern, „Sammelprüfung“). Unklares bitte einzeln prüfen.": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Each entry gets its own history record (parents, “batch review”). Please review unclear items individually."
+          }
+        }
+      }
+    },
+    "Jedes Profil hat ein Altersband (3–5, 6–8, 9–11, ab 12). Inhalte tragen ein Mindestalter und Kategorien. So kann ein Video für die Neunjährige freigegeben sein, während der Fünfjährige es nicht sieht – ohne dass ihr zwei Bibliotheken pflegen müsst. Quellen wie öffentlich-rechtliche Kinderangebote dürfen durchstöbert werden; gemischte Kanäle nur Video für Video.": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Each profile has an age band (3–5, 6–8, 9–11, from 12). Content carries a minimum age and categories. So a video can be approved for the nine-year-old while the five-year-old does not see it – without you maintaining two libraries. Sources such as public-service children’s channels may be browsed; mixed channels only video by video."
+          }
+        }
+      }
+    },
     "Jetzt freigeben": {
       "localizations": {
         "en": {
@@ -362,12 +2602,132 @@
         }
       }
     },
+    "Jetzt ist Ruhezeit. Ab %@ Uhr geht es weiter.": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "It’s quiet time now. It continues at %@."
+          }
+        }
+      }
+    },
+    "Jetzt ist Ruhezeit. Morgen früh geht es weiter.": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "It’s quiet time now. It continues tomorrow morning."
+          }
+        }
+      }
+    },
+    "Jüngere Kinder (6–8)": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Younger children (6–8)"
+          }
+        }
+      }
+    },
     "Kanal": {
       "localizations": {
         "en": {
           "stringUnit": {
             "state": "translated",
             "value": "Channel"
+          }
+        }
+      }
+    },
+    "Kanal als Kandidaten aufnehmen": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Add channel as a candidate"
+          }
+        }
+      }
+    },
+    "Kanal einstufen": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Rate channel"
+          }
+        }
+      }
+    },
+    "Kanal einstufen und aufnehmen": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Rate and add channel"
+          }
+        }
+      }
+    },
+    "Kanal hinzufügen": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Add channel"
+          }
+        }
+      }
+    },
+    "Kanal prüfen: %@": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Review channel: %@"
+          }
+        }
+      }
+    },
+    "Kanal sperren": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Block channel"
+          }
+        }
+      }
+    },
+    "Kanal steht in der Whitelist von %@.": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Channel is on the whitelist of %@."
+          }
+        }
+      }
+    },
+    "Kanal öffnen": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Open channel"
+          }
+        }
+      }
+    },
+    "Kanalname, z. B. Die Maus": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Channel name, e.g. Die Maus"
           }
         }
       }
@@ -392,12 +2752,92 @@
         }
       }
     },
+    "Katastrophe": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Disaster"
+          }
+        }
+      }
+    },
+    "Kategorie": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Category"
+          }
+        }
+      }
+    },
+    "Kein Kanal gefunden. Andere Schreibweise probieren oder den Link direkt einfügen.": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "No channel found. Try another spelling or paste the link directly."
+          }
+        }
+      }
+    },
+    "Kein Video passt zu „%@“.": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "No video matches “%@”."
+          }
+        }
+      }
+    },
+    "Kein Zugriff auf die Kamera": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "No access to the camera"
+          }
+        }
+      }
+    },
+    "Keine": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "None"
+          }
+        }
+      }
+    },
     "Keine Treffer": {
       "localizations": {
         "en": {
           "stringUnit": {
             "state": "translated",
             "value": "No matches"
+          }
+        }
+      }
+    },
+    "Keine Verbindung: %@": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "No connection: %@"
+          }
+        }
+      }
+    },
+    "Keine auswählen": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Select none"
           }
         }
       }
@@ -412,6 +2852,26 @@
         }
       }
     },
+    "Keine hinterlegt – das Kind wählt selbst. (Im Profil einstellbar.)": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "None set – the child chooses. (Configurable in the profile.)"
+          }
+        }
+      }
+    },
+    "Kind": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Child"
+          }
+        }
+      }
+    },
     "Kind in der App halten": {
       "localizations": {
         "en": {
@@ -422,12 +2882,102 @@
         }
       }
     },
+    "Kinder (9–11)": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Children (9–11)"
+          }
+        }
+      }
+    },
+    "Kinder wollen Videos schauen – und vieles davon ist gut. Das Problem ist nicht das Video, sondern die Maschine darum herum: Empfehlungen, Autoplay, Trends, Kommentare, endlose Feeds. SideTube nimmt den Inhalt und lässt die Maschine weg. Ihr wählt aus, euer Kind stöbert frei – aber nur in dieser Auswahl.": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Children want to watch videos – and much of it is good. The problem is not the video but the machine around it: recommendations, autoplay, trends, comments, endless feeds. SideTube takes the content and leaves the machine out. You choose, your child browses freely – but only within that selection."
+          }
+        }
+      }
+    },
+    "Kindernachrichten sind wertvoll, aber nicht automatisch unbelastend. Beiträge über Krieg, Katastrophen oder Tod werden gekennzeichnet und erscheinen erst, wenn ihr sie bewusst freigebt – am besten, um sie gemeinsam anzuschauen und darüber zu sprechen.": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Children’s news is valuable but not automatically harmless. Items about war, disasters or death are marked and appear only when you deliberately approve them – ideally to watch them together and talk about them."
+          }
+        }
+      }
+    },
+    "Konnte nicht sichern: %@": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Could not save: %@"
+          }
+        }
+      }
+    },
+    "Konnte nicht speichern: %@": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Could not save: %@"
+          }
+        }
+      }
+    },
+    "Kontext der aktuellen Liste": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Context of the current list"
+          }
+        }
+      }
+    },
     "Kreativ": {
       "localizations": {
         "en": {
           "stringUnit": {
             "state": "translated",
             "value": "Creative"
+          }
+        }
+      }
+    },
+    "Krieg": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "War"
+          }
+        }
+      }
+    },
+    "Kuratieren statt filtern": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Curating instead of filtering"
+          }
+        }
+      }
+    },
+    "Lege für jedes Kind ein Profil mit eigener Whitelist an.": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Create a profile with its own whitelist for each child."
           }
         }
       }
@@ -452,6 +3002,36 @@
         }
       }
     },
+    "Link kopiert – in Signal den Chat wählen und einfügen.": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Link copied – choose the chat in Signal and paste."
+          }
+        }
+      }
+    },
+    "Link kopiert: %@": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Link copied: %@"
+          }
+        }
+      }
+    },
+    "Live": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Live"
+          }
+        }
+      }
+    },
     "Lizenz": {
       "localizations": {
         "en": {
@@ -472,12 +3052,52 @@
         }
       }
     },
+    "Made for Kids": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Made for Kids"
+          }
+        }
+      }
+    },
+    "Manga als Gestalten, nicht nur Konsum": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Manga as creating, not just consuming"
+          }
+        }
+      }
+    },
+    "Manga ist bei vielen Kindern ein großes Thema. SideTube trennt bewusst: „Manga zeichnen“ (ab 8) sind Tutorials zum Selbermachen – Gesichter, Figuren, Perspektive, eigene Geschichten. „Anime & Manga“ (ab 12) ist Unterhaltung und Szenekultur, die ihr im Profil eigens einschalten müsst. Große Anime-Kanäle sind nicht automatisch kindgerecht; Popularität ist kein Qualitätsmerkmal.": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Manga is a big topic for many children. SideTube deliberately separates: “Manga drawing” (from 8) are tutorials for making your own – faces, figures, perspective, own stories. “Anime & manga” (from 12) is entertainment and scene culture that you must enable separately in the profile. Big anime channels are not automatically suitable for children; popularity is no mark of quality."
+          }
+        }
+      }
+    },
     "Manga zeichnen": {
       "localizations": {
         "en": {
           "stringUnit": {
             "state": "translated",
             "value": "Drawing manga"
+          }
+        }
+      }
+    },
+    "Medien ab 16/18": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Media rated 16/18"
           }
         }
       }
@@ -492,12 +3112,132 @@
         }
       }
     },
+    "Mehr davon": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "More like this"
+          }
+        }
+      }
+    },
+    "Mehr davon wünschen": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Wish for more like this"
+          }
+        }
+      }
+    },
+    "Mehr wie „%@“": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "More like “%@”"
+          }
+        }
+      }
+    },
+    "Meine Wünsche": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "My wishes"
+          }
+        }
+      }
+    },
+    "Mindestalter": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Minimum age"
+          }
+        }
+      }
+    },
+    "Mitte: Abspielen oder Pause. Links und rechts: Video wechseln. Oben und unten oder Drehen: 10 Sekunden spulen.": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Center: play or pause. Left and right: switch video. Up and down or turning: skip 10 seconds."
+          }
+        }
+      }
+    },
     "Musik": {
       "localizations": {
         "en": {
           "stringUnit": {
             "state": "translated",
             "value": "Music"
+          }
+        }
+      }
+    },
+    "Nach Ablauf erscheint „Gute Nacht“, das Video pausiert. In der letzten Minute wird die Lautstärke ausgeblendet. Nur die Eltern-PIN beendet den Schlafmodus vorzeitig.": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "When the time is up, “Good night” appears and the video pauses. The volume fades out during the last minute. Only the parent PIN ends sleep mode early."
+          }
+        }
+      }
+    },
+    "Nach Ablauf erscheint „Gute Nacht“, das Video pausiert. In der letzten Minute wird die Lautstärke ausgeblendet. Nur die PIN beendet den Schlafmodus vorzeitig.": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "When the time is up, “Good night” appears and the video pauses. The volume fades out during the last minute. Only the PIN ends sleep mode early."
+          }
+        }
+      }
+    },
+    "Nachricht prüfen": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "review news item"
+          }
+        }
+      }
+    },
+    "Nachricht: Eltern prüfen": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "News: parents review"
+          }
+        }
+      }
+    },
+    "Nachricht: belastend": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "News: distressing"
+          }
+        }
+      }
+    },
+    "Nachricht: unbedenklich": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "News: harmless"
           }
         }
       }
@@ -512,12 +3252,152 @@
         }
       }
     },
+    "Nachrichten (logo!)": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "News (logo!)"
+          }
+        }
+      }
+    },
+    "Nachrichten ist auf diesem Gerät nicht verfügbar. Der Link wurde kopiert.": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Messages is not available on this device. The link was copied."
+          }
+        }
+      }
+    },
+    "Nachrichtenquelle – jede Nachricht wird einzeln eingestuft.": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "News source – every item is rated individually."
+          }
+        }
+      }
+    },
+    "Nachrichtenstatus": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "News status"
+          }
+        }
+      }
+    },
+    "Name": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Name"
+          }
+        }
+      }
+    },
+    "Name (optional)": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Name (optional)"
+          }
+        }
+      }
+    },
     "Natur": {
       "localizations": {
         "en": {
           "stringUnit": {
             "state": "translated",
             "value": "Nature"
+          }
+        }
+      }
+    },
+    "Neu bei deinen Kanälen": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "New on your channels"
+          }
+        }
+      }
+    },
+    "Neu einrichten": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Set up again"
+          }
+        }
+      }
+    },
+    "Neue Folge eines Kanals mit Stufe „Vertrauenswürdige Reihe“. Das Kind hat Bild und Titel gesehen, nicht das Video.": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "New episode of a channel rated “Trusted series”. The child saw image and title, not the video."
+          }
+        }
+      }
+    },
+    "Neue Folgen erscheinen gesperrt mit Bild und Titel – das Kind kann sie sich wünschen, ihr gebt sie frei.": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "New episodes appear locked with image and title – the child can wish for them, you approve them."
+          }
+        }
+      }
+    },
+    "Neue Kandidaten erscheinen hier, bevor sie im Kinderprofil sichtbar werden.": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "New candidates appear here before they become visible in the child profile."
+          }
+        }
+      }
+    },
+    "Neue PIN": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "New PIN"
+          }
+        }
+      }
+    },
+    "Neue PIN ungültig.": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "New PIN invalid."
+          }
+        }
+      }
+    },
+    "Neue PIN wiederholen": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Repeat new PIN"
           }
         }
       }
@@ -532,12 +3412,162 @@
         }
       }
     },
+    "Nextcloud": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Nextcloud"
+          }
+        }
+      }
+    },
+    "Nicht angekommen (HTTP %lld).": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Did not arrive (HTTP %lld)."
+          }
+        }
+      }
+    },
+    "Nicht angekommen: Server nicht erreichbar.": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Did not arrive: server unreachable."
+          }
+        }
+      }
+    },
+    "Nicht das Richtige dabei?": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Not the right thing?"
+          }
+        }
+      }
+    },
+    "Nicht gefunden: Gespräch oder Talk fehlt (HTTP 404).": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Not found: conversation or Talk missing (HTTP 404)."
+          }
+        }
+      }
+    },
+    "Nicht jetzt": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Not now"
+          }
+        }
+      }
+    },
+    "Nichts dabei? Wünsch es dir!": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Nothing here? Make a wish!"
+          }
+        }
+      }
+    },
     "Nichts gefunden": {
       "localizations": {
         "en": {
           "stringUnit": {
             "state": "translated",
             "value": "Nothing found"
+          }
+        }
+      }
+    },
+    "Nichts gefunden – ist der Inhalt öffentlich und der Link vollständig?": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Nothing found – is the content public and the link complete?"
+          }
+        }
+      }
+    },
+    "Nichts gemeinsam abzulehnen": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Nothing to decline together"
+          }
+        }
+      }
+    },
+    "Nichts geschaut": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Nothing watched"
+          }
+        }
+      }
+    },
+    "Nichts zu prüfen": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Nothing to review"
+          }
+        }
+      }
+    },
+    "Noch %lld Minuten": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "%lld minutes left"
+          }
+        }
+      }
+    },
+    "Noch kein Profil": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "No profile yet"
+          }
+        }
+      }
+    },
+    "Noch keine %@": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "No %@ yet"
+          }
+        }
+      }
+    },
+    "Noch keine Einträge": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "No entries yet"
           }
         }
       }
@@ -572,6 +3602,36 @@
         }
       }
     },
+    "Noch keine Wünsche": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "No wishes yet"
+          }
+        }
+      }
+    },
+    "Noch nicht eingerichtet.": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Not set up yet."
+          }
+        }
+      }
+    },
+    "Noch nicht eingestuft": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Not rated yet"
+          }
+        }
+      }
+    },
     "Noch nichts geschaut": {
       "localizations": {
         "en": {
@@ -592,12 +3652,172 @@
         }
       }
     },
+    "Nur Eltern geben Inhalte frei – deshalb die PIN.": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Only parents approve content – hence the PIN."
+          }
+        }
+      }
+    },
+    "Nur einzeln geprüfte Videos": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Individually reviewed videos only"
+          }
+        }
+      }
+    },
+    "Nur für Eltern": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Parents only"
+          }
+        }
+      }
+    },
+    "Nur für euch in den Einstellungen – das Kind sieht nichts aus diesem Kanal.": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Only for you in the settings – the child sees nothing from this channel."
+          }
+        }
+      }
+    },
+    "Nutzung": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Usage"
+          }
+        }
+      }
+    },
     "Nächstes Video": {
       "localizations": {
         "en": {
           "stringUnit": {
             "state": "translated",
             "value": "Next video"
+          }
+        }
+      }
+    },
+    "Nächstes Video automatisch": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Next video automatically"
+          }
+        }
+      }
+    },
+    "OK": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "OK"
+          }
+        }
+      }
+    },
+    "Offen": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Open"
+          }
+        }
+      }
+    },
+    "Ohne API-Schlüssel werden bekannte SideTube-Quellen durchsucht. Andere Kanäle lassen sich über „Link hinzufügen“ per Adresse aufnehmen.": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Without an API key, known SideTube sources are searched. Other channels can be added by address via “Add link”."
+          }
+        }
+      }
+    },
+    "Ohne Limit darf unbegrenzt geschaut werden. Die Zeit wird um Mitternacht zurückgesetzt.": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Without a limit, watching is unlimited. The time resets at midnight."
+          }
+        }
+      }
+    },
+    "Original auf YouTube (Eltern-PIN)": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Original on YouTube (parent PIN)"
+          }
+        }
+      }
+    },
+    "Original auf YouTube (PIN)": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Original on YouTube (PIN)"
+          }
+        }
+      }
+    },
+    "PIN eingeben": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Enter PIN"
+          }
+        }
+      }
+    },
+    "PIN festlegen": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Set PIN"
+          }
+        }
+      }
+    },
+    "PIN für die Einstellungen": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "PIN for Settings"
+          }
+        }
+      }
+    },
+    "PIN ungültig: nur Ziffern, mindestens %lld.": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "PIN invalid: digits only, at least %lld."
           }
         }
       }
@@ -628,6 +3848,16 @@
           "stringUnit": {
             "state": "translated",
             "value": "Paused"
+          }
+        }
+      }
+    },
+    "PeerTube ist föderiert: jede Instanz moderiert selbst. Nur eingetragene Instanzen dürfen Inhalte liefern; eine eigene Familien-Instanz kann als vertrauenswürdige Kinderquelle eingestuft werden.": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "PeerTube is federated: every instance moderates itself. Only registered instances may deliver content; your own family instance can be rated as a trusted children’s source."
           }
         }
       }
@@ -672,6 +3902,16 @@
         }
       }
     },
+    "Play/Pause": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Play/Pause"
+          }
+        }
+      }
+    },
     "Playlist": {
       "localizations": {
         "en": {
@@ -682,12 +3922,62 @@
         }
       }
     },
+    "Playlist-URL oder -ID (optional)": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Playlist URL or ID (optional)"
+          }
+        }
+      }
+    },
     "Playlists": {
       "localizations": {
         "en": {
           "stringUnit": {
             "state": "translated",
             "value": "Playlists"
+          }
+        }
+      }
+    },
+    "Politik": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Politics"
+          }
+        }
+      }
+    },
+    "Pro Tag": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Per day"
+          }
+        }
+      }
+    },
+    "Probiere ein anderes Wort.": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Try another word."
+          }
+        }
+      }
+    },
+    "Profil": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Profile"
           }
         }
       }
@@ -712,6 +4002,16 @@
         }
       }
     },
+    "Profil wechseln, aktuell %@": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Switch profile, currently %@"
+          }
+        }
+      }
+    },
     "Profile": {
       "localizations": {
         "en": {
@@ -732,12 +4032,82 @@
         }
       }
     },
+    "Prüfen (%lld)": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Review (%lld)"
+          }
+        }
+      }
+    },
+    "Prüfung abgelaufen": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Review expired"
+          }
+        }
+      }
+    },
+    "Prüfung fällig": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Review due"
+          }
+        }
+      }
+    },
+    "Prüfung nötig": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Review required"
+          }
+        }
+      }
+    },
     "Quellcode": {
       "localizations": {
         "en": {
           "stringUnit": {
             "state": "translated",
             "value": "Source code"
+          }
+        }
+      }
+    },
+    "Quelle gesperrt": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Source blocked"
+          }
+        }
+      }
+    },
+    "Quelle noch nicht eingestuft.": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Source not rated yet."
+          }
+        }
+      }
+    },
+    "Quellen": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Sources"
           }
         }
       }
@@ -752,12 +4122,82 @@
         }
       }
     },
+    "Ruhezeit": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Quiet hours"
+          }
+        }
+      }
+    },
+    "Schau mal: %@\n%@": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Have a look: %@\n%@"
+          }
+        }
+      }
+    },
+    "Schau mal: %@\n%@\nMit SideTube öffnen: %@": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Have a look: %@\n%@\nOpen with SideTube: %@"
+          }
+        }
+      }
+    },
+    "Schlaf-Playlist": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Sleep playlist"
+          }
+        }
+      }
+    },
+    "Schlafenszeit": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Bedtime"
+          }
+        }
+      }
+    },
     "Schlafmodus": {
       "localizations": {
         "en": {
           "stringUnit": {
             "state": "translated",
             "value": "Sleep mode"
+          }
+        }
+      }
+    },
+    "Schlafmodus starten und in den Kindermodus": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Start sleep mode and switch to kid mode"
+          }
+        }
+      }
+    },
+    "Schlafmodus – %@": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Sleep mode – %@"
           }
         }
       }
@@ -772,6 +4212,36 @@
         }
       }
     },
+    "Schreib erst, was du dir wünschst.": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "First write what you wish for."
+          }
+        }
+      }
+    },
+    "Scrollrad": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Click wheel"
+          }
+        }
+      }
+    },
+    "Sehzeit": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Watch time"
+          }
+        }
+      }
+    },
     "Sendungen": {
       "localizations": {
         "en": {
@@ -782,12 +4252,112 @@
         }
       }
     },
+    "Sexualisierung": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Sexualization"
+          }
+        }
+      }
+    },
+    "Short": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Short"
+          }
+        }
+      }
+    },
+    "Shorts erlauben": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Allow Shorts"
+          }
+        }
+      }
+    },
     "Sichern": {
       "localizations": {
         "en": {
           "stringUnit": {
             "state": "translated",
             "value": "Save"
+          }
+        }
+      }
+    },
+    "Side": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Side"
+          }
+        }
+      }
+    },
+    "SidePlay": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "SidePlay"
+          }
+        }
+      }
+    },
+    "SideTube": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "SideTube"
+          }
+        }
+      }
+    },
+    "SideTube ist ein SideKids-Projekt: aus dem Wunsch entstanden, Kindern gute Videos zu geben – ohne die Maschine drumherum.": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "SideTube is a SideKids project, born from the wish to give children good videos – without the machine around them."
+          }
+        }
+      }
+    },
+    "Sie erscheinen nicht bei %@. Der Verlauf hält jede Ablehnung einzeln fest.": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "They do not appear for %@. The history records each decline individually."
+          }
+        }
+      }
+    },
+    "Signal ist nicht installiert. Der Link wurde kopiert.": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Signal is not installed. The link was copied."
+          }
+        }
+      }
+    },
+    "Sonstiges": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Other"
           }
         }
       }
@@ -808,6 +4378,16 @@
           "stringUnit": {
             "state": "translated",
             "value": "Playing"
+          }
+        }
+      }
+    },
+    "Sprechen wir drüber": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Let’s talk about it"
           }
         }
       }
@@ -842,6 +4422,16 @@
         }
       }
     },
+    "Startpaket": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Starter pack"
+          }
+        }
+      }
+    },
     "Startpaket 9–11 Jahre": {
       "localizations": {
         "en": {
@@ -862,6 +4452,66 @@
         }
       }
     },
+    "Statt Verbotslisten gibt es hier eine Positivliste: Nichts ist sichtbar, bevor ein Erwachsener es geprüft und freigegeben hat. Das ist mehr Arbeit als ein Jugendschutzfilter – aber es entspricht dem, wie Kinder Vertrauen erleben: Jemand hat sich das angesehen und gesagt: „Das ist gut für dich.“ Der automatische Risikofilter hilft beim Sortieren, entscheidet aber nie allein.": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Instead of block lists there is an allow list: nothing is visible before an adult has reviewed and approved it. That is more work than a parental-control filter – but it matches how children experience trust: someone looked at this and said “this is good for you.” The automatic risk filter helps with sorting but never decides alone."
+          }
+        }
+      }
+    },
+    "Steht schon auf der Whitelist von %@.": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Already on the whitelist of %@."
+          }
+        }
+      }
+    },
+    "Steht schon auf der Whitelist.": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Already on the whitelist."
+          }
+        }
+      }
+    },
+    "Stelle im Video": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Position in the video"
+          }
+        }
+      }
+    },
+    "Stufe": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Level"
+          }
+        }
+      }
+    },
+    "Stufe wählen": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Choose level"
+          }
+        }
+      }
+    },
     "Suche": {
       "localizations": {
         "en": {
@@ -872,12 +4522,42 @@
         }
       }
     },
+    "Suche fehlgeschlagen: %@": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Search failed: %@"
+          }
+        }
+      }
+    },
     "Suche in deinen freigegebenen Kanälen, Videos und Playlists.": {
       "localizations": {
         "en": {
           "stringUnit": {
             "state": "translated",
             "value": "Search your approved channels, videos and playlists."
+          }
+        }
+      }
+    },
+    "Suche läuft …": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Searching …"
+          }
+        }
+      }
+    },
+    "Suche löschen": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Clear search"
           }
         }
       }
@@ -902,12 +4582,72 @@
         }
       }
     },
+    "Tageslimit": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Daily limit"
+          }
+        }
+      }
+    },
     "Technik": {
       "localizations": {
         "en": {
           "stringUnit": {
             "state": "translated",
             "value": "Technology"
+          }
+        }
+      }
+    },
+    "Test senden": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Send test"
+          }
+        }
+      }
+    },
+    "Tippe oben, um in den freigegebenen Inhalten zu suchen.": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Type above to search the approved content."
+          }
+        }
+      }
+    },
+    "Tipps für den Alltag": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Tips for everyday life"
+          }
+        }
+      }
+    },
+    "Tod": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Death"
+          }
+        }
+      }
+    },
+    "Treffer": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Results"
           }
         }
       }
@@ -922,12 +4662,122 @@
         }
       }
     },
+    "Untertitel ausschalten": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Turn subtitles off"
+          }
+        }
+      }
+    },
+    "Untertitel einschalten": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Turn subtitles on"
+          }
+        }
+      }
+    },
+    "Verbrechen": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Crime"
+          }
+        }
+      }
+    },
+    "Verkleinern": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Shrink"
+          }
+        }
+      }
+    },
+    "Verlauf": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "History"
+          }
+        }
+      }
+    },
     "Version": {
       "localizations": {
         "en": {
           "stringUnit": {
             "state": "translated",
             "value": "Version"
+          }
+        }
+      }
+    },
+    "Verstanden": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Got it"
+          }
+        }
+      }
+    },
+    "Vertrauensstufe": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Trust level"
+          }
+        }
+      }
+    },
+    "Vertrauensstufe für %lld Kanäle": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Trust level for %lld channels"
+          }
+        }
+      }
+    },
+    "Vertrauensstufe für 1 Kanal": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Trust level for 1 channel"
+          }
+        }
+      }
+    },
+    "Vertrauenswürdige Kinderquelle": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Trusted children’s source"
+          }
+        }
+      }
+    },
+    "Vertrauenswürdige Reihe": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Trusted series"
           }
         }
       }
@@ -942,12 +4792,132 @@
         }
       }
     },
+    "Video %lld von %lld": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Video %lld of %lld"
+          }
+        }
+      }
+    },
+    "Video im Original ansehen (Eltern)": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Watch the original video (parents)"
+          }
+        }
+      }
+    },
+    "Video wird geprüft …": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Checking video …"
+          }
+        }
+      }
+    },
+    "Video-Link hinzufügen": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Add video link"
+          }
+        }
+      }
+    },
     "Videos": {
       "localizations": {
         "en": {
           "stringUnit": {
             "state": "translated",
             "value": "Videos"
+          }
+        }
+      }
+    },
+    "Vollbild": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Full screen"
+          }
+        }
+      }
+    },
+    "Vom Filter abgelehnt": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Declined by the filter"
+          }
+        }
+      }
+    },
+    "Von Eltern hinzugefügt – Standard: nur einzeln geprüfte Videos.": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Added by parents – default: individually reviewed videos only."
+          }
+        }
+      }
+    },
+    "Voriges Video": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Previous video"
+          }
+        }
+      }
+    },
+    "Vorschau": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Preview"
+          }
+        }
+      }
+    },
+    "Vorschlag": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Suggestion"
+          }
+        }
+      }
+    },
+    "Vorschule (3–5)": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Preschool (3–5)"
+          }
+        }
+      }
+    },
+    "Wartet": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Waiting"
           }
         }
       }
@@ -972,6 +4942,26 @@
         }
       }
     },
+    "Was SideTube macht": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "What SideTube does"
+          }
+        }
+      }
+    },
+    "Was SideTube nicht kann": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "What SideTube cannot do"
+          }
+        }
+      }
+    },
     "Was du anschaust, erscheint hier zum Wiederfinden.": {
       "localizations": {
         "en": {
@@ -982,12 +4972,122 @@
         }
       }
     },
+    "Weitere Aktionen": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "More actions"
+          }
+        }
+      }
+    },
+    "Weitere freigegebene Inhalte": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "More approved content"
+          }
+        }
+      }
+    },
     "Weiterschauen": {
       "localizations": {
         "en": {
           "stringUnit": {
             "state": "translated",
             "value": "Continue watching"
+          }
+        }
+      }
+    },
+    "Weiterschauen: %@%@": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Continue watching: %@%@"
+          }
+        }
+      }
+    },
+    "Werbung": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Advertising"
+          }
+        }
+      }
+    },
+    "Whitelist ist leer": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Whitelist is empty"
+          }
+        }
+      }
+    },
+    "Wie vorgeschlagen": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "As suggested"
+          }
+        }
+      }
+    },
+    "Wiedergabe angehalten": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Playback stopped"
+          }
+        }
+      }
+    },
+    "Wiedergabe unterbrochen": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Playback interrupted"
+          }
+        }
+      }
+    },
+    "Wird geprüft …": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Checking …"
+          }
+        }
+      }
+    },
+    "Wird geöffnet: %@": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Opens: %@"
+          }
+        }
+      }
+    },
+    "Wird im Schlafmodus abgespielt (Phase 6).": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Played in sleep mode (phase 6)."
           }
         }
       }
@@ -1012,12 +5112,192 @@
         }
       }
     },
+    "Worum es geht": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "What this is about"
+          }
+        }
+      }
+    },
+    "Wunsch": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Wish"
+          }
+        }
+      }
+    },
+    "Wunsch an die Eltern: mehr wie dieses Video": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Wish to the parents: more like this video"
+          }
+        }
+      }
+    },
+    "Wunsch an die Eltern: „%@“": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Wish to the parents: “%@”"
+          }
+        }
+      }
+    },
+    "Wunsch erfüllt": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Wish fulfilled"
+          }
+        }
+      }
+    },
+    "Wunsch: besprechen": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Wish: discuss"
+          }
+        }
+      }
+    },
+    "Wunsch: nicht jetzt": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Wish: not now"
+          }
+        }
+      }
+    },
+    "Wünsche bleiben auf diesem Gerät. Es gibt keine Benachrichtigung – %@ sieht den Stand unter „Meine Wünsche“.": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Wishes stay on this device. There is no notification – %@ sees the status under “My wishes”."
+          }
+        }
+      }
+    },
+    "Wünsche von %@ (%lld)": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Wishes from %@ (%lld)"
+          }
+        }
+      }
+    },
+    "Wünschen": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Wish"
+          }
+        }
+      }
+    },
+    "Wünschen: %@": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Wish: %@"
+          }
+        }
+      }
+    },
+    "YouTube (Kanal, Video, Playlist) oder PeerTube – z. B. youtube.com/@name, youtu.be/…, framatube.org/w/…": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "YouTube (channel, video, playlist) or PeerTube – e.g. youtube.com/@name, youtu.be/…, framatube.org/w/…"
+          }
+        }
+      }
+    },
+    "YouTube antwortet mit Fehler %lld.": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "YouTube answers with error %lld."
+          }
+        }
+      }
+    },
+    "YouTube hat die Anfrage abgelehnt (403) – Tageskontingent aufgebraucht oder Schlüssel nicht für diese App freigegeben.": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "YouTube declined the request (403) – daily quota used up or key not enabled for this app."
+          }
+        }
+      }
+    },
+    "YouTube-API-Schlüssel": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "YouTube API key"
+          }
+        }
+      }
+    },
+    "YouTube-Link": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "YouTube link"
+          }
+        }
+      }
+    },
     "Zeichnen": {
       "localizations": {
         "en": {
           "stringUnit": {
             "state": "translated",
             "value": "Drawing"
+          }
+        }
+      }
+    },
+    "Zeit und Rhythmus": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Time and rhythm"
+          }
+        }
+      }
+    },
+    "Zeitraum": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Period"
           }
         }
       }
@@ -1042,6 +5322,76 @@
         }
       }
     },
+    "Zuletzt gesucht": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Recent searches"
+          }
+        }
+      }
+    },
+    "Zum Start": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "To the start"
+          }
+        }
+      }
+    },
+    "Zur Prüfung aufgenommen": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Added for review"
+          }
+        }
+      }
+    },
+    "Zur Prüfung aufnehmen": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Add for review"
+          }
+        }
+      }
+    },
+    "Zur Prüfung übernehmen (Eltern-PIN)": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Add for review (parent PIN)"
+          }
+        }
+      }
+    },
+    "Zur Prüfung übernehmen (PIN)": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Add for review (PIN)"
+          }
+        }
+      }
+    },
+    "Zur Whitelist hinzufügen": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Add to whitelist"
+          }
+        }
+      }
+    },
     "Zurück": {
       "localizations": {
         "en": {
@@ -1062,12 +5412,352 @@
         }
       }
     },
+    "Zurück zur Prüfung": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Back to review"
+          }
+        }
+      }
+    },
+    "Zurückgestellt": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Deferred"
+          }
+        }
+      }
+    },
+    "ab %@": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "from %@"
+          }
+        }
+      }
+    },
+    "ab %lld": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "from %lld"
+          }
+        }
+      }
+    },
+    "ab %lld%@": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "from %lld%@"
+          }
+        }
+      }
+    },
+    "ab 13": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "from 13"
+          }
+        }
+      }
+    },
+    "dabei": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "included"
+          }
+        }
+      }
+    },
+    "gesperrt": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "blocked"
+          }
+        }
+      }
+    },
+    "github.com/sidekids/sidetube": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "github.com/sidekids/sidetube"
+          }
+        }
+      }
+    },
+    "https://www.youtube.com/…": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "https://www.youtube.com/…"
+          }
+        }
+      }
+    },
+    "iOS erlaubt Apps keinen eigenen Kiosk-Modus. Nutze den Geführten Zugriff: Einstellungen → Bedienungshilfen → Geführter Zugriff einschalten und einen Code setzen. Dann in SideTube die Seitentaste dreimal drücken → Start. Beenden wieder mit Dreifachklick und Code.": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "iOS does not allow apps their own kiosk mode. Use Guided Access: Settings → Accessibility → turn on Guided Access and set a passcode. Then, in SideTube, triple-click the side button → Start. End it again with a triple-click and the passcode."
+          }
+        }
+      }
+    },
+    "nicht MfK": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "not MfK"
+          }
+        }
+      }
+    },
+    "nicht mehr offen": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "no longer open"
+          }
+        }
+      }
+    },
+    "nur für Eltern": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "parents only"
+          }
+        }
+      }
+    },
+    "z. B. „Schauen wir am Wochenende zusammen.“": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "e.g. “Let’s watch it together at the weekend.”"
+          }
+        }
+      }
+    },
+    "·": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "·"
+          }
+        }
+      }
+    },
+    "· %lld:%@": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "· %lld:%@"
+          }
+        }
+      }
+    },
+    "· ging nicht: %@": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "· did not work: %@"
+          }
+        }
+      }
+    },
+    "Änderungen sichern": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Save changes"
+          }
+        }
+      }
+    },
+    "Änderungen werden im Verlauf festgehalten. „Zurück zur Prüfung“ nimmt den Eintrag so lange aus dem Kinderprofil.": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Changes are recorded in the history. “Back to review” removes the entry from the child profile for the time being."
+          }
+        }
+      }
+    },
+    "Öffnen": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Open"
+          }
+        }
+      }
+    },
+    "Öffnet das Click-Wheel zur Steuerung": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Opens the click wheel for control"
+          }
+        }
+      }
+    },
+    "Öffnet das Scrollrad": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Opens the click wheel"
+          }
+        }
+      }
+    },
+    "Öffnet die PIN-Eingabe für Eltern": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Opens the PIN entry for parents"
+          }
+        }
+      }
+    },
     "Über SideTube": {
       "localizations": {
         "en": {
           "stringUnit": {
             "state": "translated",
             "value": "About SideTube"
+          }
+        }
+      }
+    },
+    "„%@“": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "“%@”"
+          }
+        }
+      }
+    },
+    "„%@“ ist jetzt gesperrt und steht nicht in der Liste von %@. Links aus diesem Kanal werden künftig abgewiesen.": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "“%@” is now blocked and is not on the list of %@. Links from this channel will be rejected from now on."
+          }
+        }
+      }
+    },
+    "„%@“ liegt jetzt bei %@ unter „Prüfen“ – nach der Freigabe erscheint es unter Videos.": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "“%@” is now under “Review” for %@ – after approval it appears under Videos."
+          }
+        }
+      }
+    },
+    "„%@“ war bei %@ schon freigegeben.": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "“%@” was already approved for %@."
+          }
+        }
+      }
+    },
+    "„%@“ wird erst ab %lld gezeigt – das Mindestalter wird entsprechend angehoben.": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "“%@” is shown from age %lld – the minimum age is raised accordingly."
+          }
+        }
+      }
+    },
+    "„%@“ wird erst ab %lld gezeigt – für diesen Kanal gilt deshalb ab %lld.": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "“%@” is shown from age %lld – so this channel applies from %lld."
+          }
+        }
+      }
+    },
+    "„Gesperrt“ geht nur einzeln: Kanal in der Prüfliste antippen.": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "“Blocked” only works individually: tap the channel in the review list."
+          }
+        }
+      }
+    },
+    "„Vertrauenswürdige Kinderquelle“ erlaubt das Stöbern im Kanal (mit Risikofilter). Alle anderen Stufen zeigen nur einzeln freigegebene Videos. „Gesperrt“ blendet die Quelle überall aus.": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "“Trusted children’s source” allows browsing the channel (with the risk filter). All other levels show only individually approved videos. “Blocked” hides the source everywhere."
+          }
+        }
+      }
+    },
+    "• Startet klein – zehn gute Videos sind mehr wert als hundert wahrscheinlich okaye.\n• Lasst euer Kind Wünsche äußern (Empfehlungen landen zur Prüfung bei euch).\n• Prüft alle paar Monate: Kanäle ändern sich, die App erinnert daran.\n• Nutzt die Kategorien als Gesprächsanlass: Was hast du heute im Bereich Wissen gesehen?": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "• Start small – ten good videos are worth more than a hundred probably okay ones.\n• Let your child make wishes (recommendations come to you for review).\n• Check every few months: channels change, the app reminds you.\n• Use the categories as a conversation starter: what did you watch in Knowledge today?"
+          }
+        }
+      }
+    },
+    "🎉": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "🎉"
           }
         }
       }

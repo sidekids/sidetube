@@ -101,7 +101,7 @@ private struct ProfileRow: View {
                 if profile.bedtimeEnabled {
                     Label("ab \(BedtimeEvaluator.format(minutes: profile.bedtimeStartMinutes))", systemImage: "bed.double")
                 }
-                Label(profile.dailyLimitMinutes.map { "\(watched)/\($0) min heute" } ?? "\(watched) min heute", systemImage: "clock")
+                Label(profile.dailyLimitMinutes.map { String(localized: "\(watched)/\($0) min heute") } ?? String(localized: "\(watched) min heute"), systemImage: "clock")
             }
             .font(.caption).foregroundStyle(.secondary)
         }

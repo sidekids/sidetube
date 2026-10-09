@@ -173,7 +173,7 @@ final class HomeModel: KidScreenModel {
     var rowsTitle: String? { rows.isEmpty ? nil : (lead == nil ? "Zuletzt geschaut" : "Weiterschauen") }
 
     var footerHint: String? {
-        if tab.contentType != nil, cards.isEmpty { return "Deine Eltern haben noch nichts ausgesucht." }
+        if tab.contentType != nil, cards.isEmpty { return String(localized: "Deine Eltern haben noch nichts ausgesucht.") }
         return nil
     }
 }
@@ -191,7 +191,7 @@ final class ChannelModel: KidScreenModel {
     private(set) var isLoading = false
     private(set) var footerHint: String?
     var searchText = "" { didSet { refreshRows() } }
-    var rowsTitle: String? { searchText.isEmpty ? "Videos" : "Treffer" }
+    var rowsTitle: String? { searchText.isEmpty ? String(localized: "Videos") : String(localized: "Treffer") }
 
     private let channelId: String
     private let context: KidContext
@@ -224,8 +224,8 @@ final class ChannelModel: KidScreenModel {
             try? context.cache.clear(channelId: channelId)
             rows = approvedRows()
             syncMenuCount()
-            footerHint = rows.isEmpty ? "Deine Eltern haben von hier noch kein Video ausgesucht."
-                                      : "Hier sind nur die Videos, die deine Eltern ausgesucht haben."
+            footerHint = rows.isEmpty ? String(localized: "Deine Eltern haben von hier noch kein Video ausgesucht.")
+                                      : String(localized: "Hier sind nur die Videos, die deine Eltern ausgesucht haben.")
             return
         }
         try? context.cache.clear(channelId: channelId)   // wie Android: pro Besuch frische Daten
@@ -255,11 +255,11 @@ final class ChannelModel: KidScreenModel {
         } catch YouTubeError.missingAPIKey {
             hasMore = false
             footerHint = rows.isEmpty && context.cache.videos(channelId: channelId).isEmpty
-                ? "Das klappt gerade nicht. Sag deinen Eltern Bescheid."
+                ? String(localized: "Das klappt gerade nicht. Sag deinen Eltern Bescheid.")
                 : nil   // die neuesten Videos sind da; ältere Seiten brauchen den Schlüssel der Eltern
         } catch {
             hasMore = false
-            footerHint = "Das hat nicht geklappt. Ist das Internet an?"
+            footerHint = String(localized: "Das hat nicht geklappt. Ist das Internet an?")
         }
     }
 
@@ -277,7 +277,7 @@ final class ChannelModel: KidScreenModel {
         rows = videos.map { KidRow(id: $0.videoId, title: $0.title, subtitle: $0.channelTitle, thumbnailUrl: $0.thumbnailUrl,
                                    sourceChannelId: channelId, action: .play(videoId: $0.videoId, title: $0.title)) }
         syncMenuCount()
-        if rows.isEmpty, !searchText.isEmpty { footerHint = "Kein Video passt zu „\(searchText)“." }
+        if rows.isEmpty, !searchText.isEmpty { footerHint = String(localized: "Kein Video passt zu „\(searchText)“.") }
     }
 }
 
@@ -320,7 +320,7 @@ final class PlaylistModel: KidScreenModel {
         started = true
         guard let profile, PlaylistPlayability.playlistItem(id: playlistId, profile: profile) != nil else {
             hasMore = false
-            footerHint = "Diese Sendung haben deine Eltern nicht ausgesucht."
+            footerHint = String(localized: "Diese Sendung haben deine Eltern nicht ausgesucht.")
             return
         }
         // Zuerst der Zwischenspeicher (offline, sofort), dann frische Daten.
@@ -355,11 +355,11 @@ final class PlaylistModel: KidScreenModel {
         } catch YouTubeError.missingAPIKey {
             hasMore = false
             refreshRows()
-            if rows.isEmpty { footerHint = "Das klappt gerade nicht. Sag deinen Eltern Bescheid." }
+            if rows.isEmpty { footerHint = String(localized: "Das klappt gerade nicht. Sag deinen Eltern Bescheid.") }
         } catch {
             hasMore = false
             refreshRows()
-            if rows.isEmpty { footerHint = "Das hat nicht geklappt. Ist das Internet an?" }
+            if rows.isEmpty { footerHint = String(localized: "Das hat nicht geklappt. Ist das Internet an?") }
         }
     }
 
@@ -376,8 +376,8 @@ final class PlaylistModel: KidScreenModel {
                    action: .play(videoId: video.videoId, title: video.title))
         }
         syncMenuCount()
-        footerHint = videos.isEmpty ? "Diese Playlist ist leer."
-            : rows.isEmpty ? "Hier ist gerade nichts für dich dabei." : nil
+        footerHint = videos.isEmpty ? String(localized: "Diese Playlist ist leer.")
+            : rows.isEmpty ? String(localized: "Hier ist gerade nichts für dich dabei.") : nil
     }
 }
 
@@ -387,14 +387,14 @@ final class PlaylistModel: KidScreenModel {
 final class SearchModel: KidScreenModel {
     let id: String
     let title = "Suche"
-    let hero: KidHero? = KidHero(title: "Suche", subtitle: "In deinen Inhalten", systemImage: "magnifyingglass")
+    let hero: KidHero? = KidHero(title: String(localized: "Suche"), subtitle: String(localized: "In deinen Inhalten"), systemImage: "magnifyingglass")
     let menu = WheelMenuModel(count: 0)
     let supportsSearch = true
     let tab: KidTab = .search
     let profile: KidProfile
     private(set) var rows: [KidRow] = []
-    private(set) var footerHint: String? = "Tippe oben, um in den freigegebenen Inhalten zu suchen."
-    var rowsTitle: String? { rows.isEmpty ? nil : "Treffer" }
+    private(set) var footerHint: String? = String(localized: "Tippe oben, um in den freigegebenen Inhalten zu suchen.")
+    var rowsTitle: String? { rows.isEmpty ? nil : String(localized: "Treffer") }
     var searchText = "" { didSet { refresh() } }
 
     private let context: KidContext
@@ -410,7 +410,7 @@ final class SearchModel: KidScreenModel {
         guard !needle.isEmpty else {
             rows = []
             menu.setCount(0)
-            footerHint = "Tippe oben, um in den freigegebenen Inhalten zu suchen."
+            footerHint = String(localized: "Tippe oben, um in den freigegebenen Inhalten zu suchen.")
             return
         }
    // ausschließlich freigegebene Inhalte – niemals eine offene YouTube-Suche.
@@ -428,6 +428,6 @@ final class SearchModel: KidScreenModel {
                           sourceChannelId: $0.channelId, action: .play(videoId: $0.videoId, title: $0.title)) }
         rows = items + cached
         syncMenuCount()
-        footerHint = rows.isEmpty ? "Dazu gibt es kein Video." : nil
+        footerHint = rows.isEmpty ? String(localized: "Dazu gibt es kein Video.") : nil
     }
 }

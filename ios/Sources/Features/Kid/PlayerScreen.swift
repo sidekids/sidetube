@@ -197,18 +197,18 @@ struct PlayerScreen: View {
         VStack(spacing: 4) {
             PlayerScrubBar(model: model)
             HStack(spacing: 18) {
-                control("backward.end.fill", "Voriges Video") { model.previous() }
-                control("gobackward.10", "10 Sekunden zurück") { model.seek(by: -10) }
-                control(model.status == .playing ? "pause.fill" : "play.fill", model.status == .playing ? "Pause" : "Abspielen", large: true) { model.togglePlayback() }
-                control("goforward.10", "10 Sekunden vor") { model.seek(by: 10) }
+                control("backward.end.fill", String(localized: "Voriges Video")) { model.previous() }
+                control("gobackward.10", String(localized: "10 Sekunden zurück")) { model.seek(by: -10) }
+                control(model.status == .playing ? "pause.fill" : "play.fill", model.status == .playing ? String(localized: "Pause") : String(localized: "Abspielen"), large: true) { model.togglePlayback() }
+                control("goforward.10", String(localized: "10 Sekunden vor")) { model.seek(by: 10) }
                 control("forward.end.fill", "Nächstes Video") { model.next() }
                 if model.captionsAvailable {
                     control(model.captionsEnabled ? "captions.bubble.fill" : "captions.bubble",
-                            model.captionsEnabled ? "Untertitel ausschalten" : "Untertitel einschalten",
+                            model.captionsEnabled ? String(localized: "Untertitel ausschalten") : String(localized: "Untertitel einschalten"),
                             identifier: "player.captions") { model.toggleCaptions() }
                 }
                 // Vollbild auch ohne Drehen – hilft, wenn die Drehsperre des iPhones an ist.
-                control("arrow.up.left.and.arrow.down.right", "Vollbild", identifier: "player.fullscreenToggle") {
+                control("arrow.up.left.and.arrow.down.right", String(localized: "Vollbild"), identifier: "player.fullscreenToggle") {
                     coordinator.fullscreenRequested = true
                 }
             }

@@ -77,7 +77,7 @@ class KidWuenscheTest {
     }
 
     @Test fun `Startseite - gesperrte neue Folgen der Reihe, hoechstens sechs, und Meine Wuensche`() = test { _, vm ->
-        val neu = vm.rows().filter { it.section == KidWunschRows.NEU }
+        val neu = vm.rows().filter { it.section == KidWunschRows(xyz.steier.sidetube.TestTexte).NEU }
         assertThat(neu.map { it.title }).containsExactly("Folge 1", "Folge 2", "Folge 3", "Folge 4", "Folge 5", "Folge 6").inOrder()
         // Nie abspielbar, nur wünschbar.
         assertThat(neu.all { it.action is KidAction.OpenNeueFolge }).isTrue()

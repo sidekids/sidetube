@@ -68,7 +68,7 @@ struct IncomingRecommendationView: View {
                             .buttonStyle(.borderedProminent)
                             .disabled(profiles.isEmpty)
                     } footer: {
-                        Text(profiles.isEmpty ? "Erst in den Einstellungen ein Profil anlegen." : "Nur Eltern geben Inhalte frei – deshalb die PIN.")
+                        Text(profiles.isEmpty ? String(localized: "Erst in den Einstellungen ein Profil anlegen.") : String(localized: "Nur Eltern geben Inhalte frei – deshalb die PIN."))
                     }
                 case .done(let message):
                     Label(message, systemImage: "checkmark.circle.fill").foregroundStyle(.green)
@@ -108,14 +108,14 @@ struct IncomingRecommendationView: View {
     private func add(_ draft: WhitelistItemDraft) {
         guard let profile = profiles.first(where: { $0.id == selectedProfileId }) ?? profiles.first else { return }
         do {
-            _ = try CurationRepository(context: modelContext).discover(draft, for: profile, actor: "Empfehlung")
-            phase = .done("„\(draft.title)“ liegt jetzt bei \(profile.name) unter „Prüfen“ – nach der Freigabe erscheint es unter Videos.")
+            _ = try CurationRepository(context: modelContext).discover(draft, for: profile, actor: String(localized: "Empfehlung"))
+            phase = .done(String(localized: "„\(draft.title)“ liegt jetzt bei \(profile.name) unter „Prüfen“ – nach der Freigabe erscheint es unter Videos."))
         } catch CurationRepository.DiscoverError.duplicate {
-            phase = .done("„\(draft.title)“ war bei \(profile.name) schon freigegeben.")
+            phase = .done(String(localized: "„\(draft.title)“ war bei \(profile.name) schon freigegeben."))
         } catch CurationRepository.DiscoverError.blockedSource {
-            phase = .failed("Diese Quelle ist für Kinder gesperrt.")
+            phase = .failed(String(localized: "Diese Quelle ist für Kinder gesperrt."))
         } catch {
-            phase = .failed("Konnte nicht speichern: \(error.localizedDescription)")
+            phase = .failed(String(localized: "Konnte nicht speichern: \(error.localizedDescription)"))
         }
     }
 }

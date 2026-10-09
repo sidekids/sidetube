@@ -4,6 +4,9 @@
 
 package xyz.steier.sidetube.parent
 
+import androidx.compose.ui.res.stringResource
+import xyz.steier.sidetube.R
+
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
@@ -34,7 +37,7 @@ import xyz.steier.sidetube.core.model.SourceTrust
 @Composable
 internal fun KanalEinstufungFelder(einstufung: Kanaleinstufung, onChange: (Kanaleinstufung) -> Unit) {
     Column(Modifier.fillMaxWidth()) {
-        Text("Vertrauensstufe", style = MaterialTheme.typography.titleSmall)
+        Text(stringResource(R.string.vertrauensstufe), style = MaterialTheme.typography.titleSmall)
         Column(Modifier.selectableGroup()) {
             SourceTrust.entries.forEach { stufe ->
                 Row(
@@ -60,18 +63,18 @@ internal fun KanalEinstufungFelder(einstufung: Kanaleinstufung, onChange: (Kanal
 
         if (einstufung.ergebnis == Kanaleinstufung.Ergebnis.AUFNEHMEN_UND_FREIGEBEN) {
             Spacer(Modifier.height(12.dp))
-            AgeStepper("Ab ${einstufung.ageMin} Jahren", "Mindestalter",
+            AgeStepper(stringResource(R.string.ab_jahren, einstufung.ageMin), stringResource(R.string.mindestalter),
                 onMinus = { onChange(einstufung.juenger()) },
                 onPlus = { onChange(einstufung.aelter()) })
             Spacer(Modifier.height(8.dp))
             CategoryPicker(selected = einstufung.category?.id, onSelect = { onChange(einstufung.mitKategorie(ContentCategory.from(it))) })
             einstufung.category?.takeIf { einstufung.kategorieHebtAlterAn }?.let {
-                Text("„${ParentLabels.category(it)}“ wird erst ab ${it.minimumAge} gezeigt – es gilt ab ${einstufung.effektivesMindestalter}.",
+                Text(stringResource(R.string.kategorie_hebt_alter_an, ParentLabels.category(it), it.minimumAge, einstufung.effektivesMindestalter),
                     style = MaterialTheme.typography.bodySmall, color = MaterialTheme.colorScheme.tertiary)
             }
         } else {
             Spacer(Modifier.height(8.dp))
-            Text("Der Kanal kommt nicht in die Liste des Kindes. Links aus diesem Kanal werden künftig abgewiesen.",
+            Text(stringResource(R.string.kanal_kommt_nicht_in_liste),
                 style = MaterialTheme.typography.bodySmall, color = MaterialTheme.colorScheme.error)
         }
     }

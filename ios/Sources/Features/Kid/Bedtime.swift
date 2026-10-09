@@ -13,7 +13,7 @@ struct BedtimeSettings: Equatable, Sendable {
 
     /// Vorschläge für Eltern, nach Alter.
     static let ageSuggestions: [(label: String, startMinutes: Int)] = [
-        ("6–9 Jahre", 19 * 60), ("10–12 Jahre", 20 * 60), ("ab 13", 21 * 60),
+        (String(localized: "6–9 Jahre"), 19 * 60), (String(localized: "10–12 Jahre"), 20 * 60), (String(localized: "ab 13"), 21 * 60),
     ]
 
     var enabled = true

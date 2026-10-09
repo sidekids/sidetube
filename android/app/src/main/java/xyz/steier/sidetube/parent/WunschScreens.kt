@@ -4,6 +4,13 @@
 
 package xyz.steier.sidetube.parent
 
+import androidx.compose.ui.res.pluralStringResource
+import androidx.compose.ui.res.stringResource
+import xyz.steier.sidetube.LocalTexte
+import xyz.steier.sidetube.R
+import xyz.steier.sidetube.Texte
+import androidx.compose.runtime.Composable
+
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
@@ -35,10 +42,13 @@ import java.time.Instant
 internal object WunschLabels {
     private val ZEIT: java.time.format.DateTimeFormatter = java.time.format.DateTimeFormatter.ofPattern("dd.MM. HH:mm")
 
+    @Composable
     fun herkunft(wunsch: WishEntity): String = when (WunschArt.from(wunsch.kind)) {
-        WunschArt.THEMA -> "Themenwunsch"
-        WunschArt.MEHR_DAVON -> "Mehr davon" + (wunsch.channelTitle?.let { " · $it" } ?: "")
-        WunschArt.NEUE_FOLGE -> "Neue Folge" + (wunsch.channelTitle?.let { " bei $it" } ?: "")
+        WunschArt.THEMA -> stringResource(R.string.wunsch_herkunft_thema)
+        WunschArt.MEHR_DAVON -> wunsch.channelTitle?.let { stringResource(R.string.wunsch_herkunft_mehr_davon_kanal, it) }
+            ?: stringResource(R.string.wunsch_herkunft_mehr_davon)
+        WunschArt.NEUE_FOLGE -> wunsch.channelTitle?.let { stringResource(R.string.wunsch_herkunft_neue_folge_kanal, it) }
+            ?: stringResource(R.string.wunsch_herkunft_neue_folge)
         null -> wunsch.kind
     }
 
@@ -48,11 +58,12 @@ internal object WunschLabels {
         else -> wunsch.videoTitle.orEmpty()
     }
 
+    @Composable
     fun zeile(wunsch: WishEntity): String = listOfNotNull(
         herkunft(wunsch),
         ZEIT.format(Instant.ofEpochMilli(wunsch.createdAt).atZone(java.time.ZoneId.systemDefault())),
-        "besprechen".takeIf { wunsch.status == WunschStatus.BESPRECHEN.id },
-        wunsch.resultContentId?.let { "Link aufgenommen" }
+        stringResource(R.string.wunsch_zeile_besprechen).takeIf { wunsch.status == WunschStatus.BESPRECHEN.id },
+        wunsch.resultContentId?.let { stringResource(R.string.wunsch_zeile_link) }
     ).joinToString(" · ")
 }
 
@@ -98,7 +109,7 @@ fun WunschSheet(
 
     AlertDialog(
         onDismissRequest = onDismiss,
-        title = { Text("Wunsch") },
+        title = { Text(stringResource(R.string.wunsch_titel)) },
         text = {
             Column(Modifier.verticalScroll(rememberScrollState())) {
                 // Bild neben dem Titel: So stehen Antwortfeld und erste Aktion am SidePhone ohne Scrollen im Bild.
@@ -119,7 +130,7 @@ fun WunschSheet(
                     colors = xyz.steier.sidetube.sideTextFieldColors(),
                     value = antwort,
                     onValueChange = { if (it.length <= xyz.steier.sidetube.core.curation.WunschRegeln.ANTWORT_MAX) antwort = it },
-                    label = { Text("Antwort an das Kind (freiwillig)") },
+                    label = { Text(stringResource(R.string.wunsch_antwort_label)) },
                     maxLines = 3,
                     modifier = Modifier.fillMaxWidth()
                 )
@@ -127,48 +138,48 @@ fun WunschSheet(
 
                 when (art) {
                     WunschArt.NEUE_FOLGE -> {
-                        Button(onClick = { onFreigeben(text()) }, modifier = Modifier.fillMaxWidth()) { Text("Freigeben") }
+                        Button(onClick = { onFreigeben(text()) }, modifier = Modifier.fillMaxWidth()) { Text(stringResource(R.string.freigeben)) }
                     }
                     WunschArt.MEHR_DAVON -> {
-                        Button(onClick = onKanalPruefen, modifier = Modifier.fillMaxWidth()) { Text("Kanal prüfen") }
-                        OutlinedButton(onClick = onLink, modifier = Modifier.fillMaxWidth()) { Text("Video-Link hinzufügen") }
-                        OutlinedButton(onClick = { onEntscheiden(WunschStatus.ERFUELLT, text()) }, modifier = Modifier.fillMaxWidth()) { Text("Erledigt") }
+                        Button(onClick = onKanalPruefen, modifier = Modifier.fillMaxWidth()) { Text(stringResource(R.string.wunsch_kanal_pruefen)) }
+                        OutlinedButton(onClick = onLink, modifier = Modifier.fillMaxWidth()) { Text(stringResource(R.string.wunsch_video_link_hinzufuegen)) }
+                        OutlinedButton(onClick = { onEntscheiden(WunschStatus.ERFUELLT, text()) }, modifier = Modifier.fillMaxWidth()) { Text(stringResource(R.string.erledigt)) }
                     }
                     WunschArt.THEMA, null -> {
-                        Button(onClick = onLink, modifier = Modifier.fillMaxWidth()) { Text("Link hinzufügen") }
-                        OutlinedButton(onClick = { onEntscheiden(WunschStatus.ERFUELLT, text()) }, modifier = Modifier.fillMaxWidth()) { Text("Erledigt") }
+                        Button(onClick = onLink, modifier = Modifier.fillMaxWidth()) { Text(stringResource(R.string.link_hinzufuegen)) }
+                        OutlinedButton(onClick = { onEntscheiden(WunschStatus.ERFUELLT, text()) }, modifier = Modifier.fillMaxWidth()) { Text(stringResource(R.string.erledigt)) }
                     }
                 }
                 OutlinedButton(onClick = { onEntscheiden(WunschStatus.ABGELEHNT, text()) }, modifier = Modifier.fillMaxWidth()) {
-                    Text("Ablehnen („nicht jetzt“)", color = MaterialTheme.colorScheme.error)
+                    Text(stringResource(R.string.wunsch_ablehnen_nicht_jetzt), color = MaterialTheme.colorScheme.error)
                 }
                 if (wunsch.status != WunschStatus.BESPRECHEN.id) {
                     OutlinedButton(onClick = { onEntscheiden(WunschStatus.BESPRECHEN, text()) }, modifier = Modifier.fillMaxWidth()) {
-                        Text("Besprechen")
+                        Text(stringResource(R.string.besprechen))
                     }
                 }
 
                 Spacer(Modifier.height(8.dp))
                 Text(
                     when (art) {
-                        WunschArt.NEUE_FOLGE -> "Das Kind hat Bild und Titel gesehen, das Video aber nicht. Freigeben legt einen freigegebenen Eintrag an (Alter und Kategorie aus der Quelle)."
-                        WunschArt.MEHR_DAVON -> "Das Kind möchte mehr von diesem freigegebenen Video. Ein Link kommt in die Prüfliste; mit seiner Freigabe ist der Wunsch erfüllt."
-                        WunschArt.THEMA -> "Ein Thema, kein Inhalt: Das Kind hat nichts Fremdes gesehen. Ein Link kommt in die Prüfliste; mit seiner Freigabe ist der Wunsch erfüllt."
+                        WunschArt.NEUE_FOLGE -> stringResource(R.string.wunsch_erklaerung_neue_folge)
+                        WunschArt.MEHR_DAVON -> stringResource(R.string.wunsch_erklaerung_mehr_davon)
+                        WunschArt.THEMA -> stringResource(R.string.wunsch_erklaerung_thema)
                         null -> ""
                     },
                     style = MaterialTheme.typography.bodySmall,
                     color = MaterialTheme.colorScheme.onSurface.copy(alpha = 0.7f)
                 )
                 Spacer(Modifier.height(16.dp))
-                Text("Verlauf", style = MaterialTheme.typography.titleSmall)
+                Text(stringResource(R.string.verlauf), style = MaterialTheme.typography.titleSmall)
                 Spacer(Modifier.height(4.dp))
                 if (history.isEmpty()) {
-                    Text("Noch keine Einträge", style = MaterialTheme.typography.bodySmall,
+                    Text(stringResource(R.string.noch_keine_eintraege), style = MaterialTheme.typography.bodySmall,
                         color = MaterialTheme.colorScheme.onSurface.copy(alpha = 0.7f))
                 }
                 history.forEach { event ->
                     Column(Modifier.padding(vertical = 4.dp)) {
-                        Text(ParentLabels.eventHeadline(event), style = MaterialTheme.typography.labelMedium)
+                        Text(ParentLabels.eventHeadline(event, LocalTexte.current), style = MaterialTheme.typography.labelMedium)
                         Text(ParentLabels.eventTime(event), style = MaterialTheme.typography.bodySmall,
                             color = MaterialTheme.colorScheme.onSurface.copy(alpha = 0.7f))
                         event.note?.takeIf { it.isNotBlank() }?.let {
@@ -179,6 +190,6 @@ fun WunschSheet(
                 }
             }
         },
-        confirmButton = { TextButton(onClick = onDismiss) { Text("Schließen") } }
+        confirmButton = { TextButton(onClick = onDismiss) { Text(stringResource(R.string.schliessen)) } }
     )
 }

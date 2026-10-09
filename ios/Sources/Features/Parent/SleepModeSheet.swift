@@ -20,7 +20,7 @@ struct SleepModeSheet: View {
                     Text("Nach Ablauf erscheint „Gute Nacht“, das Video pausiert. In der letzten Minute wird die Lautstärke ausgeblendet. Nur die PIN beendet den Schlafmodus vorzeitig.")
                 }
                 Section("Schlaf-Playlist") {
-                    Text(profile.sleepPlaylistId.map { "Wird geöffnet: \($0)" } ?? "Keine hinterlegt – das Kind wählt selbst. (Im Profil einstellbar.)")
+                    Text(profile.sleepPlaylistId.map { String(localized: "Wird geöffnet: \($0)") } ?? String(localized: "Keine hinterlegt – das Kind wählt selbst. (Im Profil einstellbar.)"))
                         .foregroundStyle(.secondary)
                 }
                 Section {

@@ -14,8 +14,8 @@ enum RecommendLink {
    /// Text: Original-Link fuer alle, darunter der sidetube-Link (tippbar nur mit installierter App).
     static func message(title: String, videoId: String) -> String {
         PeerTubeIDs.isPeerTube(videoId)
-            ? "Schau mal: \(title)\n\(url(videoId: videoId).absoluteString)"
-            : "Schau mal: \(title)\n\(url(videoId: videoId).absoluteString)\nMit SideTube öffnen: \(IncomingLink.url(videoId: videoId).absoluteString)"
+            ? String(localized: "Schau mal: \(title)\n\(url(videoId: videoId).absoluteString)")
+            : String(localized: "Schau mal: \(title)\n\(url(videoId: videoId).absoluteString)\nMit SideTube öffnen: \(IncomingLink.url(videoId: videoId).absoluteString)")
     }
 
    /// Signal hat keine Compose-URL: Text in die Zwischenablage, App öffnen, dort einfügen.
@@ -79,7 +79,7 @@ struct RecommendMenu: View {
             UIApplication.shared.open(url)
         } else {
             copyLink()
-            notice = "Nachrichten ist auf diesem Gerät nicht verfügbar. Der Link wurde kopiert."
+            notice = String(localized: "Nachrichten ist auf diesem Gerät nicht verfügbar. Der Link wurde kopiert.")
         }
     }
 
@@ -87,15 +87,15 @@ struct RecommendMenu: View {
         UIPasteboard.general.string = RecommendLink.message(title: title, videoId: videoId)
         if UIApplication.shared.canOpenURL(RecommendLink.signalScheme) {
             UIApplication.shared.open(RecommendLink.signalScheme)
-            notice = "Link kopiert – in Signal den Chat wählen und einfügen."
+            notice = String(localized: "Link kopiert – in Signal den Chat wählen und einfügen.")
         } else {
-            notice = "Signal ist nicht installiert. Der Link wurde kopiert."
+            notice = String(localized: "Signal ist nicht installiert. Der Link wurde kopiert.")
         }
     }
 
     private func copyLink() {
         UIPasteboard.general.string = RecommendLink.url(videoId: videoId).absoluteString
-        notice = "Link kopiert: \(RecommendLink.url(videoId: videoId).absoluteString)"
+        notice = String(localized: "Link kopiert: \(RecommendLink.url(videoId: videoId).absoluteString)")
     }
 }
 

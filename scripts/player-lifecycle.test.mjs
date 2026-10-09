@@ -16,8 +16,9 @@ for (const path of ['ios/Sources/Resources/Player.html', 'android/app/src/main/a
       getCurrentTime: () => 10, getDuration: () => 100, getPlayerState: () => 1,
       getVideoData: () => ({ video_id: 'abcdefghijk' }), loadModule() {}, getOption: () => [],
     };
+    const posted = [];
     const context = {
-      window: {},
+      window: { SideTube: { onPlayerEvent: json => posted.push(JSON.parse(json)) } },
       document: { createElement: () => ({}), head: { appendChild() {} }, querySelector: () => null },
       setInterval: (fn, ms) => { const id = ++sequence; timers.set(id, {fn, ms}); return id; },
       clearInterval: id => timers.delete(id), setTimeout: () => ++sequence,
@@ -36,6 +37,16 @@ for (const path of ['ios/Sources/Resources/Player.html', 'android/app/src/main/a
     assert.ok(activeCount > 0);
     for (let i = 0; i < 50; i++) options.events.onStateChange({data: 1});
     assert.equal(timers.size, activeCount);
+    if (path.startsWith('android/')) {
+      // Puffern zwischendurch (3 -> 1) darf den Takt nicht neu starten, sonst kommt auf einem
+      // langsamen Geraet minutenlang keine Stelle an; beim Start wird sie einmal sofort gemeldet.
+      const [firstId] = timers.keys();
+      options.events.onStateChange({data: 3});
+      assert.equal(timers.size, activeCount, 'buffering keeps the ticker');
+      options.events.onStateChange({data: 1});
+      assert.ok(timers.has(firstId), 'resuming after buffering must not restart the ticker');
+      assert.ok(posted.some(m => m.event === 'time'), 'the position is posted once when playback starts');
+    }
     options.events.onStateChange({data: 2});
     assert.equal(timers.size, 0, 'pause must cancel timers');
     options.events.onStateChange({data: 1});

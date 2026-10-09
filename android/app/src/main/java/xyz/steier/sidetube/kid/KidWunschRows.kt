@@ -4,6 +4,9 @@
 
 package xyz.steier.sidetube.kid
 
+import xyz.steier.sidetube.R
+import xyz.steier.sidetube.Texte
+
 import xyz.steier.sidetube.core.curation.NeueFolge
 import xyz.steier.sidetube.core.curation.WunschArt
 import xyz.steier.sidetube.core.curation.WunschRegeln
@@ -21,40 +24,60 @@ enum class WunschMoeglich { JA, SCHON_GEWUENSCHT, GRENZE }
  * Die Zeilen der Wünsche (ADR 0001). Rein und ohne Datenbank wie [KidRows]: Was abspielbar ist,
  * kommt aus `visible`; eine neue Folge ist nie abspielbar, nur wünschbar.
  */
-internal object KidWunschRows {
-    const val NEU = "Neu bei deinen Kanälen"
-    const val WUENSCHE = "Wünsche"
-    const val WUNSCH_ZEILE_SUCHE = "wish-topic"
-    const val MEINE_WUENSCHE = "wishes"
+internal class KidWunschRows(private val texte: Texte) {
+    val NEU = texte.get(R.string.wunsch_abschnitt_neu)
+    val WUENSCHE = texte.get(R.string.wunsch_abschnitt_wuensche)
 
-    fun heuteText(heuteNoch: Int): String = when (heuteNoch) {
-        0 -> "Heute keine Wünsche mehr – morgen wieder"
-        1 -> "Heute noch 1 Wunsch"
-        else -> "Heute noch $heuteNoch Wünsche"
+    companion object {
+        const val WUNSCH_ZEILE_SUCHE = "wish-topic"
+        const val MEINE_WUENSCHE = "wishes"
+
+        fun wortanfaenge(text: String): String =
+            text.split(' ').joinToString(" ") { wort -> wort.replaceFirstChar { if (it == 'ß') it else it.titlecaseChar() } }
+
+        /**
+         * Das freie Rad des Themenwunsches: alle Buchstaben, dazu Ä Ö Ü ß, Lücke und Löschen. Anders
+         * als die Suche bietet es auch an, wozu es nichts gibt – das ist ja der Sinn des Wunsches.
+         */
+        fun freiesRad(vorher: RadZustand): RadZustand {
+            val text = vorher.getippt
+            val tasten = buildList {
+                ALPHABET.forEach { add(RadTaste.Buchstabe(Radsuche.Zeichen(it, it.toString()))) }
+                if (text.isNotEmpty() && !text.endsWith(' ') && text.length < WunschRegeln.THEMA_MAX) add(RadTaste.Luecke)
+                if (text.isNotEmpty()) add(RadTaste.Loeschen)
+            }.let { if (text.length >= WunschRegeln.THEMA_MAX) it.filterNot { t -> t is RadTaste.Buchstabe } else it }
+            val fokus = Radtasten.fokusNach(vorher.tasten.getOrNull(vorher.fokus), tasten)
+            return vorher.copy(tasten = tasten, fokus = fokus, anzeige = text, t9 = false)
+        }
+
+        private val ALPHABET = ('a'..'z') + listOf('ä', 'ö', 'ü', 'ß')
     }
+
+    fun heuteText(heuteNoch: Int): String =
+        if (heuteNoch == 0) texte.get(R.string.wunsch_heute_keine) else texte.plural(R.plurals.wunsch_heute_noch, heuteNoch)
 
     /** Startseite: „Neu bei deinen Kanälen" (gesperrt) und „Meine Wünsche". */
     fun home(folgen: List<NeueFolge>, wuensche: List<WishEntity>, heuteNoch: Int): List<KidRow> {
         val offen = wuensche.count { WunschStatus.from(it.status)?.istOffen == true }
         return folgen.map(::folgenZeile) + KidRow(
-            id = MEINE_WUENSCHE, title = "Meine Wünsche",
-            subtitle = listOfNotNull(heuteText(heuteNoch), "$offen offen".takeIf { offen > 0 }).joinToString(" · "),
+            id = MEINE_WUENSCHE, title = texte.get(R.string.kid_meine_wuensche),
+            subtitle = listOfNotNull(heuteText(heuteNoch), texte.get(R.string.wunsch_offen, offen).takeIf { offen > 0 }).joinToString(" · "),
             action = KidAction.OpenWishes, section = WUENSCHE
         )
     }
 
     fun folgenZeile(folge: NeueFolge) = KidRow(
         id = "neu-" + folge.videoId, title = folge.title,
-        subtitle = (if (folge.gewuenscht) "✓ Gewünscht · " else "🔒 Wünschen · ") + folge.channelTitle,
+        subtitle = texte.get(if (folge.gewuenscht) R.string.wunsch_folge_gewuenscht else R.string.wunsch_folge_wuenschen, folge.channelTitle),
         thumbnailUrl = Vorschaubilder.fuerVideo(folge.videoId),
         action = KidAction.OpenNeueFolge(folge.videoId), section = NEU
     )
 
     /** In der Suche: der Weg zum Themenwunsch – ohne Treffer als einzige Zeile, sonst nach den Treffern. */
     fun suchZeile(anzeige: String) = KidRow(
-        id = WUNSCH_ZEILE_SUCHE, title = "Wunsch an die Eltern",
-        subtitle = if (anzeige.isBlank()) "Ein Thema wünschen" else "„${wortanfaenge(anzeige.trim())}“ wünschen",
-        action = KidAction.OpenThemaWunsch, section = "Nicht gefunden?"
+        id = WUNSCH_ZEILE_SUCHE, title = texte.get(R.string.kid_wunsch_an_die_eltern),
+        subtitle = if (anzeige.isBlank()) texte.get(R.string.wunsch_thema_wuenschen) else texte.get(R.string.wunsch_text_wuenschen, wortanfaenge(anzeige.trim())),
+        action = KidAction.OpenThemaWunsch, section = texte.get(R.string.wunsch_abschnitt_nicht_gefunden)
     )
 
     /** Themenwunsch: eine Zeile zum Abschicken (oder warum es nicht geht). */
@@ -62,10 +85,10 @@ internal object KidWunschRows {
         val thema = WunschRegeln.thema(text)
         val zeile = when {
             moeglich == WunschMoeglich.GRENZE -> KidRow("send", heuteText(0), action = KidAction.Info)
-            thema.isEmpty() -> KidRow("send", "Erst Buchstaben wählen", subtitle = "Oben mit ◀ ▶ und Mitte", action = KidAction.Info)
+            thema.isEmpty() -> KidRow("send", texte.get(R.string.wunsch_erst_buchstaben), subtitle = texte.get(R.string.wunsch_oben_mit_rad), action = KidAction.Info)
             moeglich == WunschMoeglich.SCHON_GEWUENSCHT ->
-                KidRow("send", "„${wortanfaenge(thema)}“ ist schon gewünscht", subtitle = "Unter „Meine Wünsche“", action = KidAction.Info)
-            else -> KidRow("send", "Wunsch schicken: „${wortanfaenge(thema)}“", subtitle = heuteText(heuteNoch), action = KidAction.SendWish)
+                KidRow("send", texte.get(R.string.wunsch_schon_gewuenscht_text, wortanfaenge(thema)), subtitle = texte.get(R.string.wunsch_unter_meine_wuensche), action = KidAction.Info)
+            else -> KidRow("send", texte.get(R.string.wunsch_schicken_text, wortanfaenge(thema)), subtitle = heuteText(heuteNoch), action = KidAction.SendWish)
         }
         return listOf(zeile)
     }
@@ -73,11 +96,11 @@ internal object KidWunschRows {
     /** Gesperrte neue Folge: Wünschen (oder warum nicht) und Zurück. */
     fun folgenZeilen(moeglich: WunschMoeglich, heuteNoch: Int): List<KidRow> = listOf(
         when (moeglich) {
-            WunschMoeglich.JA -> KidRow("send", "Wünschen", subtitle = heuteText(heuteNoch), action = KidAction.SendWish)
-            WunschMoeglich.SCHON_GEWUENSCHT -> KidRow("send", "✓ Schon gewünscht", subtitle = "Die Eltern sehen es", action = KidAction.Info)
+            WunschMoeglich.JA -> KidRow("send", texte.get(R.string.wunsch_wuenschen), subtitle = heuteText(heuteNoch), action = KidAction.SendWish)
+            WunschMoeglich.SCHON_GEWUENSCHT -> KidRow("send", texte.get(R.string.wunsch_schon_gewuenscht), subtitle = texte.get(R.string.wunsch_eltern_sehen_es), action = KidAction.Info)
             WunschMoeglich.GRENZE -> KidRow("send", heuteText(0), action = KidAction.Info)
         },
-        KidRow("back", "Zurück", action = KidAction.GoBack)
+        KidRow("back", texte.get(R.string.wunsch_zurueck), action = KidAction.GoBack)
     )
 
     /**
@@ -91,7 +114,7 @@ internal object KidWunschRows {
         gesperrteKanaele: Set<String> = emptySet()
     ): List<KidRow> {
         val kopf = heuteText(heuteNoch)
-        val neu = KidRow("wish-new", "Etwas wünschen", subtitle = "Ein Thema für die Eltern", action = KidAction.OpenThemaWunsch, section = kopf)
+        val neu = KidRow("wish-new", texte.get(R.string.wunsch_etwas_wuenschen), subtitle = texte.get(R.string.wunsch_thema_fuer_eltern), action = KidAction.OpenThemaWunsch, section = kopf)
         return listOf(neu) + wuensche.map { wunsch ->
             val ziel = ziel(wunsch, visible, kanalbilder)
             val status = WunschStatus.from(wunsch.status)
@@ -103,7 +126,7 @@ internal object KidWunschRows {
                 thumbnailUrl = if (zeigtVideo) wunsch.videoId?.let(Vorschaubilder::fuerVideo) else null,
                 action = KidAction.Wish(wunsch.id, ziel),
                 section = kopf,
-                detail = wunsch.parentReply?.takeIf { it.isNotBlank() && status != WunschStatus.OFFEN }?.let { "Eltern: „$it“" }
+                detail = wunsch.parentReply?.takeIf { it.isNotBlank() && status != WunschStatus.OFFEN }?.let { texte.get(R.string.wunsch_eltern_antwort, it) }
             )
         }
     }
@@ -116,8 +139,8 @@ internal object KidWunschRows {
     }
 
     private fun neutralerTitel(wunsch: WishEntity): String = when (WunschArt.from(wunsch.kind)) {
-        WunschArt.MEHR_DAVON -> "Mehr davon"
-        WunschArt.NEUE_FOLGE -> "Eine neue Folge"
+        WunschArt.MEHR_DAVON -> texte.get(R.string.wunsch_art_mehr_davon)
+        WunschArt.NEUE_FOLGE -> texte.get(R.string.wunsch_art_eine_neue_folge)
         else -> titel(wunsch)
     }
 
@@ -127,44 +150,25 @@ internal object KidWunschRows {
     }
 
     private fun herkunft(wunsch: WishEntity): String = when (WunschArt.from(wunsch.kind)) {
-        WunschArt.THEMA -> "Thema"
-        WunschArt.MEHR_DAVON -> "Mehr davon"
-        WunschArt.NEUE_FOLGE -> "Neue Folge"
+        WunschArt.THEMA -> texte.get(R.string.wunsch_art_thema)
+        WunschArt.MEHR_DAVON -> texte.get(R.string.wunsch_art_mehr_davon)
+        WunschArt.NEUE_FOLGE -> texte.get(R.string.wunsch_art_neue_folge)
         null -> wunsch.kind
     }
 
     /** Die vier Stände, wie das Kind sie liest (ADR 0001). */
     fun statusText(status: WunschStatus?, mitZiel: Boolean): String = when (status) {
-        WunschStatus.OFFEN, null -> "Wartet auf die Eltern"
-        WunschStatus.ERFUELLT -> if (mitZiel) "Freigegeben ▶" else "Erledigt"
-        WunschStatus.ABGELEHNT -> "Nicht jetzt"
-        WunschStatus.BESPRECHEN -> "Sprechen wir drüber"
+        WunschStatus.OFFEN, null -> texte.get(R.string.wunsch_status_wartet)
+        WunschStatus.ERFUELLT -> texte.get(if (mitZiel) R.string.wunsch_status_freigegeben else R.string.wunsch_status_erledigt)
+        WunschStatus.ABGELEHNT -> texte.get(R.string.wunsch_status_nicht_jetzt)
+        WunschStatus.BESPRECHEN -> texte.get(R.string.wunsch_status_besprechen)
     }
 
     /** Der Weg zum Inhalt: nur, was dieses Profil gerade sehen darf. */
     private fun ziel(wunsch: WishEntity, visible: List<WhitelistItemEntity>, kanalbilder: Map<String, String>): KidAction? {
         if (WunschStatus.from(wunsch.status) != WunschStatus.ERFUELLT) return null
         val inhalt = wunsch.resultContentId ?: wunsch.videoId?.takeIf { wunsch.kind == WunschArt.NEUE_FOLGE.id } ?: return null
-        return visible.firstOrNull { it.contentId == inhalt }?.let { KidRows.item(it, kanalbilder).action }
+        return visible.firstOrNull { it.contentId == inhalt }?.let { KidRows(texte).item(it, kanalbilder).action }
     }
 
-    fun wortanfaenge(text: String): String =
-        text.split(' ').joinToString(" ") { wort -> wort.replaceFirstChar { if (it == 'ß') it else it.titlecaseChar() } }
-
-    /**
-     * Das freie Rad des Themenwunsches: alle Buchstaben, dazu Ä Ö Ü ß, Lücke und Löschen. Anders
-     * als die Suche bietet es auch an, wozu es nichts gibt – das ist ja der Sinn des Wunsches.
-     */
-    fun freiesRad(vorher: RadZustand): RadZustand {
-        val text = vorher.getippt
-        val tasten = buildList {
-            ALPHABET.forEach { add(RadTaste.Buchstabe(Radsuche.Zeichen(it, it.toString()))) }
-            if (text.isNotEmpty() && !text.endsWith(' ') && text.length < WunschRegeln.THEMA_MAX) add(RadTaste.Luecke)
-            if (text.isNotEmpty()) add(RadTaste.Loeschen)
-        }.let { if (text.length >= WunschRegeln.THEMA_MAX) it.filterNot { t -> t is RadTaste.Buchstabe } else it }
-        val fokus = Radtasten.fokusNach(vorher.tasten.getOrNull(vorher.fokus), tasten)
-        return vorher.copy(tasten = tasten, fokus = fokus, anzeige = text, t9 = false)
-    }
-
-    private val ALPHABET = ('a'..'z') + listOf('ä', 'ö', 'ü', 'ß')
 }

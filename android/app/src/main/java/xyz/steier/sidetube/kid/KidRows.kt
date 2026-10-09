@@ -4,6 +4,8 @@
 
 package xyz.steier.sidetube.kid
 
+import xyz.steier.sidetube.R
+import xyz.steier.sidetube.Texte
 import xyz.steier.sidetube.core.curation.ContentPolicy
 import xyz.steier.sidetube.core.db.WhitelistItemEntity
 import xyz.steier.sidetube.core.model.WhitelistItemType
@@ -76,10 +78,10 @@ sealed interface KidScreen {
 internal val KidScreen.hatRad: Boolean get() = this is KidScreen.Search || this is KidScreen.ThemaWunsch
 
 /** Die drei Bereiche der Mediathek – dieselben Wörter wie auf iOS (`LibraryScreen`). */
-enum class LibrarySegment(val title: String, val type: WhitelistItemType) {
-    CHANNELS("Kanäle", WhitelistItemType.CHANNEL),
-    VIDEOS("Videos", WhitelistItemType.VIDEO),
-    PLAYLISTS("Sendungen", WhitelistItemType.PLAYLIST);
+enum class LibrarySegment(val titleRes: Int, val type: WhitelistItemType) {
+    CHANNELS(R.string.kid_abschnitt_kanaele, WhitelistItemType.CHANNEL),
+    VIDEOS(R.string.kid_abschnitt_videos, WhitelistItemType.VIDEO),
+    PLAYLISTS(R.string.kid_abschnitt_sendungen, WhitelistItemType.PLAYLIST);
 
     /** Mit einer Taste im Kreis: Kanäle → Videos → Sendungen → Kanäle. */
     fun next(): LibrarySegment = entries[(ordinal + 1) % entries.size]
@@ -89,17 +91,29 @@ enum class LibrarySegment(val title: String, val type: WhitelistItemType) {
  * Baut die Zeilen von Startseite und Mediathek aus dem, was ohnehin sichtbar ist. Rein und ohne
  * Datenbank: Welche Einträge sichtbar sind, hat [ContentPolicy] vorher entschieden.
  */
-internal object KidRows {
-    const val RECENT = "Zuletzt geschaut"
-    const val CHANNELS = "Kanäle"
-    const val PLAYLISTS = "Sendungen"
-    const val VIDEOS = "Videos"
+internal class KidRows(private val texte: Texte) {
+    /** Abschnittsueberschriften; sie sind zugleich der Schluessel, unter dem Zeilen zusammengehoeren. */
+    val RECENT = texte.get(R.string.kid_abschnitt_zuletzt)
+    val CHANNELS = texte.get(R.string.kid_abschnitt_kanaele)
+    val PLAYLISTS = texte.get(R.string.kid_abschnitt_sendungen)
+    val VIDEOS = texte.get(R.string.kid_abschnitt_videos)
 
-    /** Auf dem kleinen Schirm nur die neuesten Videos; alle stehen in der Mediathek. */
-    const val HOME_VIDEO_LIMIT = 4
-    const val RECENT_LIMIT = 3
-    const val LIBRARY_ROW_ID = "library"
-    const val SEGMENTS_ROW_ID = "segments"
+    companion object {
+        /** Auf dem kleinen Schirm nur die neuesten Videos; alle stehen in der Mediathek. */
+        const val HOME_VIDEO_LIMIT = 4
+        const val RECENT_LIMIT = 3
+        const val LIBRARY_ROW_ID = "library"
+        const val SEGMENTS_ROW_ID = "segments"
+
+        /**
+         * Videos aus Kanal- und Playlist-Feeds; die Bildadresse dort zeigt auf einen Server, den der
+         * Lader nicht anfragt. Aus der Kennung gebildet trägt auch der Zwischenspeicher.
+         */
+        fun video(videoId: String, title: String, channel: String?, idPrefix: String = "") = KidRow(
+            id = idPrefix + videoId, title = title, subtitle = channel?.takeIf { it.isNotBlank() },
+            thumbnailUrl = Vorschaubilder.fuerVideo(videoId), action = KidAction.Play(videoId, title)
+        )
+    }
 
     /**
      * Startseite: Zuletzt geschaut · Kanäle · Sendungen · Videos · „Alle Videos". Leere
@@ -117,7 +131,7 @@ internal object KidRows {
         rows += playlists.map { item(it, kanalbilder, PLAYLISTS) }
         rows += videos.map { item(it, kanalbilder, VIDEOS) }
         if (visible.isNotEmpty()) rows += KidRow(
-            id = LIBRARY_ROW_ID, title = "Alle Videos", subtitle = "Kanäle · Videos · Sendungen",
+            id = LIBRARY_ROW_ID, title = texte.get(R.string.kid_alle_videos), subtitle = texte.get(R.string.kid_alle_videos_untertitel),
             action = KidAction.OpenLibrary, section = VIDEOS
         )
         return rows
@@ -125,7 +139,7 @@ internal object KidRows {
 
     /** Mediathek: zuerst der Umschalter, dann alles Sichtbare des gewählten Bereichs. */
     fun library(visible: List<WhitelistItemEntity>, segment: LibrarySegment, kanalbilder: Map<String, String>): List<KidRow> =
-        listOf(KidRow(id = SEGMENTS_ROW_ID, title = segment.title, action = KidAction.NextSegment)) +
+        listOf(KidRow(id = SEGMENTS_ROW_ID, title = texte.get(segment.titleRes), action = KidAction.NextSegment)) +
             visible.filter { it.type == segment.type.name }.map { item(it, kanalbilder) }
 
     fun item(item: WhitelistItemEntity, kanalbilder: Map<String, String>, section: String? = null): KidRow {
@@ -134,7 +148,7 @@ internal object KidRows {
             id = item.id,
             title = item.title,
             subtitle = item.channelTitle?.takeIf { it != item.title }
-                ?: if (type == WhitelistItemType.PLAYLIST) "Sendung" else null,
+                ?: if (type == WhitelistItemType.PLAYLIST) texte.get(R.string.kid_sendung) else null,
             thumbnailUrl = Vorschaubilder.adresse(item) ?: kanalbilder[item.contentId],
             isChannel = type == WhitelistItemType.CHANNEL,
             action = when (type) {
@@ -145,13 +159,4 @@ internal object KidRows {
             section = section
         )
     }
-
-    /**
-     * Videos aus Kanal- und Playlist-Feeds; die Bildadresse dort zeigt auf einen Server, den der
-     * Lader nicht anfragt. Aus der Kennung gebildet trägt auch der Zwischenspeicher.
-     */
-    fun video(videoId: String, title: String, channel: String?, idPrefix: String = "") = KidRow(
-        id = idPrefix + videoId, title = title, subtitle = channel?.takeIf { it.isNotBlank() },
-        thumbnailUrl = Vorschaubilder.fuerVideo(videoId), action = KidAction.Play(videoId, title)
-    )
 }

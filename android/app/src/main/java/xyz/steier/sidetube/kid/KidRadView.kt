@@ -32,6 +32,8 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.res.stringResource
+import xyz.steier.sidetube.R
 import androidx.compose.ui.semantics.contentDescription
 import androidx.compose.ui.semantics.selected
 import androidx.compose.ui.semantics.semantics
@@ -67,13 +69,14 @@ internal fun RadEingabe(anzeige: String) {
     ) {
         Icon(Icons.Default.Search, contentDescription = null, tint = MaterialTheme.colorScheme.onSurface.copy(alpha = 0.7f))
         Spacer(Modifier.width(8.dp))
+        val gesucht = stringResource(R.string.kid_rad_gesucht, anzeige.ifEmpty { stringResource(R.string.kid_rad_noch_nichts) })
         Text(
             if (anzeige.isEmpty()) "…" else wortanfaengeGross(anzeige).let { if (it.length > 16) "…" + it.takeLast(15) else it } + "…",
             fontSize = 26.sp,
             fontWeight = FontWeight.Bold,
             maxLines = 1,
             overflow = TextOverflow.Ellipsis,
-            modifier = Modifier.semantics { contentDescription = "Gesucht: ${anzeige.ifEmpty { "noch nichts" }}" }
+            modifier = Modifier.semantics { contentDescription = gesucht }
         )
     }
 }
@@ -83,7 +86,7 @@ internal fun RadEingabe(anzeige: String) {
  * Löschen. Am Ring wählen links/rechts, die Mitte nimmt; mit dem Finger antippen.
  */
 @Composable
-internal fun Buchstabenrad(rad: RadZustand, hasHits: Boolean, onTap: (Int) -> Unit, unten: String = "Treffer") {
+internal fun Buchstabenrad(rad: RadZustand, hasHits: Boolean, onTap: (Int) -> Unit, unten: String = stringResource(R.string.kid_rad_treffer)) {
     val listState = rememberLazyListState()
     // Das gewählte Feld bleibt in der Mitte der Reihe, damit man sieht, was links und rechts kommt.
     LaunchedEffect(rad.fokus, rad.tasten.size) {
@@ -102,9 +105,9 @@ internal fun Buchstabenrad(rad: RadZustand, hasHits: Boolean, onTap: (Int) -> Un
         }
         Text(
             when {
-                !rad.aktiv -> "▲ zurück zu den Buchstaben"
-                hasHits -> "◀ ▶ wählen · Mitte nimmt · ▼ $unten"
-                else -> "◀ ▶ wählen · Mitte nimmt"
+                !rad.aktiv -> stringResource(R.string.kid_rad_zurueck_zu_buchstaben)
+                hasHits -> stringResource(R.string.kid_rad_hilfe_mit_unten, unten)
+                else -> stringResource(R.string.kid_rad_hilfe)
             },
             style = MaterialTheme.typography.labelMedium,
             color = MaterialTheme.colorScheme.onSurface.copy(alpha = 0.65f),
@@ -119,8 +122,8 @@ private fun RadFeld(taste: RadTaste, focused: Boolean, onClick: () -> Unit) {
     val form = RoundedCornerShape(12.dp)
     val (gross, klein, beschreibung) = when (taste) {
         is RadTaste.Buchstabe -> Triple(taste.zeichen.beschriftung, null, taste.zeichen.beschriftung)
-        RadTaste.Luecke -> Triple("␣", "Lücke", "Lücke")
-        RadTaste.Loeschen -> Triple("⌫", "Löschen", "Löschen")
+        RadTaste.Luecke -> Triple("␣", stringResource(R.string.kid_rad_luecke), stringResource(R.string.kid_rad_luecke))
+        RadTaste.Loeschen -> Triple("⌫", stringResource(R.string.kid_rad_loeschen), stringResource(R.string.kid_rad_loeschen))
     }
     Column(
         Modifier

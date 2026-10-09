@@ -108,7 +108,7 @@ struct SourceTrustView: View {
         do {
             try CurationRepository(context: modelContext).ensureSources([
                 SourceDefinition(channelId: entry.channelId, handle: nil, title: entry.title, provider: entry.provider,
-                                 trust: trust, notes: "Aus der Whitelist übernommen und von Eltern eingestuft.")
+                                 trust: trust, notes: String(localized: "Aus der Whitelist übernommen und von Eltern eingestuft."))
             ])
             load()
         } catch { self.error = error.localizedDescription }
@@ -119,12 +119,12 @@ struct SourceTrustView: View {
             .replacingOccurrences(of: "https://", with: "").replacingOccurrences(of: "http://", with: "")
             .split(separator: "/").first.map(String.init) ?? ""
         newInstanceHost = ""; let title = newInstanceTitle.isEmpty ? host : newInstanceTitle; newInstanceTitle = ""
-        guard host.contains("."), !host.contains(" ") else { error = "Bitte eine Adresse wie tube.example.org eingeben."; return }
+        guard host.contains("."), !host.contains(" ") else { error = String(localized: "Bitte eine Adresse wie tube.example.org eingeben."); return }
         do {
             try CurationRepository(context: modelContext).ensureSources([
                 SourceDefinition(channelId: PeerTubeIDs.instanceId(host: host), handle: nil, title: title, provider: .peertube,
                                  trust: .perVideoReview, defaultAgeMin: 6,
-                                 notes: "Von Eltern hinzugefügt – Standard: nur einzeln geprüfte Videos.")
+                                 notes: String(localized: "Von Eltern hinzugefügt – Standard: nur einzeln geprüfte Videos."))
             ])
             load()
         } catch { self.error = error.localizedDescription }

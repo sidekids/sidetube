@@ -34,7 +34,7 @@ struct LibraryScreen: View {
                 if let model {
                     grid(model: model)
                 } else {
-                    KidEmptyState(systemImage: "tv", title: "Noch keine Videos", message: "Deine Eltern richten SideTube erst noch ein.")
+                    KidEmptyState(systemImage: "tv", title: String(localized: "Noch keine Videos"), message: String(localized: "Deine Eltern richten SideTube erst noch ein."))
                     Spacer()
                 }
             }
@@ -61,8 +61,8 @@ struct LibraryScreen: View {
         ScrollView {
             if items.isEmpty {
                 KidEmptyState(systemImage: segment == .channel ? "person.crop.rectangle.stack" : (segment == .video ? "play.rectangle" : "list.and.film"),
-                              title: "Noch keine \(segment.pluralLabel)",
-                              message: "Deine Eltern können hier \(segment.pluralLabel) für dich aussuchen.")
+                              title: String(localized: "Noch keine \(segment.pluralLabel)"),
+                              message: String(localized: "Deine Eltern können hier \(segment.pluralLabel) für dich aussuchen."))
             } else {
                 LazyVGrid(columns: segment == .channel ? channelColumns : columns, alignment: .leading, spacing: KidTheme.cardSpacing) {
                     ForEach(Array(items.enumerated()), id: \.element.id) { index, row in
@@ -218,7 +218,7 @@ struct DetailScreen: View {
             }
             if rows.isEmpty, !model.isLoading {
                 KidEmptyState(systemImage: "play.rectangle", title: searchText.isEmpty ? "Noch keine Videos" : "Nichts gefunden",
-                              message: model.footerHint ?? (searchText.isEmpty ? "Hier ist gerade nichts zu sehen." : "Probiere ein anderes Wort."))
+                              message: model.footerHint ?? (searchText.isEmpty ? String(localized: "Hier ist gerade nichts zu sehen.") : String(localized: "Probiere ein anderes Wort.")))
                     .listRowBackground(Color.clear)
             }
             ForEach(Array(rows.enumerated()), id: \.element.id) { index, row in

@@ -102,7 +102,7 @@ umgehängt — sonst begänne das Video von vorn. Am Sidephone spulen Rad hoch u
 
 ### Weitere Härtungen
 
-- **`youtube-nocookie.com`** als Player-Host (Privacy-Enhanced Mode) auf beiden Plattformen und auf iOS ein nicht-persistenter `WKWebsiteDataStore`. Auf Android sind Drittanbieter-Cookies **weiterhin zugelassen**; der prozessweite Cookie-Bestand wird lediglich zu Beginn und zum Ende jeder Player-Sitzung geleert (`PlayerCookiePolicy`). Eine Verknüpfung über Sitzungen hinweg ist damit erschwert, aber nicht nachgewiesen ausgeschlossen — die Messung am Gerät steht aus.
+- **`youtube-nocookie.com`** als Player-Host (Privacy-Enhanced Mode) auf beiden Plattformen und auf iOS ein nicht-persistenter `WKWebsiteDataStore`. Auf Android sind Drittanbieter-Cookies seit 08.10.2026 **aus** (`PlayerCookiePolicy.ACCEPT_THIRD_PARTY = false`); der prozessweite Cookie-Bestand wird zudem zu Beginn und zum Ende jeder Player-Sitzung geleert. Gemessen am Emulator SP-01 (API 31, aktuelle WebView): Wiedergabe startet und läuft; `controls: 0` gilt seitdem auch in `android/app/src/main/assets/player.html`. Die Messung auf einem Gerät mit alter WebView-Fassung steht aus (siehe `release/android-device-verification.md`).
 - **Schließen stoppt**: `PlayerModel.close()` ruft `engine.stop()`, damit nach „Fertig“ kein Ton weiterläuft (die WebView lebt für die nächste Sitzung weiter).
 - **Video-IDs** erreichen die Android-Seite nur noch gefiltert (`safeVideoId`, auch beim Erstaufbau).
 - **Logging** der JS-Ereignisse auf iOS mit `privacy: .private`.

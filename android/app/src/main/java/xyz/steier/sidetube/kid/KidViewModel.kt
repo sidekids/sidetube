@@ -17,6 +17,8 @@ import kotlinx.coroutines.CancellationException
 import kotlinx.coroutines.currentCoroutineContext
 import kotlinx.coroutines.ensureActive
 import xyz.steier.sidetube.AppContainer
+import xyz.steier.sidetube.R
+import xyz.steier.sidetube.Texte
 import xyz.steier.sidetube.core.curation.ContentPolicy
 import xyz.steier.sidetube.core.db.KidProfileEntity
 import xyz.steier.sidetube.core.db.WhitelistItemEntity
@@ -64,6 +66,8 @@ data class KidState(
     val playback: xyz.steier.sidetube.core.player.PlaybackState? = null,
     val isLoading: Boolean = false,
     val hint: String? = null,
+    /** Vollbild-Sperre, aus der nur die PIN der Eltern führt; `null` = frei. */
+    val sperre: KidSperre? = null,
     val remainingMinutes: Int? = null,
     /** Restzeit des Schlaf-Timers; `null` wenn keiner laeuft, `0` nach Ablauf. */
     val sleepRemainingSeconds: Int? = null,
@@ -106,8 +110,13 @@ class KidViewModel internal constructor(
     /** Wünsche des Kindes (ADR 0001); bleiben auf dem Gerät. */
     private val wuensche: WunschRepository,
     /** Meldet den Eltern einen neu angelegten Wunsch (ADR 0005); läuft außerhalb dieses ViewModels. */
-    private val neuerWunschGemeldet: () -> Unit = {}
+    private val neuerWunschGemeldet: () -> Unit = {},
+    /** Texte der Oberflaeche; Compose nimmt `stringResource`, dieses ViewModel fragt hier. */
+    private val texte: Texte
 ) : ViewModel() {
+    private val kidRows = KidRows(texte)
+    private val wunschRows = KidWunschRows(texte)
+
     constructor(container: AppContainer) : this(
         container.profiles, container.whitelist, container.watchTime, container.playbackSessions,
         container.curation, container.channelCache, container.content, container.channelFeed,
@@ -115,7 +124,8 @@ class KidViewModel internal constructor(
         kanalbildHolen = { id -> container.channelPages.byId(id).thumbnailUrl.takeIf { it.isNotBlank() } },
         playlistHolen = container.playlistFeed::videos,
         wuensche = container.wuensche,
-        neuerWunschGemeldet = container::meldeNeuenWunsch
+        neuerWunschGemeldet = container::meldeNeuenWunsch,
+        texte = container.texte
     )
 
     /**
@@ -207,7 +217,9 @@ class KidViewModel internal constructor(
                     ?: allProfiles.firstOrNull()
                 selectedProfileId = profile?.id
                 _state.update { it.copy(profile = profile, profiles = allProfiles) }
-                if (profile != null) observe(profile) else {
+                // Jeder Profilstand kann eine Sperre setzen oder aufheben: Die Eltern haben das
+                // Limit erhoeht, eine Ausnahme von der Ruhezeit gesetzt oder die Zeiten geaendert.
+                if (profile != null) { observe(profile); pruefeSperre() } else {
                     visibleJob?.cancel()
                     channelJob?.cancel()
                     observing = null
@@ -271,7 +283,7 @@ class KidViewModel internal constructor(
                 // Room can emit after a source change or an explicit rejection of a channel item.
                 val interrupted = playback != null || startJob?.isActive == true
                 closePlayer()
-                if (interrupted) _state.update { it.copy(hint = "Die Freigaben wurden aktualisiert. Bitte ein Video erneut auswählen.") }
+                if (interrupted) _state.update { it.copy(hint = texte.get(R.string.kid_hinweis_freigaben_aktualisiert)) }
                 visible = items
                 // Erst leeren, dann neu lesen: Ein eben entzogenes Video darf auch nicht fuer die
                 // Millisekunden bis zur Neuberechnung im Verlauf stehen.
@@ -291,6 +303,8 @@ class KidViewModel internal constructor(
     }
 
     fun onKey(action: KeyAction) {
+        // Unter der Sperre tut der Ring nichts; Mitte (PIN) und Einstellungen fuehrt die Activity aus.
+        if (_state.value.sperre != null) return
         // Laeuft ein Video, gilt der Ring im Player (SideUI ADR 0015): Mitte pausiert,
         // links/rechts wechseln das Video, hoch/runter spulen 10 s. Lautstaerke liegt nicht am Ring.
         playback?.let { model ->
@@ -331,7 +345,10 @@ class KidViewModel internal constructor(
 
     fun focusRow(index: Int) { leaveWheel(); focus.focus(index); publishFocus() }
 
-    fun activateRow(index: Int) { leaveWheel(); focus.focus(index); activate() }
+    fun activateRow(index: Int) {
+        if (_state.value.sperre != null) return
+        leaveWheel(); focus.focus(index); activate()
+    }
 
     /**
      * Die Suche mit dem Rad (SideUI ADR 0014): Rad und Trefferliste sind Reihen. Im Rad wählen
@@ -634,11 +651,11 @@ class KidViewModel internal constructor(
             val ergebnis = runCatching { wuensche.wuensche(entwurf, profile.id, WunschRepository.ACTOR_KIND) }.getOrNull()
             if (_state.value.profile?.id != profile.id) return@launch
             val hinweis = when (ergebnis) {
-                is WunschErgebnis.Geschickt -> "Dein Wunsch ist bei den Eltern. " + KidWunschRows.heuteText(ergebnis.heuteNoch) + "."
-                is WunschErgebnis.SchonGewuenscht -> "Das hast du dir schon gewünscht."
-                WunschErgebnis.Grenze -> "Heute gehen keine Wünsche mehr. Morgen wieder."
-                WunschErgebnis.Leer -> "Erst Buchstaben wählen."
-                null -> "Der Wunsch konnte nicht gespeichert werden."
+                is WunschErgebnis.Geschickt -> texte.get(R.string.kid_hinweis_wunsch_geschickt, wunschRows.heuteText(ergebnis.heuteNoch))
+                is WunschErgebnis.SchonGewuenscht -> texte.get(R.string.kid_hinweis_wunsch_schon)
+                WunschErgebnis.Grenze -> texte.get(R.string.kid_hinweis_wunsch_grenze)
+                WunschErgebnis.Leer -> texte.get(R.string.kid_hinweis_wunsch_leer)
+                null -> texte.get(R.string.kid_hinweis_wunsch_fehler)
             }
             // Nur ein neuer Wunsch wird gemeldet – keine Dublette, nichts über der Tagesgrenze.
             if (ergebnis is WunschErgebnis.Geschickt) neuerWunschGemeldet()
@@ -742,32 +759,32 @@ class KidViewModel internal constructor(
     private fun refreshKeepingFocus() {
         if (playback != null) return
         when (val screen = _state.value.screen) {
-            is KidScreen.Home -> show(homeRows(), _state.value.profile?.name ?: "SideTube", keepFocus = true)
-            KidScreen.Wishes -> show(wishRows(), "Meine Wünsche", keepFocus = true)
+            is KidScreen.Home -> show(homeRows(), _state.value.profile?.name ?: texte.get(R.string.app_name), keepFocus = true)
+            KidScreen.Wishes -> show(wishRows(), texte.get(R.string.kid_meine_wuensche), keepFocus = true)
             KidScreen.ThemaWunsch, is KidScreen.NeueFolgeAnsicht -> show(wunschBildschirmRows(screen), titleFor(screen), keepFocus = true)
             else -> Unit
         }
     }
 
     private fun homeRows(): List<KidRow> =
-        KidRows.home(visible, recentRows, kanalbilder) +
-            KidWunschRows.home(neueFolgen, meineWuensche, wuenscheHeute())
+        kidRows.home(visible, recentRows, kanalbilder) +
+            wunschRows.home(neueFolgen, meineWuensche, wuenscheHeute())
 
     private fun wishRows(): List<KidRow> =
-        KidWunschRows.liste(meineWuensche, visible, kanalbilder, wuenscheHeute(), gesperrteKanaele)
+        wunschRows.liste(meineWuensche, visible, kanalbilder, wuenscheHeute(), gesperrteKanaele)
 
     private fun wunschBildschirmRows(screen: KidScreen): List<KidRow> {
         val entwurf = entwurfFuerBildschirm() ?: return emptyList()
         val moeglich = wunschMoeglich(entwurf)
         return when (screen) {
-            KidScreen.ThemaWunsch -> KidWunschRows.themaZeilen(_state.value.rad.getippt, moeglich, wuenscheHeute())
-            is KidScreen.NeueFolgeAnsicht -> KidWunschRows.folgenZeilen(moeglich, wuenscheHeute())
+            KidScreen.ThemaWunsch -> wunschRows.themaZeilen(_state.value.rad.getippt, moeglich, wuenscheHeute())
+            is KidScreen.NeueFolgeAnsicht -> wunschRows.folgenZeilen(moeglich, wuenscheHeute())
             else -> emptyList()
         }
     }
 
     private fun titleFor(screen: KidScreen): String = when (screen) {
-        KidScreen.ThemaWunsch -> "Wunsch an die Eltern"
+        KidScreen.ThemaWunsch -> texte.get(R.string.kid_wunsch_an_die_eltern)
         is KidScreen.NeueFolgeAnsicht -> screen.folge.channelTitle
         else -> _state.value.title
     }
@@ -810,7 +827,7 @@ class KidViewModel internal constructor(
     private fun startPlayback(row: KidRow) {
         val videoId = (row.action as? KidAction.Play)?.videoId ?: return
         closePlayer()
-        if (enforceTimeRules()) return
+        if (enforceTimeRules() || _state.value.sperre != null) return
         val profile = _state.value.profile ?: return
         // Ein erfüllter Wunsch spielt nur sein eines Video.
         val sameSection = if (row.action is KidAction.Play && row.section?.startsWith("wish-") == true) listOf(row)
@@ -825,7 +842,7 @@ class KidViewModel internal constructor(
                 recordJob?.join()
                 check(profile.id !in accountingFailures)
                 if (playbackSessions.pending(profile.id) != null) {
-                    _state.update { it.copy(hint = "Die letzte Wiedergabe wurde unterbrochen. Bitte die Eltern um Freigabe bitten.") }
+                    sperren(KidSperre.UNTERBROCHEN)
                     return@launch
                 }
                 val remaining = watchTime.remainingSeconds(profile)
@@ -833,7 +850,8 @@ class KidViewModel internal constructor(
                     _state.value.rows.none { abspielbarIn(it)?.videoId == videoId }) return@launch
                 if (enforceTimeRules()) return@launch
                 if (remaining != null && remaining <= 0) {
-                    _state.update { it.copy(remainingMinutes = 0, hint = "Deine Sehzeit für heute ist aufgebraucht.") }
+                    _state.update { it.copy(remainingMinutes = 0) }
+                    sperren(KidSperre.ZEIT_UM)
                     return@launch
                 }
                 val token = UUID.randomUUID().toString()
@@ -855,7 +873,8 @@ class KidViewModel internal constructor(
             } catch (cancelled: CancellationException) {
                 throw cancelled
             } catch (_: Exception) {
-                _state.update { it.copy(hint = "Die Sehzeit konnte nicht geprüft werden. Bitte die Eltern fragen.") }
+                // Auch ein Lesefehler sperrt: Ohne verlaessliche Sehzeit laeuft nichts (fail closed).
+                sperren(KidSperre.SPEICHERFEHLER)
             }
         }
     }
@@ -924,7 +943,7 @@ class KidViewModel internal constructor(
                     throw cancelled
                 } catch (_: Exception) {
                     accountingFailures += closingProfile.id
-                    _state.update { it.copy(hint = "Die Wiedergabe konnte nicht sicher abgeschlossen werden. Bitte die Eltern fragen.") }
+                    sperren(KidSperre.SPEICHERFEHLER)
                 }
             }
             // Nach jeder Wiedergabe steht „Zuletzt geschaut" neu.
@@ -940,11 +959,13 @@ class KidViewModel internal constructor(
                 recordJob?.join()
                 playbackSessions.acknowledgeByParent(profileId)
                 accountingFailures -= profileId
-                _state.update { it.copy(hint = "Unterbrochene Wiedergabe freigegeben. Gespeicherte Sehzeit bleibt erhalten.") }
+                val sperre = _state.value.sperre
+                if (sperre == KidSperre.UNTERBROCHEN || sperre == KidSperre.SPEICHERFEHLER) entsperren()
+                _state.update { it.copy(hint = texte.get(R.string.kid_hinweis_wiedergabe_freigegeben)) }
             } catch (cancelled: CancellationException) {
                 throw cancelled
             } catch (_: Exception) {
-                _state.update { it.copy(hint = "Die Freigabe konnte nicht gespeichert werden.") }
+                _state.update { it.copy(hint = texte.get(R.string.kid_hinweis_freigabe_fehler)) }
             }
         }
     }
@@ -972,12 +993,13 @@ class KidViewModel internal constructor(
                         } catch (_: Exception) {
                             accountingFailures += profile.id
                             closePlayer()
-                            _state.update { it.copy(hint = "Die Sehzeit konnte nicht gespeichert werden. Bitte die Eltern fragen.") }
+                            sperren(KidSperre.SPEICHERFEHLER)
                         }
                     }
                 }
-                is PlaybackModel.Command.LimitReached -> _state.update {
-                    it.copy(remainingMinutes = 0, hint = "Deine Sehzeit für heute ist aufgebraucht.")
+                is PlaybackModel.Command.LimitReached -> {
+                    _state.update { it.copy(remainingMinutes = 0) }
+                    sperren(KidSperre.ZEIT_UM)
                 }
                 is PlaybackModel.Command.Done -> closePlayer()
                 else -> {
@@ -1019,8 +1041,9 @@ class KidViewModel internal constructor(
         if (!SleepTimerPolicy.hasExpired(timer, now())) return false
         closePlayer()
         // Der Timer bleibt abgelaufen stehen: Erst die Eltern heben ihn auf, sonst startet das
-        // Kind gleich das naechste Video. Das entspricht dem sperrenden Overlay auf iOS.
-        _state.update { it.copy(sleepRemainingSeconds = 0, hint = "Gute Nacht. Der Schlafmodus ist zu Ende.") }
+        // Kind gleich das naechste Video. Die Sperre ist das Vollbild wie auf iOS.
+        _state.update { it.copy(sleepRemainingSeconds = 0) }
+        sperren(KidSperre.GUTE_NACHT)
         return true
     }
 
@@ -1036,6 +1059,8 @@ class KidViewModel internal constructor(
         sleepJob = null
         sleepTimer = null
         _state.update { it.copy(sleepRemainingSeconds = null) }
+        // Auch aus dem Elternbereich heraus: Ohne Timer gibt es nichts mehr zu sperren.
+        if (_state.value.sperre == KidSperre.GUTE_NACHT) entsperren()
     }
 
     private fun publishSleepRemaining() = _state.update {
@@ -1073,7 +1098,7 @@ class KidViewModel internal constructor(
         val profile = _state.value.profile ?: return false
         if (!BedtimePolicy.isActive(profile, now(), ZoneId.systemDefault())) return false
         closePlayer()
-        _state.update { it.copy(hint = "Jetzt ist Ruhezeit. Bitte die Eltern fragen.") }
+        sperren(KidSperre.RUHEZEIT)
         return true
     }
 
@@ -1081,6 +1106,96 @@ class KidViewModel internal constructor(
     fun onClockChanged() {
         if (playback != null && !enforceTimeRules()) scheduleBedtime()
         scheduleSleep()
+        pruefeSperre()
+    }
+
+    // ---- Vollbild-Sperre (iOS: KidOverlay) ----------------------------------------------------
+
+    private var sperrJob: Job? = null
+
+    /** Setzt die Sperre. Ein Hinweis daneben haette keinen Sinn: Die Sperre sagt selbst, was los ist. */
+    private fun sperren(sperre: KidSperre) {
+        _state.update { it.copy(sperre = sperre, hint = null) }
+        planeSperrPruefung()
+    }
+
+    private fun entsperren() {
+        _state.update { it.copy(sperre = null) }
+        planeSperrPruefung()
+    }
+
+    /**
+     * Prueft die Regeln, die eine Sperre von selbst setzen oder aufheben: Schlaf-Timer, Ruhezeit,
+     * Tageslimit – auch ohne laufendes Video, denn die Ruhezeit gilt fuer das Stoebern genauso.
+     * Laeuft bei jedem Profilstand, bei Uhrwechseln, an den geplanten Grenzen und beim Rueckweg
+     * in den Kindermodus. Sperren, die nur die Eltern aufheben, bleiben unberuehrt.
+     */
+    fun pruefeSperre() {
+        val profile = _state.value.profile ?: return
+        val aktuell = _state.value.sperre
+        if (aktuell != null && !aktuell.automatisch) return
+        if (enforceTimeRules()) return
+        viewModelScope.launch {
+            val remaining = try { watchTime.remainingSeconds(profile) } catch (cancelled: CancellationException) { throw cancelled }
+                catch (_: Exception) { return@launch }   // nichts aufheben, nichts erfinden
+            // Inzwischen kann eine andere Regel gegriffen haben; die bleibt.
+            if (_state.value.profile != profile || enforceTimeRules()) return@launch
+            val sperre = _state.value.sperre
+            if (sperre != null && !sperre.automatisch) return@launch
+            when {
+                remaining != null && remaining <= 0 -> {
+                    _state.update { it.copy(remainingMinutes = 0) }
+                    if (sperre != KidSperre.ZEIT_UM) sperren(KidSperre.ZEIT_UM)
+                }
+                sperre != null -> entsperren()   // die Regel greift nicht mehr: Limit erhoeht, Fenster vorbei
+                else -> planeSperrPruefung()
+            }
+        }
+    }
+
+    /**
+     * Eine Frist bis zur naechsten Grenze, an der sich eine Sperre aendern kann: Beginn oder Ende
+     * der Ruhezeit, Mitternacht bei aufgebrauchter Sehzeit. Kein wiederkehrender Wecker; der
+     * Schlaf-Timer hat seine eigene Frist in [scheduleSleep].
+     */
+    private fun planeSperrPruefung() {
+        sperrJob?.cancel()
+        sperrJob = null
+        val profile = _state.value.profile ?: return
+        val zone = ZoneId.systemDefault()
+        val current = now()
+        val kandidaten = mutableListOf<Instant>()
+        BedtimePolicy.nextBoundary(profile, current, zone)?.let { kandidaten += it }
+        if (_state.value.sperre == KidSperre.ZEIT_UM) {
+            kandidaten += current.atZone(zone).toLocalDate().plusDays(1).atStartOfDay(zone).toInstant()
+        }
+        val next = kandidaten.filter { it > current }.minOrNull() ?: return
+        sperrJob = viewModelScope.launch {
+            delay(Duration.between(current, next).toMillis().coerceAtLeast(1))
+            pruefeSperre()
+        }
+    }
+
+    /**
+     * Die Eltern haben auf der Sperre ihre PIN eingegeben. Schlaf-Timer: aufheben. Ruhezeit:
+     * Ausnahme bis zum Ende des laufenden Fensters – nicht laenger, damit aus einer Ausnahme kein
+     * Abschalten wird. Alles andere hebt nur die Sperre; was zu tun ist, liegt im Elternbereich.
+     */
+    fun elternHebenSperreAuf() {
+        val sperre = _state.value.sperre ?: return
+        when (sperre) {
+            KidSperre.GUTE_NACHT -> stopSleepTimer()
+            KidSperre.RUHEZEIT -> {
+                val profile = _state.value.profile
+                val until = profile?.let { BedtimePolicy.endOfCurrentWindow(it, now(), ZoneId.systemDefault()) }
+                entsperren()
+                if (profile != null && until != null) viewModelScope.launch {
+                    // Scheitert das Speichern, kommt kein neuer Profilstand – die naechste Pruefung sperrt wieder.
+                    runCatching { profiles.update(profile.copy(bedtimeSkipUntil = until.toEpochMilli())) }
+                }
+            }
+            KidSperre.ZEIT_UM, KidSperre.SPEICHERFEHLER, KidSperre.UNTERBROCHEN -> entsperren()
+        }
     }
 
     private fun scheduleBedtime() {
@@ -1105,7 +1220,7 @@ class KidViewModel internal constructor(
         val profile = playbackProfile ?: return
         val state = BedtimePolicy.state(profile, now(), ZoneId.systemDefault())
         if (state is BedtimeState.Warning) {
-            _state.update { it.copy(hint = "In ${state.minutesLeft} Minuten beginnt die Ruhezeit.") }
+            _state.update { it.copy(hint = texte.plural(R.plurals.kid_hinweis_ruhezeit_warnung, state.minutesLeft)) }
         }
     }
 
@@ -1183,7 +1298,7 @@ class KidViewModel internal constructor(
                 if (_state.value.profile?.id != profile.id || rows == recentRows) return@launch
                 recentRows = rows
                 if (_state.value.screen is KidScreen.Home && playback == null) {
-                    show(homeRows(), _state.value.profile?.name ?: "SideTube", keepFocus = true)
+                    show(homeRows(), _state.value.profile?.name ?: texte.get(R.string.app_name), keepFocus = true)
                 }
             } catch (cancelled: CancellationException) {
                 throw cancelled
@@ -1195,8 +1310,8 @@ class KidViewModel internal constructor(
 
     private fun refresh() {
         when (val screen = _state.value.screen) {
-            is KidScreen.Home -> show(homeRows(), _state.value.profile?.name ?: "SideTube")
-            KidScreen.Wishes -> show(wishRows(), "Meine Wünsche")
+            is KidScreen.Home -> show(homeRows(), _state.value.profile?.name ?: texte.get(R.string.app_name))
+            KidScreen.Wishes -> show(wishRows(), texte.get(R.string.kid_meine_wuensche))
             KidScreen.ThemaWunsch -> {
                 _state.update { it.copy(rad = KidWunschRows.freiesRad(it.rad)) }
                 show(wunschBildschirmRows(screen), titleFor(screen))
@@ -1210,9 +1325,9 @@ class KidViewModel internal constructor(
                     // Ohne Treffer steht der Fokus im Rad; der Wunsch darunter ist mit ▼ erreichbar.
                     it.copy(rad = if (treffer.isEmpty()) rad.copy(aktiv = true) else rad)
                 }
-                show(treffer + KidWunschRows.suchZeile(if (_state.value.rad.t9) "" else _state.value.rad.anzeige), "Suche")
+                show(treffer + wunschRows.suchZeile(if (_state.value.rad.t9) "" else _state.value.rad.anzeige), texte.get(R.string.kid_suche))
             }
-            is KidScreen.Library -> show(KidRows.library(visible, screen.segment, kanalbilder), "Alle Videos")
+            is KidScreen.Library -> show(kidRows.library(visible, screen.segment, kanalbilder), texte.get(R.string.kid_alle_videos))
             is KidScreen.Channel, is KidScreen.Playlist -> Unit   // wird beim Oeffnen geladen
         }
     }
@@ -1238,7 +1353,7 @@ class KidViewModel internal constructor(
         return radsuche.treffer(visible, query).map(::itemRow)
     }
 
-    private fun itemRow(item: WhitelistItemEntity) = KidRows.item(item, kanalbilder)
+    private fun itemRow(item: WhitelistItemEntity) = kidRows.item(item, kanalbilder)
 
     /**
      * [keepFocus]: Die Auswahl bleibt auf derselben Zeile, wenn sich die Liste darüber ändert

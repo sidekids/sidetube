@@ -31,9 +31,9 @@ struct ChangePINView: View {
 
     private var title: String {
         switch step {
-        case .old: "Aktuelle PIN"
-        case .new: "Neue PIN"
-        case .confirm: "Neue PIN wiederholen"
+        case .old: String(localized: "Aktuelle PIN")
+        case .new: String(localized: "Neue PIN")
+        case .confirm: String(localized: "Neue PIN wiederholen")
         }
     }
 
@@ -48,7 +48,7 @@ struct ChangePINView: View {
             step = .confirm
         case .confirm:
             guard pin == newPIN else {
-                message = "Die neue PIN stimmte nicht überein. Bitte erneut eingeben."
+                message = String(localized: "Die neue PIN stimmte nicht überein. Bitte erneut eingeben.")
                 step = .new
                 return
             }
@@ -56,17 +56,17 @@ struct ChangePINView: View {
                 switch try pinManager.changePIN(from: oldPIN, to: newPIN) {
                 case .success: dismiss()
                 case .failure(let remaining):
-                    message = "Aktuelle PIN falsch (noch \(remaining) Versuche)."
+                    message = String(localized: "Aktuelle PIN falsch (noch \(remaining) Versuche).")
                     step = .old
                 case .lockedOut(let seconds):
-                    message = "Gesperrt für \(seconds) s."
+                    message = String(localized: "Gesperrt für \(seconds) s.")
                     step = .old
                 }
             } catch PINSetupError.storageUnavailable {
-                message = "Die neue PIN konnte nicht sicher gespeichert werden."
+                message = String(localized: "Die neue PIN konnte nicht sicher gespeichert werden.")
                 step = .old
             } catch {
-                message = "Neue PIN ungültig."
+                message = String(localized: "Neue PIN ungültig.")
                 step = .new
             }
         }

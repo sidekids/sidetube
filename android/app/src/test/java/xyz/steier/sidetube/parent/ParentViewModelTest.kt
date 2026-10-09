@@ -104,7 +104,8 @@ private class ParentFixture {
         StarterPackService(content, curation, profileRepo),
         YouTubeResolver(OEmbedSource(offline), ChannelPageSource(offline)),
         seedSources = {},
-        wuensche = wunschRepo
+        wuensche = wunschRepo,
+        texte = xyz.steier.sidetube.TestTexte
     )
     val wunschRepo = xyz.steier.sidetube.core.repo.WunschRepository(wishes, reviewDao,
         now = { java.time.Instant.ofEpochMilli(clock) })
@@ -419,8 +420,8 @@ class ParentViewModelTest {
     @Test fun `the hint names how many need a single review and why`() {
         val g = xyz.steier.sidetube.core.curation.Einzelpruefungsgrund.FILTERTREFFER
         val n = xyz.steier.sidetube.core.curation.Einzelpruefungsgrund.QUELLE_NUR_ELTERN
-        assertThat(ParentLabels.einzelpruefungHinweis(emptyList())).isNull()
-        assertThat(ParentLabels.einzelpruefungHinweis(listOf(g, n, g)))
+        assertThat(ParentLabels.einzelpruefungHinweis(emptyList(), xyz.steier.sidetube.TestTexte)).isNull()
+        assertThat(ParentLabels.einzelpruefungHinweis(listOf(g, n, g), xyz.steier.sidetube.TestTexte))
             .isEqualTo("3 brauchen eine Einzelprüfung: nur für Eltern (1), Filtertreffer (2)")
     }
 

@@ -19,9 +19,9 @@ enum WishKind: String, Codable, CaseIterable, Sendable {
     /// Herkunft, wie Eltern sie in der Prüfliste lesen.
     var origin: String {
         switch self {
-        case .thema: "Aus der Suche"
-        case .mehrDavon: "Mehr davon"
-        case .neueFolge: "Neu bei deinen Kanälen"
+        case .thema: String(localized: "Aus der Suche")
+        case .mehrDavon: String(localized: "Mehr davon")
+        case .neueFolge: String(localized: "Neu bei deinen Kanälen")
         }
     }
 
@@ -41,19 +41,19 @@ enum WishStatus: String, Codable, CaseIterable, Sendable {
     /// So liest das Kind den Stand unter „Meine Wünsche".
     var kidTitle: String {
         switch self {
-        case .offen: "Wartet"
-        case .erfuellt: "Freigegeben"
-        case .abgelehnt: "Nicht jetzt"
-        case .besprechen: "Sprechen wir drüber"
+        case .offen: String(localized: "Wartet")
+        case .erfuellt: String(localized: "Freigegeben")
+        case .abgelehnt: String(localized: "Nicht jetzt")
+        case .besprechen: String(localized: "Sprechen wir drüber")
         }
     }
 
     var parentTitle: String {
         switch self {
-        case .offen: "Offen"
-        case .erfuellt: "Erledigt"
-        case .abgelehnt: "Abgelehnt"
-        case .besprechen: "Besprechen"
+        case .offen: String(localized: "Offen")
+        case .erfuellt: String(localized: "Erledigt")
+        case .abgelehnt: String(localized: "Abgelehnt")
+        case .besprechen: String(localized: "Besprechen")
         }
     }
 
@@ -131,8 +131,8 @@ final class KidWish {
     /// Was das Kind sich gewünscht hat, in einem Satz.
     var headline: String {
         switch kind {
-        case .thema: "„\(topic ?? "")“"
-        case .mehrDavon: "Mehr wie „\(videoTitle ?? videoId ?? "")“"
+        case .thema: String(localized: "„\(topic ?? "")“")
+        case .mehrDavon: String(localized: "Mehr wie „\(videoTitle ?? videoId ?? "")“")
         case .neueFolge: videoTitle ?? videoId ?? ""
         }
     }

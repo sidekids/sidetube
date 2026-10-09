@@ -52,17 +52,17 @@ enum SafeRecommendationService {
         // The caller's ordering is the strongest context (playlist/list “Als Nächstes”).
         for (order, id) in contextQueue.map(\.videoId).enumerated() where id != currentVideoId {
             if let item = visible.first(where: { $0.youtubeId == id }) {
-                append(item, sourceType: .playlist, reason: "Kontext der aktuellen Liste", priority: 0, order: order)
+                append(item, sourceType: .playlist, reason: String(localized: "Kontext der aktuellen Liste"), priority: 0, order: order)
             }
         }
         for item in visible where item.sourceChannelId == currentChannel {
-            append(item, sourceType: .sameChannel, reason: "Freigegebenes Video desselben Kanals", priority: 1)
+            append(item, sourceType: .sameChannel, reason: String(localized: "Freigegebenes Video desselben Kanals"), priority: 1)
         }
         for item in visible where currentCategory != nil && item.category == currentCategory {
-            append(item, sourceType: .category, reason: "Freigegebene Kategorie", priority: 2)
+            append(item, sourceType: .category, reason: String(localized: "Freigegebene Kategorie"), priority: 2)
         }
         for item in visible where !contextIDs.contains(item.youtubeId) {
-            append(item, sourceType: .recentlyApproved, reason: "Weitere freigegebene Inhalte", priority: 3)
+            append(item, sourceType: .recentlyApproved, reason: String(localized: "Weitere freigegebene Inhalte"), priority: 3)
         }
 
         // Trusted channel browsing is an existing explicit source rule, not approval.

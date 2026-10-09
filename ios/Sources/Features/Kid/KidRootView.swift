@@ -296,7 +296,7 @@ struct KidRootView: View {
         if let sleepProfile = profiles.first(where: { $0.id == session.sleepProfileId }), session.sleepTimer.isRunning {
             kidSession.select(sleepProfile)
             if let playlistId = session.consumePendingSleepPlaylist() {
-                let playlist = PlaylistModel(playlistId: playlistId, playlistTitle: "Schlaf-Playlist", context: context, profile: sleepProfile)
+                let playlist = PlaylistModel(playlistId: playlistId, playlistTitle: String(localized: "Schlaf-Playlist"), context: context, profile: sleepProfile)
                 Task {
                     await playlist.onAppear()
                     if let first = playlist.rows.first {

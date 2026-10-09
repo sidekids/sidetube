@@ -72,7 +72,7 @@ class ParentEditorLogicTest {
 
     @Test fun `pin change in three steps stores the new pin`() {
         val pins = FakePins()
-        val flow = PinChangeFlow(pins::verify) { pins.pin = it }
+        val flow = PinChangeFlow(xyz.steier.sidetube.TestTexte, pins::verify) { pins.pin = it }
         assertThat(flow.title).isEqualTo("Aktuelle PIN")
         assertThat(flow.handle("1234")).isFalse()
         assertThat(flow.title).isEqualTo("Neue PIN")
@@ -84,7 +84,7 @@ class ParentEditorLogicTest {
 
     @Test fun `mismatched repeat goes back to the new pin and stores nothing`() {
         val pins = FakePins()
-        val flow = PinChangeFlow(pins::verify) { pins.pin = it }
+        val flow = PinChangeFlow(xyz.steier.sidetube.TestTexte, pins::verify) { pins.pin = it }
         flow.handle("1234"); flow.handle("5678")
         assertThat(flow.handle("5679")).isFalse()
         assertThat(flow.step).isEqualTo(PinChangeFlow.Step.NEW)
@@ -94,7 +94,7 @@ class ParentEditorLogicTest {
 
     @Test fun `wrong or locked current pin restarts and stores nothing`() {
         val pins = FakePins()
-        val flow = PinChangeFlow(pins::verify) { pins.pin = it }
+        val flow = PinChangeFlow(xyz.steier.sidetube.TestTexte, pins::verify) { pins.pin = it }
         flow.handle("0000"); flow.handle("5678")
         assertThat(flow.handle("5678")).isFalse()
         assertThat(flow.step).isEqualTo(PinChangeFlow.Step.OLD)
@@ -122,27 +122,27 @@ class ParentEditorLogicTest {
     // --- Bezeichnungen ---
 
     @Test fun `trust levels are German like iOS, never raw ids`() {
-        assertThat(ParentLabels.trust(SourceTrust.TRUSTED_CHILD_SOURCE)).isEqualTo("Vertrauenswürdige Kinderquelle")
-        assertThat(ParentLabels.trust(SourceTrust.TRUSTED_SERIES)).isEqualTo("Vertrauenswürdige Reihe")
-        assertThat(ParentLabels.trust(SourceTrust.PER_VIDEO_REVIEW)).isEqualTo("Nur einzeln geprüfte Videos")
-        assertThat(ParentLabels.trust(SourceTrust.PARENT_ONLY)).isEqualTo("Nur für Eltern")
-        assertThat(ParentLabels.trust(SourceTrust.BLOCKED)).isEqualTo("Gesperrt")
-        SourceTrust.entries.forEach { assertThat(ParentLabels.trust(it)).isNotEqualTo(it.id) }
+        assertThat(xyz.steier.sidetube.TestTexte.get(ParentLabels.trustRes(SourceTrust.TRUSTED_CHILD_SOURCE))).isEqualTo("Vertrauenswürdige Kinderquelle")
+        assertThat(xyz.steier.sidetube.TestTexte.get(ParentLabels.trustRes(SourceTrust.TRUSTED_SERIES))).isEqualTo("Vertrauenswürdige Reihe")
+        assertThat(xyz.steier.sidetube.TestTexte.get(ParentLabels.trustRes(SourceTrust.PER_VIDEO_REVIEW))).isEqualTo("Nur einzeln geprüfte Videos")
+        assertThat(xyz.steier.sidetube.TestTexte.get(ParentLabels.trustRes(SourceTrust.PARENT_ONLY))).isEqualTo("Nur für Eltern")
+        assertThat(xyz.steier.sidetube.TestTexte.get(ParentLabels.trustRes(SourceTrust.BLOCKED))).isEqualTo("Gesperrt")
+        SourceTrust.entries.forEach { assertThat(xyz.steier.sidetube.TestTexte.get(ParentLabels.trustRes(it))).isNotEqualTo(it.id) }
     }
 
     @Test fun `history lines read in German`() {
         val event = ReviewEventEntity(contentId = "x", profileId = "p", decision = "deferred", actor = "Eltern",
             at = 0L, note = null)
-        assertThat(ParentLabels.eventHeadline(event)).isEqualTo("Zurückgestellt · Eltern")
+        assertThat(ParentLabels.eventHeadline(event, xyz.steier.sidetube.TestTexte)).isEqualTo("Zurückgestellt · Eltern")
         assertThat(ParentLabels.eventTime(event, java.time.ZoneOffset.UTC)).isEqualTo("01.01.1970 00:00")
-        assertThat(ParentLabels.decision("approved")).isEqualTo("Freigegeben")
-        assertThat(ParentLabels.decision("somethingNew")).isEqualTo("somethingNew")
+        assertThat(ParentLabels.decision("approved", xyz.steier.sidetube.TestTexte)).isEqualTo("Freigegeben")
+        assertThat(ParentLabels.decision("somethingNew", xyz.steier.sidetube.TestTexte)).isEqualTo("somethingNew")
     }
 
     @Test fun `age bands and summary`() {
-        assertThat(AgeBand.entries.map(ParentLabels::ageBand))
+        assertThat(AgeBand.entries.map { xyz.steier.sidetube.TestTexte.get(ParentLabels.ageBandRes(it)) })
             .containsExactly("Vorschule (3–5)", "Jüngere Kinder (6–8)", "Kinder (9–11)", "Ab 12").inOrder()
-        assertThat(profileSummary(profile.copy(dailyLimitMinutes = 30))).isEqualTo("30 Minuten am Tag · Ruhezeit ab 20:00")
-        assertThat(profileSummary(profile.copy(bedtimeEnabled = false))).isEqualTo("ohne Tageslimit · ohne Ruhezeit")
+        assertThat(profileSummary(profile.copy(dailyLimitMinutes = 30), xyz.steier.sidetube.TestTexte)).isEqualTo("30 Minuten am Tag · Ruhezeit ab 20:00")
+        assertThat(profileSummary(profile.copy(bedtimeEnabled = false), xyz.steier.sidetube.TestTexte)).isEqualTo("ohne Tageslimit · ohne Ruhezeit")
     }
 }

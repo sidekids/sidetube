@@ -55,7 +55,7 @@ class KidBedtimeWarningTest {
 
         jump(5 * 60)      // 20:00 - Beginn
         assertThat(vm.state.value.playback).isNull()
-        assertThat(vm.state.value.hint).contains("Ruhezeit")
+        assertThat(vm.state.value.sperre).isEqualTo(KidSperre.RUHEZEIT)
     }
 
     @Test fun `waehrend einer Elternausnahme wird weder gewarnt noch beendet`() = runTest {

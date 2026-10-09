@@ -25,11 +25,11 @@ enum Sammelpruefung {
 
         var text: String {
             switch self {
-            case .nichtOffen: "nicht mehr offen"
-            case .quelleGesperrt: "Quelle gesperrt"
-            case .quelleNurFuerEltern: "nur für Eltern"
-            case .filtertreffer: "Filtertreffer"
-            case .nachricht: "Nachricht prüfen"
+            case .nichtOffen: String(localized: "nicht mehr offen")
+            case .quelleGesperrt: String(localized: "Quelle gesperrt")
+            case .quelleNurFuerEltern: String(localized: "nur für Eltern")
+            case .filtertreffer: String(localized: "Filtertreffer")
+            case .nachricht: String(localized: "Nachricht prüfen")
             }
         }
     }
@@ -145,10 +145,10 @@ enum Sammelpruefung {
         guard !gruende.isEmpty else { return nil }
         let teile = Grund.allCases.compactMap { g -> String? in
             let n = gruende.filter { $0 == g }.count
-            return n > 0 ? "\(g.text) (\(n))" : nil
+            return n > 0 ? String(localized: "\(g.text) (\(n))") : nil
         }
-        let wer = gruende.count == 1 ? "1 Eintrag braucht" : "\(gruende.count) brauchen"
-        return "\(wer) eine Einzelprüfung: " + teile.joined(separator: ", ")
+        let wer = gruende.count == 1 ? String(localized: "1 Eintrag braucht") : String(localized: "\(gruende.count) brauchen")
+        return String(localized: "\(wer) eine Einzelprüfung: ") + teile.joined(separator: ", ")
     }
 }
 

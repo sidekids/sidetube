@@ -138,8 +138,11 @@ Suche zum Start, Zurück kurz löscht in der Suche ein Zeichen, oben rechts lang
 - Der große Abspielknopf im Player ist gelb (Zustand „spielt"/„Pause" der Wiedergabe) – als ACTIVE
   gelesen, nicht geändert.
 - Positionsanzeige im Player: Am Emulator blieb sie bei laufendem Video stehen (0:21 über mehr als
-  12 s, die WebView meldete zugleich steigende Zeiten). `player.html` schickt die Zeit nur, solange
-  sein Merker `playing` gesetzt ist. Ursache nicht untersucht, vor dieser Änderung schon so.
+  12 s, die WebView meldete zugleich steigende Zeiten). **Ursache gefunden und behoben (09.10.2026):**
+  `player.html` startete den Fünf-Sekunden-Takt bei jedem Zustandswechsel neu, und auf dem Emulator
+  wechselt YouTube beim Abspielen häufig zwischen Puffern (3) und Spielen (1) – der Takt kam so
+  minutenlang nicht zum Zug. Jetzt läuft er durch Puffern hindurch, startet nur einmal und meldet die
+  Stelle beim Start sofort.
 - Messung der Mitte unter Firmware 2.0.0 (A1).
 
 Ältere Dokumente ([ui-redesign.md](../ui-redesign.md), [UX_REVIEW.md](../UX_REVIEW.md))

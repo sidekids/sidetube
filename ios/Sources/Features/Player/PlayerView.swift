@@ -55,9 +55,9 @@ struct PlayerView: View {
         case .playing: "Spielt"
         case .paused: "Pause"
         case .ended: "Fertig"
-        case .allUnavailable: "Diese Videos gehen gerade nicht."
-        case .engineFailed: "Das Video lädt nicht. Ist das Internet an?"
-        case .storageFailed: "Die Sehzeit konnte nicht gespeichert werden. Bitte die Eltern fragen."
+        case .allUnavailable: String(localized: "Diese Videos gehen gerade nicht.")
+        case .engineFailed: String(localized: "Das Video lädt nicht. Ist das Internet an?")
+        case .storageFailed: String(localized: "Die Sehzeit konnte nicht gespeichert werden. Bitte die Eltern fragen.")
         }
     }
 }
@@ -80,7 +80,7 @@ struct FullscreenPlayerView: View {
             if model.status == .loading || model.status == .allUnavailable || model.status == .engineFailed || model.status == .storageFailed {
                 VStack {
                     Spacer()
-                    Text(model.status == .loading ? "Lädt …" : "Geht gerade nicht")
+                    Text(model.status == .loading ? String(localized: "Lädt …") : String(localized: "Geht gerade nicht"))
                         .font(.footnote).foregroundStyle(.white.opacity(0.8)).padding(8)
                         .background(Capsule().fill(.black.opacity(0.5))).padding(.bottom, 12)
                 }

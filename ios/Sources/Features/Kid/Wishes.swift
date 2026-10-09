@@ -14,25 +14,25 @@ enum WishFeedback {
     static func message(for result: Result<WishRepository.SubmitResult, Error>, remaining: Int) -> String {
         switch result {
         case .success(.created):
-            return "Dein Wunsch ist bei deinen Eltern. " + remainingText(remaining)
+            return String(localized: "Dein Wunsch ist bei deinen Eltern. ") + remainingText(remaining)
         case .success(.duplicate):
-            return "Das hast du dir schon gewünscht. Deine Eltern schauen es sich an."
+            return String(localized: "Das hast du dir schon gewünscht. Deine Eltern schauen es sich an.")
         case .failure(WishRepository.WishError.dailyLimitReached):
-            return "Für heute sind alle \(WishRepository.dailyLimit) Wünsche verbraucht. Morgen geht es weiter."
+            return String(localized: "Für heute sind alle \(WishRepository.dailyLimit) Wünsche verbraucht. Morgen geht es weiter.")
         case .failure(WishRepository.WishError.emptyTopic):
-            return "Schreib erst, was du dir wünschst."
+            return String(localized: "Schreib erst, was du dir wünschst.")
         case .failure(WishRepository.WishError.blockedSource):
-            return "Das geht leider nicht."
+            return String(localized: "Das geht leider nicht.")
         case .failure:
-            return "Das hat nicht geklappt. Sag deinen Eltern Bescheid."
+            return String(localized: "Das hat nicht geklappt. Sag deinen Eltern Bescheid.")
         }
     }
 
     static func remainingText(_ remaining: Int) -> String {
         switch remaining {
-        case 0: "Heute geht kein Wunsch mehr."
-        case 1: "Heute geht noch 1 Wunsch."
-        default: "Heute gehen noch \(remaining) Wünsche."
+        case 0: String(localized: "Heute geht kein Wunsch mehr.")
+        case 1: String(localized: "Heute geht noch 1 Wunsch.")
+        default: String(localized: "Heute gehen noch \(remaining) Wünsche.")
         }
     }
 
@@ -64,7 +64,7 @@ struct WishTopicCard: View {
 
     var body: some View {
         VStack(alignment: .leading, spacing: 10) {
-            Label(nothingFound ? "Nichts dabei? Wünsch es dir!" : "Nicht das Richtige dabei?", systemImage: "star.bubble")
+            Label(nothingFound ? String(localized: "Nichts dabei? Wünsch es dir!") : String(localized: "Nicht das Richtige dabei?"), systemImage: "star.bubble")
                 .font(.headline)
             Text("Wunsch an die Eltern: „\(String(trimmed.prefix(WishDraft.maxTopicLength)))“")
                 .font(.body)
@@ -285,8 +285,8 @@ struct MyWishesView: View {
                         .accessibilityIdentifier("wishes.remaining")
                 }
                 if wishes.isEmpty {
-                    KidEmptyState(systemImage: "star.bubble", title: "Noch keine Wünsche",
-                                  message: "In der Suche, am Ende eines Videos und bei neuen Folgen kannst du dir etwas wünschen.")
+                    KidEmptyState(systemImage: "star.bubble", title: String(localized: "Noch keine Wünsche"),
+                                  message: String(localized: "In der Suche, am Ende eines Videos und bei neuen Folgen kannst du dir etwas wünschen."))
                         .listRowBackground(Color.clear)
                 }
                 ForEach(wishes, id: \.id) { wish in
@@ -331,7 +331,7 @@ struct MyWishesView: View {
                     .accessibilityIdentifier("wish.reply")
             }
             if wish.status == .erfuellt, let target = contentRow(for: wish) {
-                Button(target.action.isPlay ? "Anschauen" : "Öffnen", systemImage: target.action.isPlay ? "play.fill" : "chevron.right") {
+                Button(target.action.isPlay ? String(localized: "Anschauen") : String(localized: "Öffnen"), systemImage: target.action.isPlay ? "play.fill" : "chevron.right") {
                     onOpen(target)
                     dismiss()
                 }
@@ -380,8 +380,8 @@ enum WishDisplay {
     static func neutralHeadline(_ wish: KidWish) -> String {
         switch wish.kind {
         case .thema: wish.headline
-        case .mehrDavon: "Mehr davon"
-        case .neueFolge: "Eine neue Folge"
+        case .mehrDavon: String(localized: "Mehr davon")
+        case .neueFolge: String(localized: "Eine neue Folge")
         }
     }
 }

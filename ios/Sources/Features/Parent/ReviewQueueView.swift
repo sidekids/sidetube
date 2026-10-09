@@ -83,7 +83,7 @@ struct ReviewQueueView: View {
             if auswaehlen {
                 ToolbarItem(placement: .topBarLeading) {
                     let alle = !pending.isEmpty && pending.allSatisfy { auswahl.contains($0.id) }
-                    Button(alle ? "Keine auswählen" : "Alle auswählen") {
+                    Button(alle ? String(localized: "Keine auswählen") : String(localized: "Alle auswählen")) {
                         auswahl = alle ? [] : Set(pending.map(\.id))
                     }
                     .accessibilityIdentifier("review.alleAuswaehlen")
@@ -117,25 +117,25 @@ struct ReviewQueueView: View {
         .confirmationDialog(ablehnTitel, isPresented: $zeigeSammelAblehnen, titleVisibility: .visible) {
             let n = ablehnbar.count
             if n > 0 {
-                Button(n == 1 ? "1 Eintrag ablehnen" : "\(n) Einträge ablehnen", role: .destructive, action: sammelAblehnen)
+                Button(n == 1 ? String(localized: "1 Eintrag ablehnen") : String(localized: "\(n) Einträge ablehnen"), role: .destructive, action: sammelAblehnen)
                     .accessibilityIdentifier("review.sammelAblehnenBestaetigen")
             }
             Button("Abbrechen", role: .cancel) {}
         } message: {
-            Text(([ablehnbar.isEmpty ? nil : "Sie erscheinen nicht bei \(profile.name). Der Verlauf hält jede Ablehnung einzeln fest."]
+            Text(([ablehnbar.isEmpty ? nil : String(localized: "Sie erscheinen nicht bei \(profile.name). Der Verlauf hält jede Ablehnung einzeln fest.")]
                   + [Sammelpruefung.hinweis(ausgewaehlt.compactMap { Sammelpruefung.grund(CurationRepository(context: modelContext).pruefling($0)) })])
                 .compactMap { $0 }.joined(separator: "\n\n"))
         }
         .sheet(isPresented: $zeigeSammelFreigabe) {
             SammelFreigabeSheet(items: ausgewaehlt) { ergebnis in
                 let n = ergebnis.erledigt.count
-                var text = n == 1 ? "1 Eintrag freigegeben" : "\(n) Einträge freigegeben"
+                var text = n == 1 ? String(localized: "1 Eintrag freigegeben") : String(localized: "\(n) Einträge freigegeben")
                 switch ergebnis.erfuellteWuensche {
                 case 0: break
-                case 1: text += ", 1 Wunsch erfüllt"
-                case let w: text += ", \(w) Wünsche erfüllt"
+                case 1: text += String(localized: ", 1 Wunsch erfüllt")
+                case let w: text += String(localized: ", \(w) Wünsche erfüllt")
                 }
-                if !ergebnis.uebersprungen.isEmpty { text += "; \(ergebnis.uebersprungen.count) bleiben zur Einzelprüfung" }
+                if !ergebnis.uebersprungen.isEmpty { text += String(localized: "; \(ergebnis.uebersprungen.count) bleiben zur Einzelprüfung") }
                 auswahlBeenden()
                 meldung = text + "."
             }
@@ -186,9 +186,9 @@ extension ReviewQueueView {
 
     fileprivate var ablehnTitel: String {
         switch ablehnbar.count {
-        case 0: "Nichts gemeinsam abzulehnen"
-        case 1: "1 Eintrag ablehnen?"
-        case let n: "\(n) Einträge ablehnen?"
+        case 0: String(localized: "Nichts gemeinsam abzulehnen")
+        case 1: String(localized: "1 Eintrag ablehnen?")
+        case let n: String(localized: "\(n) Einträge ablehnen?")
         }
     }
 
@@ -196,8 +196,8 @@ extension ReviewQueueView {
         do {
             let ergebnis = try CurationRepository(context: modelContext).sammelAblehnen(ausgewaehlt, actor: "Eltern")
             auswahlBeenden()
-            var text = ergebnis.erledigt.count == 1 ? "1 Eintrag abgelehnt" : "\(ergebnis.erledigt.count) Einträge abgelehnt"
-            if !ergebnis.uebersprungen.isEmpty { text += "; \(ergebnis.uebersprungen.count) bleiben zur Einzelprüfung" }
+            var text = ergebnis.erledigt.count == 1 ? String(localized: "1 Eintrag abgelehnt") : String(localized: "\(ergebnis.erledigt.count) Einträge abgelehnt")
+            if !ergebnis.uebersprungen.isEmpty { text += String(localized: "; \(ergebnis.uebersprungen.count) bleiben zur Einzelprüfung") }
             meldung = text + "."
         } catch { self.error = error.localizedDescription }
     }
@@ -220,7 +220,7 @@ struct ReviewCandidateRow: View {
             Thumbnail(url: item.thumbnailUrl)
             VStack(alignment: .leading, spacing: 4) {
                 Text(item.title).font(.subheadline.weight(.semibold)).lineLimit(2)
-                Text([item.channelTitle, item.durationSeconds.map { "\($0 / 60) min" }, "ab \(item.ageMin)", item.category?.title]
+                Text([item.channelTitle, item.durationSeconds.map { String(localized: "\($0 / 60) min") }, String(localized: "ab \(item.ageMin)"), item.category?.title]
                     .compactMap { $0 }.joined(separator: " · "))
                     .font(.caption).foregroundStyle(.secondary)
                 HStack(spacing: 6) {
@@ -229,9 +229,9 @@ struct ReviewCandidateRow: View {
                         badge(source.trust.title, color: source.trust == .blocked ? .red : .secondary)
                     }
                     if item.isNews, let news = item.newsStatus { badge(news.title, color: news == .safe ? .green : .orange) }
-                    if item.isShort { badge("Short", color: .orange) }
-                    if item.isLive { badge("Live", color: .red) }
-                    if item.madeForKids != .unknown { badge(item.madeForKids == .madeForKids ? "Made for Kids" : "nicht MfK", color: .secondary) }
+                    if item.isShort { badge(String(localized: "Short"), color: .orange) }
+                    if item.isLive { badge(String(localized: "Live"), color: .red) }
+                    if item.madeForKids != .unknown { badge(item.madeForKids == .madeForKids ? String(localized: "Made for Kids") : String(localized: "nicht MfK"), color: .secondary) }
                 }
                 if !item.sensitiveTopics.isEmpty {
                     Text("Risiken: " + item.sensitiveTopics.map(\.title).sorted().joined(separator: ", ")).font(.caption).foregroundStyle(.orange)
@@ -288,8 +288,8 @@ struct ReviewDecisionView: View {
                     }
                 } footer: {
                     Text(mode == .review
-                         ? "Bitte das Video ausreichend ansehen. Der automatische Filter ist nur ein Hinweis."
-                         : "Änderungen werden im Verlauf festgehalten. „Zurück zur Prüfung“ nimmt den Eintrag so lange aus dem Kinderprofil.")
+                         ? String(localized: "Bitte das Video ausreichend ansehen. Der automatische Filter ist nur ein Hinweis.")
+                         : String(localized: "Änderungen werden im Verlauf festgehalten. „Zurück zur Prüfung“ nimmt den Eintrag so lange aus dem Kinderprofil."))
                 }
                 Section("Einordnung") {
                     Stepper("Ab \(ageMin) Jahren", value: $ageMin, in: 3...16)
@@ -335,7 +335,7 @@ struct ReviewDecisionView: View {
                 }
                 if let error { Text(error).foregroundStyle(.red) }
             }
-            .navigationTitle(mode == .review ? "Prüfen" : "Bearbeiten")
+            .navigationTitle(mode == .review ? String(localized: "Prüfen") : String(localized: "Bearbeiten"))
             .navigationBarTitleDisplayMode(.inline)
             .toolbar { ToolbarItem(placement: .cancellationAction) { Button("Schließen") { dismiss() } } }
         }

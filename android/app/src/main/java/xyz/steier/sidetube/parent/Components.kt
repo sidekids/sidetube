@@ -4,6 +4,10 @@
 
 package xyz.steier.sidetube.parent
 
+import androidx.compose.ui.res.pluralStringResource
+import androidx.compose.ui.res.stringResource
+import xyz.steier.sidetube.R
+
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
@@ -88,7 +92,7 @@ fun TextPrompt(
             )
         },
         confirmButton = { TextButton(onClick = { onConfirm(text) }) { Text(confirmLabel) } },
-        dismissButton = { TextButton(onClick = onDismiss) { Text("Abbrechen") } }
+        dismissButton = { TextButton(onClick = onDismiss) { Text(stringResource(R.string.abbrechen)) } }
     )
 }
 
@@ -103,16 +107,16 @@ fun StarterPackDialog(
 
     AlertDialog(
         onDismissRequest = onDismiss,
-        title = { Text("Startpaket laden") },
+        title = { Text(stringResource(R.string.startpaket_laden)) },
         text = {
             Column {
                 Text(
-                    "Von Hand geprüfte Listen. Alles kommt zur Prüfung, nichts wird sofort sichtbar.",
+                    stringResource(R.string.startpaket_erklaerung),
                     style = MaterialTheme.typography.bodySmall
                 )
                 Spacer(Modifier.height(12.dp))
                 if (packs.isEmpty()) {
-                    Text("In dieser Fassung sind keine Startpakete enthalten.")
+                    Text(stringResource(R.string.startpaket_keine))
                 } else {
                     packs.forEach { pack ->
                         Card(
@@ -123,8 +127,8 @@ fun StarterPackDialog(
                                 Text(pack.title, style = MaterialTheme.typography.titleSmall)
                                 Text(
                                     listOfNotNull(
-                                        pack.videoCount.takeIf { it > 0 }?.let { "$it Videos" },
-                                        pack.channelCount.takeIf { it > 0 }?.let { "$it Kanäle" }
+                                        pack.videoCount.takeIf { it > 0 }?.let { pluralStringResource(R.plurals.startpaket_videos, it, it) },
+                                        pack.channelCount.takeIf { it > 0 }?.let { pluralStringResource(R.plurals.startpaket_kanaele, it, it) }
                                     ).joinToString(" · "),
                                     style = MaterialTheme.typography.bodySmall
                                 )
@@ -134,12 +138,12 @@ fun StarterPackDialog(
                     Spacer(Modifier.height(8.dp))
                     Row(verticalAlignment = Alignment.CenterVertically) {
                         Checkbox(checked = applyPreset, onCheckedChange = { applyPreset = it })
-                        Text("Vorgeschlagene Regeln mit übernehmen", style = MaterialTheme.typography.bodySmall)
+                        Text(stringResource(R.string.startpaket_regeln_uebernehmen), style = MaterialTheme.typography.bodySmall)
                     }
                 }
             }
         },
-        confirmButton = { TextButton(onClick = onDismiss) { Text("Abbrechen") } }
+        confirmButton = { TextButton(onClick = onDismiss) { Text(stringResource(R.string.abbrechen)) } }
     )
 }
 
@@ -188,7 +192,7 @@ internal fun VorschauDialog(
     val gesperrt = einstufung.ergebnis == Kanaleinstufung.Ergebnis.NICHT_AUFNEHMEN
     AlertDialog(
         onDismissRequest = onDismiss,
-        title = { Text(if (kanal) "Kanal hinzufügen" else "Vorschau") },
+        title = { Text(stringResource(if (kanal) R.string.kanal_hinzufuegen else R.string.vorschau)) },
         text = {
             // Mit den drei Wahlen ist der Dialog hoeher als das SidePhone; ohne Scrollen ueberlappt er.
             Column(
@@ -219,9 +223,9 @@ internal fun VorschauDialog(
             }
         },
         confirmButton = {
-            if (kanal) TextButton(onClick = { onKanal(einstufung) }) { Text(if (gesperrt) "Sperren" else "Hinzufügen") }
-            else TextButton(onClick = onConfirm) { Text("Aufnehmen") }
+            if (kanal) TextButton(onClick = { onKanal(einstufung) }) { Text(stringResource(if (gesperrt) R.string.sperren else R.string.hinzufuegen)) }
+            else TextButton(onClick = onConfirm) { Text(stringResource(R.string.aufnehmen)) }
         },
-        dismissButton = { TextButton(onClick = onDismiss) { Text("Abbrechen") } }
+        dismissButton = { TextButton(onClick = onDismiss) { Text(stringResource(R.string.abbrechen)) } }
     )
 }

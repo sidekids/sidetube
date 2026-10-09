@@ -4,6 +4,10 @@
 
 package xyz.steier.sidetube.parent
 
+import androidx.compose.ui.res.pluralStringResource
+import androidx.compose.ui.res.stringResource
+import xyz.steier.sidetube.R
+
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.Row
@@ -54,11 +58,11 @@ internal fun SammelLeiste(anzahl: Int, onFreigeben: () -> Unit, onAblehnen: () -
         Row(Modifier.fillMaxWidth().padding(horizontal = 8.dp, vertical = 6.dp)) {
             val schmal = PaddingValues(horizontal = 8.dp)
             Button(onClick = onFreigeben, enabled = anzahl > 0, contentPadding = schmal, modifier = Modifier.weight(1f)) {
-                Text("Freigeben ($anzahl)", maxLines = 1)
+                Text(stringResource(R.string.sammel_freigeben_anzahl, anzahl), maxLines = 1)
             }
             Spacer(Modifier.width(8.dp))
             OutlinedButton(onClick = onAblehnen, enabled = anzahl > 0, contentPadding = schmal, modifier = Modifier.weight(1f)) {
-                Text("Ablehnen ($anzahl)", maxLines = 1,
+                Text(stringResource(R.string.sammel_ablehnen_anzahl, anzahl), maxLines = 1,
                     color = if (anzahl > 0) MaterialTheme.colorScheme.error else MaterialTheme.colorScheme.onSurface.copy(alpha = 0.38f))
             }
         }
@@ -85,7 +89,7 @@ internal fun SammelFreigabeDialog(
 
     AlertDialog(
         onDismissRequest = onDismiss,
-        title = { Text(if (anzahl == 1) "1 Eintrag freigeben" else "$anzahl Einträge freigeben") },
+        title = { Text(pluralStringResource(R.plurals.sammel_eintraege_freigeben, anzahl, anzahl)) },
         text = {
             Column(Modifier.verticalScroll(rememberScrollState())) {
                 Row(
@@ -93,14 +97,14 @@ internal fun SammelFreigabeDialog(
                     verticalAlignment = Alignment.CenterVertically
                 ) {
                     Column(Modifier.weight(1f)) {
-                        Text("Mindestalter", style = MaterialTheme.typography.bodyMedium)
-                        Text(if (alterFest) "für alle gleich" else "wie vorgeschlagen", style = MaterialTheme.typography.bodySmall,
+                        Text(stringResource(R.string.mindestalter), style = MaterialTheme.typography.bodyMedium)
+                        Text(stringResource(if (alterFest) R.string.fuer_alle_gleich else R.string.wie_vorgeschlagen), style = MaterialTheme.typography.bodySmall,
                             color = MaterialTheme.colorScheme.onSurface.copy(alpha = 0.7f))
                     }
                     Switch(checked = alterFest, onCheckedChange = null)
                 }
                 if (alterFest) {
-                    AgeStepper("Ab $alter Jahren", "Mindestalter",
+                    AgeStepper(stringResource(R.string.ab_jahren, alter), stringResource(R.string.mindestalter),
                         onMinus = { if (alter > Kanaleinstufung.MIN_ALTER) alter-- },
                         onPlus = { if (alter < Kanaleinstufung.MAX_ALTER) alter++ })
                 }
@@ -110,7 +114,7 @@ internal fun SammelFreigabeDialog(
                 (kategorie as? KategorieWahl.Gesetzt)?.kategorie
                     ?.takeIf { it.minimumAge > (if (alterFest) alter else Kanaleinstufung.MIN_ALTER) }
                     ?.let {
-                        Text("„${ParentLabels.category(it)}“ gilt erst ab ${it.minimumAge} – jüngere Angaben werden angehoben.",
+                        Text(stringResource(R.string.kategorie_gilt_erst_ab, ParentLabels.category(it), it.minimumAge),
                             style = MaterialTheme.typography.bodySmall, color = MaterialTheme.colorScheme.tertiary)
                     }
 
@@ -125,9 +129,9 @@ internal fun SammelFreigabeDialog(
         confirmButton = {
             TextButton(onClick = {
                 onConfirm(Sammelwahl(alter = alter.takeIf { alterFest }, kategorie = kategorie, kanalStufe = stufe))
-            }) { Text("Freigeben") }
+            }) { Text(stringResource(R.string.freigeben)) }
         },
-        dismissButton = { TextButton(onClick = onDismiss) { Text("Abbrechen") } }
+        dismissButton = { TextButton(onClick = onDismiss) { Text(stringResource(R.string.abbrechen)) } }
     )
 }
 
@@ -136,12 +140,12 @@ internal fun SammelFreigabeDialog(
 internal fun SammelAblehnenDialog(anzahl: Int, onDismiss: () -> Unit, onConfirm: () -> Unit) {
     AlertDialog(
         onDismissRequest = onDismiss,
-        title = { Text(if (anzahl == 1) "1 Eintrag ablehnen?" else "$anzahl Einträge ablehnen?") },
-        text = { Text("Sie erscheinen nicht beim Kind. Jeder Eintrag bekommt einen Vermerk im Verlauf.") },
+        title = { Text(pluralStringResource(R.plurals.sammel_eintraege_ablehnen, anzahl, anzahl)) },
+        text = { Text(stringResource(R.string.sammel_ablehnen_erklaerung)) },
         confirmButton = {
-            TextButton(onClick = onConfirm) { Text("Ablehnen", color = MaterialTheme.colorScheme.error) }
+            TextButton(onClick = onConfirm) { Text(stringResource(R.string.ablehnen), color = MaterialTheme.colorScheme.error) }
         },
-        dismissButton = { TextButton(onClick = onDismiss) { Text("Abbrechen") } }
+        dismissButton = { TextButton(onClick = onDismiss) { Text(stringResource(R.string.abbrechen)) } }
     )
 }
 
@@ -151,21 +155,21 @@ internal fun SammelAblehnenDialog(anzahl: Int, onDismiss: () -> Unit, onConfirm:
 private fun SammelKategoriePicker(wahl: KategorieWahl, onSelect: (KategorieWahl) -> Unit) {
     var open by remember { mutableStateOf(false) }
     val label = when (wahl) {
-        KategorieWahl.WieVorgeschlagen -> "wie vorgeschlagen"
-        is KategorieWahl.Gesetzt -> wahl.kategorie?.let { ParentLabels.category(it) } ?: "keine"
+        KategorieWahl.WieVorgeschlagen -> stringResource(R.string.wie_vorgeschlagen)
+        is KategorieWahl.Gesetzt -> wahl.kategorie?.let { ParentLabels.category(it) } ?: stringResource(R.string.keine)
     }
     ExposedDropdownMenuBox(expanded = open, onExpandedChange = { open = it }) {
         OutlinedTextField(
             colors = xyz.steier.sidetube.sideTextFieldColors(),
             value = label, onValueChange = {}, readOnly = true,
-            label = { Text("Kategorie") },
+            label = { Text(stringResource(R.string.kategorie)) },
             trailingIcon = { ExposedDropdownMenuDefaults.TrailingIcon(expanded = open) },
             modifier = Modifier.menuAnchor(MenuAnchorType.PrimaryNotEditable).fillMaxWidth()
         )
         ExposedDropdownMenu(expanded = open, onDismissRequest = { open = false }) {
-            DropdownMenuItem(text = { Text("wie vorgeschlagen") },
+            DropdownMenuItem(text = { Text(stringResource(R.string.wie_vorgeschlagen)) },
                 onClick = { onSelect(KategorieWahl.WieVorgeschlagen); open = false })
-            DropdownMenuItem(text = { Text("keine") }, onClick = { onSelect(KategorieWahl.Gesetzt(null)); open = false })
+            DropdownMenuItem(text = { Text(stringResource(R.string.keine)) }, onClick = { onSelect(KategorieWahl.Gesetzt(null)); open = false })
             ContentCategory.entries.forEach { entry ->
                 DropdownMenuItem(text = { Text(ParentLabels.category(entry)) },
                     onClick = { onSelect(KategorieWahl.Gesetzt(entry)); open = false })
@@ -183,7 +187,7 @@ private fun KanalStufePicker(kanaele: Int, stufe: SourceTrust, onSelect: (Source
         OutlinedTextField(
             colors = xyz.steier.sidetube.sideTextFieldColors(),
             value = ParentLabels.trust(stufe), onValueChange = {}, readOnly = true,
-            label = { Text(if (kanaele == 1) "Stufe für 1 Kanal" else "Stufe für $kanaele Kanäle") },
+            label = { Text(pluralStringResource(R.plurals.stufe_fuer_kanaele, kanaele, kanaele)) },
             trailingIcon = { ExposedDropdownMenuDefaults.TrailingIcon(expanded = open) },
             modifier = Modifier.menuAnchor(MenuAnchorType.PrimaryNotEditable).fillMaxWidth()
         )

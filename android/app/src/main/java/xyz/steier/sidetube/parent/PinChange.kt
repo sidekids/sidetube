@@ -4,6 +4,11 @@
 
 package xyz.steier.sidetube.parent
 
+import androidx.compose.ui.res.stringResource
+import xyz.steier.sidetube.LocalTexte
+import xyz.steier.sidetube.R
+import xyz.steier.sidetube.Texte
+
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Scaffold
@@ -27,6 +32,7 @@ import xyz.steier.sidetube.PinStore
  * hereingereicht, damit der Ablauf ohne verschluesselten Speicher testbar bleibt.
  */
 class PinChangeFlow(
+    private val texte: Texte,
     private val verify: (String) -> PinResult,
     private val set: (String) -> Unit
 ) {
@@ -41,9 +47,9 @@ class PinChangeFlow(
     private var newPin = ""
 
     val title: String get() = when (step) {
-        Step.OLD -> "Aktuelle PIN"
-        Step.NEW -> "Neue PIN"
-        Step.CONFIRM -> "Neue PIN wiederholen"
+        Step.OLD -> texte.get(R.string.pin_aktuelle)
+        Step.NEW -> texte.get(R.string.pin_neue)
+        Step.CONFIRM -> texte.get(R.string.pin_neue_wiederholen)
     }
 
     /** Gibt `true` zurueck, sobald die neue PIN gespeichert ist. */
@@ -53,7 +59,7 @@ class PinChangeFlow(
             Step.NEW -> { newPin = pin; step = Step.CONFIRM }
             Step.CONFIRM -> {
                 if (pin != newPin) {
-                    message = "Die neue PIN stimmte nicht überein. Bitte erneut eingeben."
+                    message = texte.get(R.string.pin_neue_ungleich)
                     step = Step.NEW
                     return false
                 }
@@ -64,12 +70,12 @@ class PinChangeFlow(
                         true
                     }
                     is PinResult.Wrong -> {
-                        message = "Aktuelle PIN falsch (noch ${result.attemptsRemaining} Versuche)."
+                        message = texte.plural(R.plurals.pin_aktuelle_falsch, result.attemptsRemaining)
                         step = Step.OLD
                         false
                     }
                     is PinResult.LockedOut -> {
-                        message = "Gesperrt für ${result.secondsRemaining} s."
+                        message = texte.get(R.string.pin_gesperrt_kurz, result.secondsRemaining)
                         step = Step.OLD
                         false
                     }
@@ -84,18 +90,19 @@ class PinChangeFlow(
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun ChangePinScreen(store: PinStore, onCancel: () -> Unit, onDone: () -> Unit) {
-    val flow = remember { PinChangeFlow(store::verify, store::set) }
+    val texte = LocalTexte.current
+    val flow = remember { PinChangeFlow(texte, store::verify, store::set) }
     Scaffold(
         topBar = {
             TopAppBar(
-                title = { Text("PIN ändern") },
-                navigationIcon = { TextButton(onClick = onCancel) { Text("Abbrechen") } }
+                title = { Text(stringResource(R.string.pin_aendern)) },
+                navigationIcon = { TextButton(onClick = onCancel) { Text(stringResource(R.string.abbrechen)) } }
             )
         }
     ) { padding ->
         PinPad(
             title = flow.title,
-            subtitle = "Vier Ziffern",
+            subtitle = stringResource(R.string.pin_vier_ziffern),
             error = flow.message,
             modifier = Modifier.padding(padding),
             onComplete = { pin -> if (flow.handle(pin)) onDone() }

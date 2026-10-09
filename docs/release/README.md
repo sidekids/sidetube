@@ -32,7 +32,7 @@ The CI workflow performs native builds, unit tests, Android lint, content checks
 
 1. Resolve every BLOCKER in the audit and obtain product-owner approval of the target audience and provider model.
 2. Verify licensing, notices, asset/content permissions and publishable author metadata.
-3. Run physical-device energy, accessibility and network tests; attach sanitized evidence.
+3. Work through the [device and owner checklist](device-checklist.md) on physical hardware; attach sanitized evidence.
 4. Freeze versions and lock dependency inputs; run both platform checklists and full CI.
 5. Scan all final refs, objects and the working tree with redaction. Review scanner exclusions. Recheck dependency vulnerabilities at the frozen version.
 6. Preserve verified offline backups before any history migration. Retain fork attribution and meaningful development history. A mirror does not include inaccessible server-side reflogs, issues or unadvertised objects.

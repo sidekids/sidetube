@@ -73,7 +73,7 @@ struct AddWhitelistItemView: View {
                             }
                         }
                         if draft.type != .channel {
-                            Button(draft.type == .video ? "Jetzt freigeben" : "Zur Whitelist hinzufügen", systemImage: "checkmark.circle.fill") { add(draft, approve: true) }
+                            Button(draft.type == .video ? String(localized: "Jetzt freigeben") : String(localized: "Zur Whitelist hinzufügen"), systemImage: "checkmark.circle.fill") { add(draft, approve: true) }
                                 .buttonStyle(.borderedProminent)
                                 .disabled(risk.isHardBlocked)
                         }
@@ -104,7 +104,7 @@ struct AddWhitelistItemView: View {
             return
         }
         guard let parsed = YouTubeURLParser.parse(input) else {
-            phase = .failed("Das ist kein unterstützter Link. Möglich: YouTube (Kanal, Video, Playlist) oder PeerTube (Video, Kanal).")
+            phase = .failed(String(localized: "Das ist kein unterstützter Link. Möglich: YouTube (Kanal, Video, Playlist) oder PeerTube (Video, Kanal)."))
             return
         }
    // Dubletten vor dem Netzaufruf erkennen (0 Quota) – bei @handle/c/name erst nach der Auflösung möglich.
@@ -113,7 +113,7 @@ struct AddWhitelistItemView: View {
         case .channelHandle, .channelCustomName: nil
         }
         if let knownId, WhitelistRepository(context: context).contains(youtubeId: knownId, in: profile) {
-            phase = .failed("Steht schon auf der Whitelist von \(profile.name).")
+            phase = .failed(String(localized: "Steht schon auf der Whitelist von \(profile.name)."))
             return
         }
 #if DEBUG
@@ -139,7 +139,7 @@ struct AddWhitelistItemView: View {
             do {
                 let draft = try await services.youtube.resolve(parsed)
                 if WhitelistRepository(context: context).contains(youtubeId: draft.youtubeId, in: profile) {
-                    phase = .failed("Steht schon auf der Whitelist von \(profile.name).")
+                    phase = .failed(String(localized: "Steht schon auf der Whitelist von \(profile.name)."))
                 } else {
                     zeigeVorschau(draft)
                 }
@@ -176,20 +176,20 @@ struct AddWhitelistItemView: View {
                 let curation = CurationRepository(context: context)
                 try curation.ensureSources(SourceRegistry.allDefinitions)
                 guard PeerTubePolicy.instanceAllowed(for: draft(from: parsed), curation: curation) else {
-                    phase = .failed("Diese PeerTube-Instanz ist nicht freigegeben. Eltern können sie unter „Quellen & Sicherheitsstufen“ ergänzen.")
+                    phase = .failed(String(localized: "Diese PeerTube-Instanz ist nicht freigegeben. Eltern können sie unter „Quellen & Sicherheitsstufen“ ergänzen."))
                     return
                 }
                 let draft = try await services.resolver.resolve(parsed)
                 // Ein gesperrter Kanal kommt trotzdem in die Vorschau: dort steht „Gesperrt“ vorausgewählt
                 // und Eltern entscheiden bewusst neu (ADR 0003). Videos aus gesperrten Quellen nie.
                 if draft.type != .channel, curation.effectiveSource(channelId: draft.sourceChannelId)?.trust == .blocked {
-                    phase = .failed("Diese Quelle ist für Kinder gesperrt."); return
+                    phase = .failed(String(localized: "Diese Quelle ist für Kinder gesperrt.")); return
                 }
                 if WhitelistRepository(context: context).contains(youtubeId: draft.youtubeId, in: profile) {
-                    phase = .failed("Steht schon auf der Whitelist von \(profile.name)."); return
+                    phase = .failed(String(localized: "Steht schon auf der Whitelist von \(profile.name).")); return
                 }
                 if draft.isNSFW {
-                    phase = .failed("Dieses Video ist auf der Instanz als nicht jugendfrei gekennzeichnet."); return
+                    phase = .failed(String(localized: "Dieses Video ist auf der Instanz als nicht jugendfrei gekennzeichnet.")); return
                 }
                 zeigeVorschau(draft)
             } catch {
@@ -222,11 +222,11 @@ struct AddWhitelistItemView: View {
             }
             finish(item.youtubeId)
         } catch CurationRepository.DiscoverError.duplicate, WhitelistRepository.AddError.duplicate {
-            phase = .failed("Steht schon auf der Whitelist.")
+            phase = .failed(String(localized: "Steht schon auf der Whitelist."))
         } catch CurationRepository.DiscoverError.blockedSource {
-            phase = .failed("Diese Quelle ist für Kinder gesperrt.")
+            phase = .failed(String(localized: "Diese Quelle ist für Kinder gesperrt."))
         } catch {
-            phase = .failed("Konnte nicht speichern: \(error.localizedDescription)")
+            phase = .failed(String(localized: "Konnte nicht speichern: \(error.localizedDescription)"))
         }
     }
 
@@ -254,7 +254,7 @@ struct AddWhitelistItemView: View {
                 finish(youtubeId)
             }
         } catch {
-            phase = .failed("Konnte nicht speichern: \(error.localizedDescription)")
+            phase = .failed(String(localized: "Konnte nicht speichern: \(error.localizedDescription)"))
         }
     }
 
@@ -265,13 +265,13 @@ struct AddWhitelistItemView: View {
 
     static func message(for error: Error) -> String {
         switch error {
-        case YouTubeError.invalidURL: "Das ist kein YouTube-Link."
-        case YouTubeError.notFound: "Nichts gefunden – ist der Inhalt öffentlich und der Link vollständig?"
-        case YouTubeError.missingAPIKey: "Dafür wird der YouTube-API-Schlüssel gebraucht (Playlists ohne oEmbed, Ausweichweg für Videos). Er fehlt in Config/Secrets.xcconfig."
-        case YouTubeError.http(let status) where status == 403: "YouTube hat die Anfrage abgelehnt (403) – Tageskontingent aufgebraucht oder Schlüssel nicht für diese App freigegeben."
-        case YouTubeError.http(let status): "YouTube antwortet mit Fehler \(status)."
-        case YouTubeError.decoding: "Antwort von YouTube war unlesbar."
-        case YouTubeError.network(let text): "Keine Verbindung: \(text)"
+        case YouTubeError.invalidURL: String(localized: "Das ist kein YouTube-Link.")
+        case YouTubeError.notFound: String(localized: "Nichts gefunden – ist der Inhalt öffentlich und der Link vollständig?")
+        case YouTubeError.missingAPIKey: String(localized: "Dafür wird der YouTube-API-Schlüssel gebraucht (Playlists ohne oEmbed, Ausweichweg für Videos). Er fehlt in Config/Secrets.xcconfig.")
+        case YouTubeError.http(let status) where status == 403: String(localized: "YouTube hat die Anfrage abgelehnt (403) – Tageskontingent aufgebraucht oder Schlüssel nicht für diese App freigegeben.")
+        case YouTubeError.http(let status): String(localized: "YouTube antwortet mit Fehler \(status).")
+        case YouTubeError.decoding: String(localized: "Antwort von YouTube war unlesbar.")
+        case YouTubeError.network(let text): String(localized: "Keine Verbindung: \(text)")
         default: error.localizedDescription
         }
     }

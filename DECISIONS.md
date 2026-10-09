@@ -10,3 +10,6 @@
 | [0004](docs/adr/0004-mehrere-auf-einmal-pruefen.md) | Mehrere Einträge auf einmal prüfen | angenommen 04.10.2026 |
 | [0005](docs/adr/0005-eltern-ueber-wuensche-benachrichtigen.md) | Eltern über neue Wünsche benachrichtigen (Nextcloud Talk, sonst ntfy; nur eigener Server) | angenommen 04.10.2026 |
 | [0006](docs/adr/0006-zwischenstand-veroeffentlichen.md) | Zwischenstand öffentlich machen: Quelltext ohne Historie, Test-APK als Vorabversion | angenommen 05.10.2026 |
+| [0007](docs/adr/0007-android-vollbild-sperre.md) | Android: Vollbild-Sperre statt wegtippbarem Hinweis bei Ruhezeit, Schlaf-Timer, Sehzeit, Speicherfehler, unterbrochener Wiedergabe | angenommen 08.10.2026 |
+| [0008](docs/adr/0008-android-lokalisierung.md) | Android: Texte als Ressourcen, ViewModels fragen `Texte` statt `Context`; Tests lesen strings.xml | angenommen 09.10.2026 |
+| [0009](docs/adr/0009-oeffentliche-fassung-kanal.md) | Öffentliche Fassung: zuerst GitHub-Release, Stores später; jede Veröffentlichung mit Einzelfreigabe | angenommen 09.10.2026 |

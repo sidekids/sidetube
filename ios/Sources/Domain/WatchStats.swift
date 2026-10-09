@@ -16,9 +16,9 @@ enum StatsPeriod: Int, CaseIterable, Identifiable {
 
     var title: String {
         switch self {
-        case .day: "Heute"
-        case .week: "7 Tage"
-        case .month: "30 Tage"
+        case .day: String(localized: "Heute")
+        case .week: String(localized: "7 Tage")
+        case .month: String(localized: "30 Tage")
         }
     }
 }
@@ -52,7 +52,7 @@ struct WatchStats: Equatable {
     static func format(seconds: Int) -> String {
         let hours = seconds / 3600
         let minutes = (seconds % 3600) / 60
-        return hours > 0 ? "\(hours) h \(minutes) min" : "\(minutes) min"
+        return hours > 0 ? String(localized: "\(hours) h \(minutes) min") : String(localized: "\(minutes) min")
     }
 }
 

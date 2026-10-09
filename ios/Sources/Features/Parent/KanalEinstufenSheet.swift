@@ -81,7 +81,7 @@ struct KanalEinstufenSheet: View {
             case .aufgenommen: dismiss()
             }
         } catch {
-            self.error = "Konnte nicht speichern: \(error.localizedDescription)"
+            self.error = String(localized: "Konnte nicht speichern: \(error.localizedDescription)")
         }
     }
 }

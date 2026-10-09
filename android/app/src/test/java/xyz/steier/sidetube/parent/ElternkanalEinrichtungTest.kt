@@ -28,7 +28,7 @@ class ElternkanalEinrichtungTest {
     @Test fun `einrichten, testen, entfernen`() = runTest {
         val ablage = FluechtigeAblage()
         val poster = Poster(201)
-        val einrichtung = ElternkanalEinrichtung(ablage, TalkBotMelder({ ablage.lade() }, poster))
+        val einrichtung = ElternkanalEinrichtung(ablage, TalkBotMelder({ ablage.lade() }, poster), xyz.steier.sidetube.TestTexte)
         assertThat(einrichtung.kanal).isNull()
 
         assertThat(einrichtung.uebernimm("Unsinn")).startsWith("Der Einrichtungscode passt nicht")
@@ -51,7 +51,7 @@ class ElternkanalEinrichtungTest {
 
     @Test fun `abgelehnter Test wird erklaert`() = runTest {
         val ablage = FluechtigeAblage()
-        val einrichtung = ElternkanalEinrichtung(ablage, TalkBotMelder({ ablage.lade() }, Poster(401)))
+        val einrichtung = ElternkanalEinrichtung(ablage, TalkBotMelder({ ablage.lade() }, Poster(401)), xyz.steier.sidetube.TestTexte)
         einrichtung.uebernimm(code)
         assertThat(einrichtung.teste()).isEqualTo("Abgelehnt: Schlüssel oder Bot passen nicht (HTTP 401).")
     }

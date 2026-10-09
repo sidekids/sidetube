@@ -4,6 +4,12 @@
 
 package xyz.steier.sidetube.parent
 
+import androidx.compose.ui.res.pluralStringResource
+import androidx.compose.ui.res.stringResource
+import xyz.steier.sidetube.LocalTexte
+import xyz.steier.sidetube.R
+import xyz.steier.sidetube.Texte
+
 import android.Manifest
 import android.content.ClipboardManager
 import android.content.Context
@@ -63,36 +69,36 @@ import xyz.steier.sidetube.core.elternkanal.UngueltigerCode
 import java.util.concurrent.Executors
 
 /** Einrichtung des Elternkanals (ADR 0005), ohne Oberflaeche testbar – dieselben Texte wie iOS. */
-class ElternkanalEinrichtung(private val ablage: ElternkanalAblage, private val melder: TalkBotMelder) {
+class ElternkanalEinrichtung(private val ablage: ElternkanalAblage, private val melder: TalkBotMelder, private val texte: Texte) {
 
     val kanal: Elternkanal? get() = ablage.lade()
 
     /** Ein ungueltiger Code aendert nichts an einer bestehenden Einrichtung. */
     fun uebernimm(code: String): String = try {
         ablage.speichere(Elternkanal.lies(code))
-        "Eingerichtet. Mit „Test senden“ prüfen, ob die Meldung ankommt."
+        texte.get(R.string.elternkanal_eingerichtet_meldung)
     } catch (e: UngueltigerCode) {
-        e.message ?: "Der Einrichtungscode passt nicht."
+        e.message ?: texte.get(R.string.elternkanal_code_passt_nicht)
     }
 
     suspend fun teste(): String {
-        val kanal = kanal ?: return "Noch nicht eingerichtet."
-        val text = kanal.erwaehnen.joinToString(" ") { TalkBot.erwaehnung(it) } + " SideTube: Test der Benachrichtigung"
+        val kanal = kanal ?: return texte.get(R.string.elternkanal_nicht_eingerichtet)
+        val text = kanal.erwaehnen.joinToString(" ") { TalkBot.erwaehnung(it) } + texte.get(R.string.elternkanal_testnachricht)
         return when (val meldung = melder.sende(text, kanal)) {
-            Meldung.Gesendet -> "Gesendet. Die Meldung erscheint in der Nextcloud-App."
-            Meldung.NichtEingerichtet -> "Noch nicht eingerichtet."
+            Meldung.Gesendet -> texte.get(R.string.elternkanal_gesendet)
+            Meldung.NichtEingerichtet -> texte.get(R.string.elternkanal_nicht_eingerichtet)
             is Meldung.Gescheitert -> when (meldung.status) {
-                null -> "Nicht angekommen: Server nicht erreichbar."
-                401 -> "Abgelehnt: Schlüssel oder Bot passen nicht (HTTP 401)."
-                404 -> "Nicht gefunden: Gespräch oder Talk fehlt (HTTP 404)."
-                else -> "Nicht angekommen (HTTP ${meldung.status})."
+                null -> texte.get(R.string.elternkanal_nicht_erreichbar)
+                401 -> texte.get(R.string.elternkanal_401)
+                404 -> texte.get(R.string.elternkanal_404)
+                else -> texte.get(R.string.elternkanal_http, meldung.status ?: 0)
             }
         }
     }
 
     fun entferne(): String {
         ablage.loesche()
-        return "Entfernt. SideTube meldet keine Wünsche mehr."
+        return texte.get(R.string.elternkanal_entfernt)
     }
 }
 
@@ -113,8 +119,9 @@ fun ElternkanalScreen(einrichtung: ElternkanalEinrichtung, onBack: () -> Unit) {
         kanal = einrichtung.kanal
     }
 
+    val ohneKamera = stringResource(R.string.elternkanal_ohne_kamera)
     val kameraErlaubnis = rememberLauncherForActivityResult(ActivityResultContracts.RequestPermission()) { erlaubt ->
-        if (erlaubt) scannt = true else meldung = "Ohne Kamera: den Code kopieren und „Code einfügen“ wählen."
+        if (erlaubt) scannt = true else meldung = ohneKamera
     }
 
     if (scannt) {
@@ -125,8 +132,8 @@ fun ElternkanalScreen(einrichtung: ElternkanalEinrichtung, onBack: () -> Unit) {
     Scaffold(
         topBar = {
             TopAppBar(
-                title = { Text("Eltern benachrichtigen", maxLines = 1) },
-                navigationIcon = { TextButton(onClick = onBack) { Text("Zurück") } }
+                title = { Text(stringResource(R.string.eltern_benachrichtigen), maxLines = 1) },
+                navigationIcon = { TextButton(onClick = onBack) { Text(stringResource(R.string.zurueck)) } }
             )
         }
     ) { padding ->
@@ -135,31 +142,30 @@ fun ElternkanalScreen(einrichtung: ElternkanalEinrichtung, onBack: () -> Unit) {
             verticalArrangement = Arrangement.spacedBy(12.dp)
         ) {
             Text(
-                "Bei jedem neuen Wunsch schreibt SideTube eine kurze Nachricht in ein Gespräch auf der eigenen " +
-                    "Nextcloud – ohne Namen und ohne Titel. Die Nextcloud-App meldet sie auf dem Telefon der Eltern.",
+                stringResource(R.string.elternkanal_erklaerung),
                 style = MaterialTheme.typography.bodySmall
             )
             val aktuell = kanal
             if (aktuell != null) {
-                Text("Eingerichtet", style = MaterialTheme.typography.titleSmall)
-                Text("Nextcloud: " + aktuell.server.removePrefix("https://"))
-                Text("Erwähnt: " + aktuell.erwaehnen.joinToString(" ") { TalkBot.erwaehnung(it) })
+                Text(stringResource(R.string.elternkanal_eingerichtet), style = MaterialTheme.typography.titleSmall)
+                Text(stringResource(R.string.elternkanal_nextcloud, aktuell.server.removePrefix("https://")))
+                Text(stringResource(R.string.elternkanal_erwaehnt, aktuell.erwaehnen.joinToString(" ") { TalkBot.erwaehnung(it) }))
                 Button(
                     onClick = { sendet = true; scope.launch { meldung = einrichtung.teste(); sendet = false } },
                     enabled = !sendet,
                     modifier = Modifier.fillMaxWidth()
-                ) { Text(if (sendet) "Sendet …" else "Test senden") }
+                ) { Text(stringResource(if (sendet) R.string.elternkanal_sendet else R.string.elternkanal_test_senden)) }
                 OutlinedButton(onClick = { kameraOderScan(context, { scannt = true }) { kameraErlaubnis.launch(Manifest.permission.CAMERA) } },
-                    modifier = Modifier.fillMaxWidth()) { Text("Neu einrichten") }
-                OutlinedButton(onClick = { entfernen = true }, modifier = Modifier.fillMaxWidth()) { Text("Entfernen") }
+                    modifier = Modifier.fillMaxWidth()) { Text(stringResource(R.string.elternkanal_neu_einrichten)) }
+                OutlinedButton(onClick = { entfernen = true }, modifier = Modifier.fillMaxWidth()) { Text(stringResource(R.string.entfernen)) }
             } else {
                 Button(onClick = { kameraOderScan(context, { scannt = true }) { kameraErlaubnis.launch(Manifest.permission.CAMERA) } },
-                    modifier = Modifier.fillMaxWidth()) { Text("Einrichtungscode scannen") }
+                    modifier = Modifier.fillMaxWidth()) { Text(stringResource(R.string.elternkanal_code_scannen)) }
                 OutlinedButton(onClick = { uebernimm(zwischenablage(context)) }, modifier = Modifier.fillMaxWidth()) {
-                    Text("Code einfügen")
+                    Text(stringResource(R.string.elternkanal_code_einfuegen))
                 }
                 Text(
-                    "Den Code erzeugt das Skript talk-wunschkanal.sh auf dem Server der Familie (Nextcloud mit Talk).",
+                    stringResource(R.string.elternkanal_skript_hinweis),
                     style = MaterialTheme.typography.bodySmall
                 )
             }
@@ -170,12 +176,12 @@ fun ElternkanalScreen(einrichtung: ElternkanalEinrichtung, onBack: () -> Unit) {
     if (entfernen) {
         AlertDialog(
             onDismissRequest = { entfernen = false },
-            title = { Text("Benachrichtigung entfernen?") },
-            text = { Text("Der Schlüssel wird von diesem Gerät gelöscht. Bot und Gespräch auf der Nextcloud bleiben.") },
+            title = { Text(stringResource(R.string.elternkanal_entfernen_titel)) },
+            text = { Text(stringResource(R.string.elternkanal_entfernen_text)) },
             confirmButton = {
-                TextButton(onClick = { entfernen = false; meldung = einrichtung.entferne(); kanal = null }) { Text("Entfernen") }
+                TextButton(onClick = { entfernen = false; meldung = einrichtung.entferne(); kanal = null }) { Text(stringResource(R.string.entfernen)) }
             },
-            dismissButton = { TextButton(onClick = { entfernen = false }) { Text("Abbrechen") } }
+            dismissButton = { TextButton(onClick = { entfernen = false }) { Text(stringResource(R.string.abbrechen)) } }
         )
     }
 }
@@ -225,7 +231,7 @@ private fun QrScanner(onCode: (String) -> Unit, onCancel: () -> Unit) {
         TextButton(onClick = {
             runCatching { ProcessCameraProvider.getInstance(context).get().unbindAll() }
             onCancel()
-        }, modifier = Modifier.padding(16.dp)) { Text("Abbrechen") }
+        }, modifier = Modifier.padding(16.dp)) { Text(stringResource(R.string.abbrechen)) }
     }
 }
 

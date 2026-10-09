@@ -34,8 +34,12 @@ import xyz.steier.sidetube.core.db.WhitelistItemEntity
 import xyz.steier.sidetube.core.input.HoldKey
 import xyz.steier.sidetube.core.input.KeyMap
 import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.res.stringResource
 import androidx.compose.runtime.DisposableEffect
 import xyz.steier.sidetube.core.player.PlaybackModel
+import xyz.steier.sidetube.kid.KidSperre
+import xyz.steier.sidetube.kid.KidSperreText
+import xyz.steier.sidetube.kid.KidSperreView
 import xyz.steier.sidetube.kid.KidView
 import xyz.steier.sidetube.kid.KidViewModel
 import xyz.steier.sidetube.kid.PlayerEventKind
@@ -52,12 +56,15 @@ import xyz.steier.sidetube.parent.*
 private sealed interface Screen {
     data object Kid : Screen
     data object PinSetup : Screen
-    data object PinEntry : Screen
+    /** [sperre]: Die PIN kommt von der Vollbild-Sperre; nur dann hebt sie die Sperre auf. */
+    data class PinEntry(val sperre: KidSperre? = null) : Screen
     data object Profiles : Screen
     data class Whitelist(val profile: KidProfileEntity) : Screen
     data class Review(val profile: KidProfileEntity) : Screen
     data object Sources : Screen
     data class ProfileEdit(val profile: KidProfileEntity) : Screen
+    /** Nutzung (Sehstatistik) eines Profils, wie `WatchStatsView` auf iOS. */
+    data class Stats(val profile: KidProfileEntity) : Screen
     data object ChangePin : Screen
     data object Elternkanal : Screen
 }
@@ -80,8 +87,10 @@ class MainActivity : ComponentActivity() {
         val container = (application as SideTubeApp).container
         setContent {
             SideTubeTheme {
-                Surface(color = MaterialTheme.colorScheme.background) {
-                    SideTubeApp(container) { handler -> keyHandler = handler }
+                androidx.compose.runtime.CompositionLocalProvider(LocalTexte provides container.texte) {
+                    Surface(color = MaterialTheme.colorScheme.background) {
+                        SideTubeApp(container) { handler -> keyHandler = handler }
+                    }
                 }
             }
         }
@@ -218,7 +227,7 @@ private fun SideTubeApp(container: AppContainer, registerKeys: (((KeyEvent, Bool
         bridge.webView.layoutParams = params
     }
 
-    val flow = remember { PinFlow(container.pinStore) }
+    val flow = remember { PinFlow(container.pinStore, container.texte) }
 
     // Ohne PIN zuerst die Einrichtung, danach ist der Kindermodus der Normalzustand.
     var screen by remember { mutableStateOf<Screen>(if (flow.isConfigured) Screen.Kid else Screen.PinSetup) }
@@ -227,7 +236,9 @@ private fun SideTubeApp(container: AppContainer, registerKeys: (((KeyEvent, Bool
     var wunsch by remember { mutableStateOf<xyz.steier.sidetube.core.db.WishEntity?>(null) }
     var linkFuer by remember { mutableStateOf<xyz.steier.sidetube.core.db.WishEntity?>(null) }
     val lifecycle = LocalLifecycleOwner.current.lifecycle
-    DisposableEffect(lifecycle, context, bridge) {
+    // Uhr- und Zeitzonenwechsel: frueher nur waehrend einer Wiedergabe gehoert. Seit die Sperre
+    // (ADR 0007) auch beim Stoebern an Wanduhr-Grenzen haengt, hoert der Kindermodus immer zu.
+    DisposableEffect(lifecycle, context) {
         val receiver = object : BroadcastReceiver() {
             override fun onReceive(context: Context?, intent: Intent?) {
                 kidViewModel.onClockChanged()
@@ -238,7 +249,7 @@ private fun SideTubeApp(container: AppContainer, registerKeys: (((KeyEvent, Bool
             if (registered) { context.unregisterReceiver(receiver); registered = false }
         }
         val observer = LifecycleEventObserver { _, event ->
-            if (event == Lifecycle.Event.ON_START && bridge != null && !registered) {
+            if (event == Lifecycle.Event.ON_START && !registered) {
                 val filter = IntentFilter().apply {
                     addAction(Intent.ACTION_TIME_CHANGED)
                     addAction(Intent.ACTION_TIMEZONE_CHANGED)
@@ -272,14 +283,21 @@ private fun SideTubeApp(container: AppContainer, registerKeys: (((KeyEvent, Bool
     // Suche und Themenwunsch nehmen Zeichen einer Tastatur direkt an (beide haben ein Rad).
     val searching = kidState.screen is xyz.steier.sidetube.kid.KidScreen.Search ||
         kidState.screen is xyz.steier.sidetube.kid.KidScreen.ThemaWunsch
-    DisposableEffect(isKid, searching) {
+    val sperre = kidState.sperre
+    DisposableEffect(isKid, searching, sperre) {
         registerKeys(if (!isKid) null else { event, longPress ->
             val action = KeyMap.action(event.keyCode, longPress, typing = searching)
             when {
+                // Unter der Sperre: Mitte fuehrt zur PIN (wie der Knopf), Einstellungen lang in den
+                // Elternbereich – die Sperre bleibt dabei stehen. Alles andere verhallt.
+                sperre != null && action == xyz.steier.sidetube.core.input.KeyAction.Select -> {
+                    screen = Screen.PinEntry(sperre); true
+                }
+                sperre != null && action != xyz.steier.sidetube.core.input.KeyAction.Settings -> true
                 // Aussen oben rechts lang: die Einstellungen, also der Elternbereich hinter der PIN –
                 // wie das Schloss im Kopf. Ein laufendes Video wird ordentlich geschlossen.
                 action == xyz.steier.sidetube.core.input.KeyAction.Settings -> {
-                    kidViewModel.closePlayer(); screen = Screen.PinEntry; true
+                    kidViewModel.closePlayer(); screen = Screen.PinEntry(); true
                 }
                 action != null -> { kidViewModel.onKey(action); true }
                 // In der Suche nimmt das Geraet Zeichen direkt entgegen - ohne fokussiertes
@@ -300,7 +318,9 @@ private fun SideTubeApp(container: AppContainer, registerKeys: (((KeyEvent, Bool
     }
     val snackbar = remember { SnackbarHostState() }
     // Meldungen des Elternbereichs (Titel, Antworten an das Kind) bleiben nicht im Kindermodus stehen.
-    LaunchedEffect(isKid) { if (isKid) snackbar.currentSnackbarData?.dismiss() }
+    LaunchedEffect(isKid) {
+        if (isKid) { snackbar.currentSnackbarData?.dismiss(); kidViewModel.pruefeSperre() }
+    }
 
     LaunchedEffect(kidState.hint) {
         kidState.hint?.let {
@@ -333,7 +353,8 @@ private fun SideTubeApp(container: AppContainer, registerKeys: (((KeyEvent, Bool
     Scaffold(snackbarHost = { SnackbarHost(snackbar) }) { padding ->
         Box(Modifier.padding(padding)) {
         when (val current = screen) {
-            Screen.Kid -> kidState.playback?.let { playback ->
+            Screen.Kid -> {
+                kidState.playback?.let { playback ->
                 PlayerView(
                     state = playback,
                     onVideoBounds = { videoBounds = it },
@@ -355,30 +376,44 @@ private fun SideTubeApp(container: AppContainer, registerKeys: (((KeyEvent, Bool
                 onActivate = kidViewModel::activateRow,
                 onQuery = kidViewModel::setQuery,
                 onHome = kidViewModel::goHome,
-                onParent = { kidViewModel.closePlayer(); screen = Screen.PinEntry },
+                onParent = { kidViewModel.closePlayer(); screen = Screen.PinEntry() },
                 onSelectProfile = kidViewModel::selectProfile,
                 onSearch = kidViewModel::openSearch,
                 onSelectSegment = kidViewModel::selectSegment,
                 onWheelKey = kidViewModel::tapWheelKey
             )
+            // Die Sperre liegt ueber Liste und Player; nur die PIN der Eltern fuehrt heraus.
+            kidState.sperre?.let { aktiv ->
+                KidSperreView(aktiv, KidSperreText.weiterAb(kidState.profile)) { screen = Screen.PinEntry(aktiv) }
+            }
+            }
 
             Screen.PinSetup -> PinPad(
-                title = if (flow.awaitingRepeat) "PIN wiederholen" else "PIN festlegen",
-                subtitle = "Vier Ziffern. Sie schützt die Einstellungen.",
+                title = stringResource(if (flow.awaitingRepeat) R.string.pin_wiederholen else R.string.pin_festlegen),
+                subtitle = stringResource(R.string.pin_festlegen_untertitel),
                 error = flow.error,
                 onComplete = { pin -> if (flow.setup(pin)) screen = Screen.Kid }
             )
 
-            Screen.PinEntry -> PinPad(
-                title = "PIN für die Einstellungen",
+            is Screen.PinEntry -> PinPad(
+                title = stringResource(R.string.pin_fuer_einstellungen),
                 error = flow.error,
-                onComplete = { pin -> if (flow.verify(pin)) screen = Screen.Profiles }
+                onComplete = { pin ->
+                    if (flow.verify(pin)) {
+                        val vonSperre = current.sperre
+                        if (vonSperre != null) kidViewModel.elternHebenSperreAuf()
+                        // Schlaf-Timer und Ruhezeit: zurueck zum Kind. Sonst dorthin, wo die Eltern
+                        // etwas tun koennen – Limit anpassen, Wiedergabe freigeben.
+                        screen = if (vonSperre?.zurueckZumKind == true) Screen.Kid else Screen.Profiles
+                    }
+                }
             )
 
             Screen.Profiles -> ProfileListScreen(
                 state = state,
                 onOpen = { profile -> viewModel.openProfile(profile); screen = Screen.Whitelist(profile) },
                 onEdit = { profile -> screen = Screen.ProfileEdit(profile) },
+                onStats = { profile -> screen = Screen.Stats(profile) },
                 onCreate = viewModel::createProfile,
                 onDelete = viewModel::deleteProfile,
                 onSources = { screen = Screen.Sources },
@@ -442,7 +477,13 @@ private fun SideTubeApp(container: AppContainer, registerKeys: (((KeyEvent, Bool
             )
 
             Screen.Elternkanal -> ElternkanalScreen(
-                einrichtung = remember { ElternkanalEinrichtung(container.elternkanal, container.elternmelder) },
+                einrichtung = remember { ElternkanalEinrichtung(container.elternkanal, container.elternmelder, container.texte) },
+                onBack = { screen = Screen.Profiles }
+            )
+
+            is Screen.Stats -> WatchStatsScreen(
+                profile = current.profile,
+                laden = container.watchTime::since,
                 onBack = { screen = Screen.Profiles }
             )
 
@@ -470,9 +511,9 @@ private fun SideTubeApp(container: AppContainer, registerKeys: (((KeyEvent, Bool
     }
     linkFuer?.let { ziel ->
         TextPrompt(
-            title = if (ziel.kind == "thema") "Link zum Wunsch" else "Video-Link zum Wunsch",
-            label = "YouTube-Adresse",
-            confirmLabel = "Prüfen",
+            title = stringResource(if (ziel.kind == "thema") R.string.wunsch_link_titel else R.string.wunsch_video_link_titel),
+            label = stringResource(R.string.youtube_adresse),
+            confirmLabel = stringResource(R.string.pruefen),
             onDismiss = { linkFuer = null },
             onConfirm = { url -> linkFuer = null; if (url.isNotBlank()) viewModel.wunschLink(ziel, url) }
         )

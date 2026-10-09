@@ -101,6 +101,10 @@ class PlaybackModel(
     fun onState(value: Int): List<Command> {
         val limit = checkBudget()
         if (limit.isNotEmpty()) return limit
+        // Nach dem Ende zaehlen die Zustaende des Players nicht mehr (iOS: PlayerModel.handle):
+        // stopVideo() meldet -1 und 5, und mit controls: 0 geht YouTube nach dem Ende von selbst
+        // auf „bereit" – beides ersetzte die Endkarte durch „Lädt …". Laeuft trotzdem etwas, stoppen.
+        if (state.status == PlaybackStatus.Ended) return if (value == 1) listOf(Command.Stop) else emptyList()
         return when (value) {
         1 -> {
             if (playingSince == null) { playingSince = now(); playingSinceWallClock = wallClockNow() }
@@ -127,6 +131,7 @@ class PlaybackModel(
     }
 
     fun onTime(seconds: Int): List<Command> {
+        if (state.status == PlaybackStatus.Ended) return emptyList()   // die Endkarte behaelt die letzte Stelle
         state = state.copy(positionSeconds = seconds)
         return emptyList()
     }

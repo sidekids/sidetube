@@ -55,21 +55,21 @@ struct KidOverlayView: View {
 
     private var title: String {
         switch kind {
-        case .goodNight: "Gute Nacht!"
-        case .timeUp: "Die Zeit ist um"
-        case .bedtime: "Schlafenszeit"
-        case .storageError: "Wiedergabe angehalten"
-        case .interruptedSession: "Wiedergabe unterbrochen"
+        case .goodNight: String(localized: "Gute Nacht!")
+        case .timeUp: String(localized: "Die Zeit ist um")
+        case .bedtime: String(localized: "Schlafenszeit")
+        case .storageError: String(localized: "Wiedergabe angehalten")
+        case .interruptedSession: String(localized: "Wiedergabe unterbrochen")
         }
     }
 
     private var message: String {
         switch kind {
-        case .goodNight: "Die Schlafzeit ist da. Bis morgen!"
-        case .timeUp: "Deine Zeit für heute ist um. Morgen geht es weiter."
-        case .bedtime: resumesAt.map { "Jetzt ist Ruhezeit. Ab \($0) Uhr geht es weiter." } ?? "Jetzt ist Ruhezeit. Morgen früh geht es weiter."
-        case .storageError: "Die Sehzeit konnte nicht gespeichert werden. Bitte die Eltern fragen."
-        case .interruptedSession: "Die letzte Wiedergabe wurde nicht sicher beendet. Bereits gespeicherte Sehzeit bleibt erhalten; fehlende Zeit wird nicht geschätzt. Bitte die Eltern fragen."
+        case .goodNight: String(localized: "Die Schlafzeit ist da. Bis morgen!")
+        case .timeUp: String(localized: "Deine Zeit für heute ist um. Morgen geht es weiter.")
+        case .bedtime: resumesAt.map { String(localized: "Jetzt ist Ruhezeit. Ab \($0) Uhr geht es weiter.") } ?? String(localized: "Jetzt ist Ruhezeit. Morgen früh geht es weiter.")
+        case .storageError: String(localized: "Die Sehzeit konnte nicht gespeichert werden. Bitte die Eltern fragen.")
+        case .interruptedSession: String(localized: "Die letzte Wiedergabe wurde nicht sicher beendet. Bereits gespeicherte Sehzeit bleibt erhalten; fehlende Zeit wird nicht geschätzt. Bitte die Eltern fragen.")
         }
     }
 

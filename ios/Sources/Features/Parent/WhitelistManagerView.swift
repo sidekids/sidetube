@@ -103,10 +103,10 @@ struct WhitelistManagerView: View {
         do {
             let library = try SeedLibraryImporter.load(catalog)
             let result = try SeedLibraryImporter(context: context).importLibrary(library, into: profile, applyProfilePreset: true)
-            let preset = library.profilePreset.map { " Profil auf „\($0.ageBand.title)“ gesetzt." } ?? ""
-            seedMessage = "\(catalog.title): \(result.imported) Kandidaten zur Prüfung für \(profile.name) übernommen, \(result.skipped) bereits vorhanden, \(result.blocked) aus gesperrten Quellen übersprungen.\(preset) Freigabe unter „Freigaben prüfen“."
+            let preset = library.profilePreset.map { String(localized: " Profil auf „\($0.ageBand.title)“ gesetzt.") } ?? ""
+            seedMessage = String(localized: "\(catalog.title): \(result.imported) Kandidaten zur Prüfung für \(profile.name) übernommen, \(result.skipped) bereits vorhanden, \(result.blocked) aus gesperrten Quellen übersprungen.\(preset) Freigabe unter „Freigaben prüfen“.")
         } catch {
-            seedMessage = "Import fehlgeschlagen: \(error.localizedDescription)"
+            seedMessage = String(localized: "Import fehlgeschlagen: \(error.localizedDescription)")
         }
     }
 

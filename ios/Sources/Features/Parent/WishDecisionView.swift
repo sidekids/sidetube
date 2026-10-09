@@ -59,7 +59,7 @@ struct WishDecisionView: View {
                 Section {
                     WishRow(wish: wish)
                     if let videoId = wish.videoId, let url = URL(string: "https://www.youtube.com/watch?v=\(videoId)") {
-                        Link(wish.kind == .neueFolge ? "Video im Original ansehen (Eltern)" : "Anlass im Original ansehen (Eltern)",
+                        Link(wish.kind == .neueFolge ? String(localized: "Video im Original ansehen (Eltern)") : String(localized: "Anlass im Original ansehen (Eltern)"),
                              destination: url).font(.footnote)
                     }
                 } header: { Text(wish.kind.origin) } footer: { Text(footer) }
@@ -104,9 +104,9 @@ struct WishDecisionView: View {
 
     private var footer: String {
         switch wish.kind {
-        case .thema: "Das Kind hat nur ein Stichwort geschickt und dabei nichts Fremdes gesehen."
-        case .mehrDavon: "Das Kind möchte mehr wie dieses freigegebene Video."
-        case .neueFolge: "Neue Folge eines Kanals mit Stufe „Vertrauenswürdige Reihe“. Das Kind hat Bild und Titel gesehen, nicht das Video."
+        case .thema: String(localized: "Das Kind hat nur ein Stichwort geschickt und dabei nichts Fremdes gesehen.")
+        case .mehrDavon: String(localized: "Das Kind möchte mehr wie dieses freigegebene Video.")
+        case .neueFolge: String(localized: "Neue Folge eines Kanals mit Stufe „Vertrauenswürdige Reihe“. Das Kind hat Bild und Titel gesehen, nicht das Video.")
         }
     }
 
@@ -180,9 +180,9 @@ struct WishDecisionView: View {
             try WishRepository(context: modelContext).approveEpisode(wish, in: profile, reply: reply)
             dismiss()
         } catch WishRepository.WishError.notApprovable {
-            error = "Der Filter hat eindeutig nicht kindgerechte Begriffe im Titel erkannt – keine Freigabe möglich."
+            error = String(localized: "Der Filter hat eindeutig nicht kindgerechte Begriffe im Titel erkannt – keine Freigabe möglich.")
         } catch WishRepository.WishError.blockedSource {
-            error = "Diese Quelle ist für Kinder gesperrt."
+            error = String(localized: "Diese Quelle ist für Kinder gesperrt.")
         } catch {
             self.error = error.localizedDescription
         }
@@ -192,7 +192,7 @@ struct WishDecisionView: View {
         do {
             try WishRepository(context: modelContext).decide(wish, status: status, reply: reply, fulfilledYoutubeId: fulfilled)
             dismiss()
-        } catch { self.error = "Das ging nicht: Der Wunsch ist schon entschieden." }
+        } catch { self.error = String(localized: "Das ging nicht: Der Wunsch ist schon entschieden.") }
     }
 
     private func setTrust(_ trust: SourceTrust, for source: CuratedSource) {

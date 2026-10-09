@@ -76,7 +76,11 @@ data class ProfileDraft(
         const val DEFAULT_LIMIT = 60
 
         /** Vorschlaege fuer den Beginn der Ruhezeit nach Alter, wie auf iOS. */
-        val BEDTIME_SUGGESTIONS = listOf("6–9 Jahre" to 19 * 60, "10–12 Jahre" to 20 * 60, "ab 13" to 21 * 60)
+        val BEDTIME_SUGGESTIONS = listOf(
+            xyz.steier.sidetube.R.string.ruhezeit_vorschlag_6_9 to 19 * 60,
+            xyz.steier.sidetube.R.string.ruhezeit_vorschlag_10_12 to 20 * 60,
+            xyz.steier.sidetube.R.string.ruhezeit_vorschlag_ab_13 to 21 * 60
+        )
 
         fun from(profile: KidProfileEntity) = ProfileDraft(
             name = profile.name,

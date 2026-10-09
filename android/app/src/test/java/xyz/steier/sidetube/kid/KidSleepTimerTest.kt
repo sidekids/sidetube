@@ -50,7 +50,7 @@ class KidSleepTimerTest {
             tick(60)          // durch die Ausblendung bis zum Ablauf
             assertThat(vm.state.value.playback).isNull()
             assertThat(vm.state.value.sleepRemainingSeconds).isEqualTo(0)
-            assertThat(vm.state.value.hint).contains("Gute Nacht")
+            assertThat(vm.state.value.sperre).isEqualTo(KidSperre.GUTE_NACHT)
         }
 
     @Test fun `in der letzten Minute wird die Lautstaerke schrittweise abgesenkt`() =
@@ -72,7 +72,7 @@ class KidSleepTimerTest {
 
             vm.activateRow(0); runCurrent()
             assertThat(vm.state.value.playback).isNull()
-            assertThat(vm.state.value.hint).contains("Gute Nacht")
+            assertThat(vm.state.value.sperre).isEqualTo(KidSperre.GUTE_NACHT)
         }
 
     @Test fun `die Eltern koennen den Timer aufheben, danach laeuft die Wiedergabe weiter`() =

@@ -166,7 +166,7 @@ struct ProfileEditorView: View {
             }
             dismiss()
         } catch {
-            errorMessage = "Konnte nicht sichern: \(error.localizedDescription)"
+            errorMessage = String(localized: "Konnte nicht sichern: \(error.localizedDescription)")
         }
     }
 

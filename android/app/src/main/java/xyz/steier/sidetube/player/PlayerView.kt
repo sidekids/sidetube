@@ -21,6 +21,8 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.layout.boundsInWindow
 import androidx.compose.ui.layout.onGloballyPositioned
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.res.stringResource
+import xyz.steier.sidetube.R
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.viewinterop.AndroidView
@@ -94,7 +96,7 @@ fun PlayerView(
             )
             Spacer(Modifier.height(4.dp))
             Text(
-                listOfNotNull(state.progressLabel.takeIf { it.isNotEmpty() }, statusLabel(state), state.positionLabel)
+                listOfNotNull(state.progressLabel.takeIf { it.isNotEmpty() }, stringResource(statusLabel(state)), state.positionLabel)
                     .joinToString(" · "),
                 style = MaterialTheme.typography.bodySmall,
                 color = Color.White.copy(alpha = 0.7f)
@@ -102,7 +104,7 @@ fun PlayerView(
             state.skippedTitle?.let {
                 Spacer(Modifier.height(4.dp))
                 Text(
-                    "„$it“ lässt sich nicht abspielen – übersprungen.",
+                    stringResource(R.string.player_uebersprungen, it),
                     style = MaterialTheme.typography.bodySmall,
                     color = Color.White.copy(alpha = 0.85f)
                 )
@@ -114,28 +116,28 @@ fun PlayerView(
             horizontalArrangement = Arrangement.SpaceEvenly,
             verticalAlignment = Alignment.CenterVertically
         ) {
-            Control(Icons.Default.SkipPrevious, "Voriges Video", onPrevious)
+            Control(Icons.Default.SkipPrevious, stringResource(R.string.player_voriges), onPrevious)
             Control(
                 if (state.status == PlaybackStatus.Playing) Icons.Default.Pause else Icons.Default.PlayArrow,
-                if (state.status == PlaybackStatus.Playing) "Pause" else "Abspielen",
+                stringResource(if (state.status == PlaybackStatus.Playing) R.string.player_pause else R.string.player_abspielen),
                 onPlayPause,
                 large = true
             )
-            Control(Icons.Default.SkipNext, "Nächstes Video", onNext)
+            Control(Icons.Default.SkipNext, stringResource(R.string.player_naechstes), onNext)
             // Das Menü mit „Mehr davon wünschen"; am Gerät außen unten rechts lang (ADR 0013).
-            Control(Icons.Default.ThumbUp, "Mehr davon", onOpenMenu)
-            Control(Icons.Default.Close, "Schließen", onClose)
+            Control(Icons.Default.ThumbUp, stringResource(R.string.player_mehr_davon), onOpenMenu)
+            Control(Icons.Default.Close, stringResource(R.string.player_schliessen), onClose)
         }
     }
 }
 
-private fun statusLabel(state: PlaybackState): String = when (state.status) {
-    PlaybackStatus.Loading -> "Lädt …"
-    PlaybackStatus.Playing -> "Spielt"
-    PlaybackStatus.Paused -> "Pause"
-    PlaybackStatus.Ended -> "Fertig"
-    PlaybackStatus.Skipped -> "Übersprungen"
-    PlaybackStatus.Failed -> "Nicht abspielbar"
+private fun statusLabel(state: PlaybackState): Int = when (state.status) {
+    PlaybackStatus.Loading -> R.string.player_status_laedt
+    PlaybackStatus.Playing -> R.string.player_status_spielt
+    PlaybackStatus.Paused -> R.string.player_status_pause
+    PlaybackStatus.Ended -> R.string.player_status_fertig
+    PlaybackStatus.Skipped -> R.string.player_status_uebersprungen
+    PlaybackStatus.Failed -> R.string.player_status_nicht_abspielbar
 }
 
 @Composable
@@ -166,19 +168,19 @@ private fun EndCard(
     mehrDavon: WunschMoeglich, onMehrDavon: () -> Unit
 ) {
     Column(Modifier.fillMaxWidth().padding(horizontal = 16.dp, vertical = 10.dp), verticalArrangement = Arrangement.spacedBy(8.dp)) {
-        Text("Fertig 🎉", style = MaterialTheme.typography.headlineSmall, color = Color.White)
+        Text(stringResource(R.string.player_fertig), style = MaterialTheme.typography.headlineSmall, color = Color.White)
         Text(title, style = MaterialTheme.typography.bodyMedium, color = Color.White.copy(alpha = 0.7f),
             maxLines = 1, overflow = TextOverflow.Ellipsis)
-        EndButton("Nochmal", Icons.Default.Replay, focused = endFocus == 0, onClick = onReplay)
-        WunschKnopf(mehrDavonText(mehrDavon), focused = endFocus == 1, aktiv = mehrDavon == WunschMoeglich.JA, onClick = onMehrDavon)
-        EndButton("Zurück zu den Videos", Icons.AutoMirrored.Filled.List, focused = endFocus == 2, onClick = onClose)
+        EndButton(stringResource(R.string.player_nochmal), Icons.Default.Replay, focused = endFocus == 0, onClick = onReplay)
+        WunschKnopf(stringResource(mehrDavonText(mehrDavon)), focused = endFocus == 1, aktiv = mehrDavon == WunschMoeglich.JA, onClick = onMehrDavon)
+        EndButton(stringResource(R.string.player_zurueck_zu_videos), Icons.AutoMirrored.Filled.List, focused = endFocus == 2, onClick = onClose)
     }
 }
 
-private fun mehrDavonText(moeglich: WunschMoeglich): String = when (moeglich) {
-    WunschMoeglich.JA -> "Mehr davon wünschen"
-    WunschMoeglich.SCHON_GEWUENSCHT -> "✓ Mehr davon gewünscht"
-    WunschMoeglich.GRENZE -> "Heute keine Wünsche mehr"
+private fun mehrDavonText(moeglich: WunschMoeglich): Int = when (moeglich) {
+    WunschMoeglich.JA -> R.string.player_mehr_davon_wuenschen
+    WunschMoeglich.SCHON_GEWUENSCHT -> R.string.player_mehr_davon_gewuenscht
+    WunschMoeglich.GRENZE -> R.string.player_heute_keine_wuensche
 }
 
 /**
@@ -190,8 +192,8 @@ private fun PlayerMenu(title: String, focus: Int, mehrDavon: WunschMoeglich, onC
     Column(Modifier.fillMaxWidth().padding(horizontal = 16.dp, vertical = 10.dp), verticalArrangement = Arrangement.spacedBy(8.dp)) {
         Text(title, style = MaterialTheme.typography.bodyMedium, color = Color.White.copy(alpha = 0.7f),
             maxLines = 1, overflow = TextOverflow.Ellipsis)
-        WunschKnopf(mehrDavonText(mehrDavon), focused = focus == 0, aktiv = mehrDavon == WunschMoeglich.JA, onClick = { onChoose(0) })
-        WunschKnopf("Weiterschauen", focused = focus == 1, aktiv = true, onClick = { onChoose(1) }, icon = Icons.Default.PlayArrow)
+        WunschKnopf(stringResource(mehrDavonText(mehrDavon)), focused = focus == 0, aktiv = mehrDavon == WunschMoeglich.JA, onClick = { onChoose(0) })
+        WunschKnopf(stringResource(R.string.player_weiterschauen), focused = focus == 1, aktiv = true, onClick = { onChoose(1) }, icon = Icons.Default.PlayArrow)
     }
 }
 

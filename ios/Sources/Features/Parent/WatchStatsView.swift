@@ -30,7 +30,7 @@ struct WatchStatsView: View {
                 LabeledContent("Sehzeit", value: stats.totalFormatted)
                 LabeledContent("Videos", value: "\(stats.videoCount)")
                 if let limit = profile.dailyLimitMinutes {
-                    LabeledContent("Tageslimit", value: "\(limit) min")
+                    LabeledContent("Tageslimit", value: String(localized: "\(limit) min"))
                 }
             } footer: {
                 Text("Gezählt wird die tatsächlich gespielte Zeit, nicht die Länge der Videos.")

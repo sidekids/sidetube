@@ -28,7 +28,7 @@ struct SearchScreen: View {
                 if let model {
                     results(model: model)
                 } else {
-                    KidEmptyState(systemImage: "tv", title: "Noch keine Videos", message: "Deine Eltern richten SideTube erst noch ein.")
+                    KidEmptyState(systemImage: "tv", title: String(localized: "Noch keine Videos"), message: String(localized: "Deine Eltern richten SideTube erst noch ein."))
                     Spacer()
                 }
             }
@@ -135,7 +135,7 @@ struct SearchScreen: View {
                 // Findet die Suche nichts, steht der Wunsch an die Eltern zuerst (ADR 0001, Weg 1).
                 if canWish { wishCard(nothingFound: true) }
                 KidEmptyState(systemImage: "questionmark.circle", title: "Nichts gefunden",
-                              message: "Für „\(text)“ gibt es keinen Treffer. Probiere ein anderes Wort.")
+                              message: String(localized: "Für „\(text)“ gibt es keinen Treffer. Probiere ein anderes Wort."))
                     .listRowBackground(Color.clear)
             }
             ForEach(Array(rows.enumerated()), id: \.element.id) { index, row in

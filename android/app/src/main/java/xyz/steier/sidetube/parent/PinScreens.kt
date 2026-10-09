@@ -4,6 +4,10 @@
 
 package xyz.steier.sidetube.parent
 
+import androidx.compose.ui.res.stringResource
+import xyz.steier.sidetube.R
+import xyz.steier.sidetube.Texte
+
 import androidx.compose.foundation.background
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.verticalScroll
@@ -133,7 +137,7 @@ private fun Keypad(enabled: Boolean, onKey: (Key) -> Unit) {
         Row {
             Spacer(Modifier.size(keySize))
             KeyButton("0", enabled, size = keySize) { onKey(Key.Digit('0')) }
-            KeyButton("⌫", enabled, size = keySize, description = "Löschen") { onKey(Key.Backspace) }
+            KeyButton("⌫", enabled, size = keySize, description = stringResource(R.string.pin_loeschen)) { onKey(Key.Backspace) }
         }
     }
 }
@@ -156,7 +160,7 @@ private fun KeyButton(
 }
 
 /** Zustand der PIN-Strecke, damit die Bildschirme selbst zustandslos bleiben. */
-class PinFlow(private val store: PinStore) {
+class PinFlow(private val store: PinStore, private val texte: Texte) {
     var error by mutableStateOf<String?>(null)
         private set
 
@@ -180,7 +184,7 @@ class PinFlow(private val store: PinStore) {
             true
         } else {
             firstEntry = null
-            error = "Die beiden Eingaben stimmen nicht überein."
+            error = texte.get(R.string.pin_eingaben_ungleich)
             false
         }
     }
@@ -190,11 +194,11 @@ class PinFlow(private val store: PinStore) {
     fun verify(pin: String): Boolean = when (val result = store.verify(pin)) {
         is PinResult.Success -> { error = null; true }
         is PinResult.Wrong -> {
-            error = "Falsche PIN. Noch ${result.attemptsRemaining} Versuche."
+            error = texte.plural(R.plurals.pin_falsch, result.attemptsRemaining)
             false
         }
         is PinResult.LockedOut -> {
-            error = "Zu viele Versuche. Noch ${result.secondsRemaining} Sekunden gesperrt."
+            error = texte.plural(R.plurals.pin_gesperrt, result.secondsRemaining.toInt())
             false
         }
     }

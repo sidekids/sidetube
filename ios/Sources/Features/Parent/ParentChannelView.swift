@@ -26,9 +26,9 @@ final class ParentChannelSetup {
             let parsed = try ParentChannel.parse(code)
             store.save(parsed)
             channel = parsed
-            message = "Eingerichtet. Mit „Test senden“ prüfen, ob die Meldung ankommt."
+            message = String(localized: "Eingerichtet. Mit „Test senden“ prüfen, ob die Meldung ankommt.")
         } catch {
-            message = (error as? LocalizedError)?.errorDescription ?? "Der Einrichtungscode passt nicht."
+            message = (error as? LocalizedError)?.errorDescription ?? String(localized: "Der Einrichtungscode passt nicht.")
         }
     }
 
@@ -36,21 +36,21 @@ final class ParentChannelSetup {
         guard let channel, !sending else { return }
         sending = true
         defer { sending = false }
-        let text = channel.mentions.map(TalkBot.mention).joined(separator: " ") + " SideTube: Test der Benachrichtigung"
+        let text = channel.mentions.map(TalkBot.mention).joined(separator: " ") + String(localized: " SideTube: Test der Benachrichtigung")
         message = switch await notifier.send(text, via: channel) {
-        case .sent: "Gesendet. Die Meldung erscheint in der Nextcloud-App."
-        case .notConfigured: "Noch nicht eingerichtet."
-        case .failed(let status?) where status == 401: "Abgelehnt: Schlüssel oder Bot passen nicht (HTTP 401)."
-        case .failed(let status?) where status == 404: "Nicht gefunden: Gespräch oder Talk fehlt (HTTP 404)."
-        case .failed(let status?): "Nicht angekommen (HTTP \(status))."
-        case .failed(nil): "Nicht angekommen: Server nicht erreichbar."
+        case .sent: String(localized: "Gesendet. Die Meldung erscheint in der Nextcloud-App.")
+        case .notConfigured: String(localized: "Noch nicht eingerichtet.")
+        case .failed(let status?) where status == 401: String(localized: "Abgelehnt: Schlüssel oder Bot passen nicht (HTTP 401).")
+        case .failed(let status?) where status == 404: String(localized: "Nicht gefunden: Gespräch oder Talk fehlt (HTTP 404).")
+        case .failed(let status?): String(localized: "Nicht angekommen (HTTP \(status)).")
+        case .failed(nil): String(localized: "Nicht angekommen: Server nicht erreichbar.")
         }
     }
 
     func remove() {
         store.delete()
         channel = nil
-        message = "Entfernt. SideTube meldet keine Wünsche mehr."
+        message = String(localized: "Entfernt. SideTube meldet keine Wünsche mehr.")
     }
 }
 

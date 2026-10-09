@@ -30,7 +30,7 @@ struct HomeScreen: View {
                     content(model: model, profile: profile)
                 } else {
                     KidEmptyState(systemImage: "tv", title: "Noch keine Videos",
-                                  message: "Deine Eltern richten SideTube erst noch ein.")
+                                  message: String(localized: "Deine Eltern richten SideTube erst noch ein."))
                 }
             }
             .navigationTitle(kidSession.activeProfile?.name ?? "Start")
@@ -101,7 +101,7 @@ struct HomeScreen: View {
                 section("Kanäle", trailing: channels.isEmpty ? nil : ("Alle", onShowAllChannels)) {
                     if channels.isEmpty {
                         KidEmptyState(systemImage: "person.crop.rectangle.stack", title: "Noch keine Kanäle",
-                                      message: "Deine Eltern können hier Kanäle für dich aussuchen.")
+                                      message: String(localized: "Deine Eltern können hier Kanäle für dich aussuchen."))
                     } else {
                         ScrollViewReader { rowProxy in
                             ScrollView(.horizontal, showsIndicators: false) {

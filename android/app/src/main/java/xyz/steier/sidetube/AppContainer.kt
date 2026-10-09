@@ -54,6 +54,8 @@ class AppContainer(context: Context) {
     private val http = UrlConnectionHttpClient()
 
     val content = ContentBundle(AssetContentSource(context))
+    /** Texte fuer ViewModels und Zeilenaufbau; Compose nimmt `stringResource` direkt. */
+    val texte: Texte = AndroidTexte(context)
     val pinStore = PinStore(context)
     val profilePreferences = ProfilePreferences(context)
 

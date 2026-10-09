@@ -4,6 +4,12 @@
 
 package xyz.steier.sidetube.parent
 
+import androidx.compose.ui.res.pluralStringResource
+import androidx.compose.ui.res.stringResource
+import xyz.steier.sidetube.LocalTexte
+import xyz.steier.sidetube.R
+import xyz.steier.sidetube.Texte
+
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Arrangement
@@ -24,6 +30,7 @@ import androidx.compose.material.icons.filled.Bedtime
 import androidx.compose.material.icons.filled.CheckCircle
 import androidx.compose.material.icons.filled.Delete
 import androidx.compose.material.icons.filled.Download
+import androidx.compose.material.icons.filled.BarChart
 import androidx.compose.material.icons.filled.Edit
 import androidx.compose.material.icons.filled.Key
 import androidx.compose.material.icons.filled.MoreVert
@@ -55,6 +62,7 @@ fun ProfileListScreen(
     state: ParentState,
     onOpen: (KidProfileEntity) -> Unit,
     onEdit: (KidProfileEntity) -> Unit,
+    onStats: (KidProfileEntity) -> Unit,
     onCreate: (String) -> Unit,
     onDelete: (KidProfileEntity) -> Unit,
     onSources: () -> Unit,
@@ -77,41 +85,41 @@ fun ProfileListScreen(
     Scaffold(
         topBar = {
             TopAppBar(
-                title = { Text("Einstellungen", maxLines = 1) },
+                title = { Text(stringResource(R.string.eltern_einstellungen), maxLines = 1) },
                 navigationIcon = {
-                    TextButton(onClick = onLock) { Text("Sperren") }
+                    TextButton(onClick = onLock) { Text(stringResource(R.string.eltern_sperren)) }
                 },
                 actions = {
                     IconButton(onClick = { showSleep = true }) {
                         Icon(
                             Icons.Default.Bedtime,
                             contentDescription = sleepRemainingSeconds
-                                ?.let { "Schlafmodus laeuft, noch ${SleepTimerPolicy.format(it)}" }
-                                ?: "Schlafmodus"
+                                ?.let { stringResource(R.string.schlafmodus_laeuft_noch, SleepTimerPolicy.format(it)) }
+                                ?: stringResource(R.string.schlafmodus)
                         )
                     }
                     IconButton(onClick = { showCreate = true }) {
-                        Icon(Icons.Default.Add, contentDescription = "Neues Profil")
+                        Icon(Icons.Default.Add, contentDescription = stringResource(R.string.neues_profil))
                     }
                     // Wie das ⋯-Menue auf iOS. Selten Gebrauchtes wandert hierher, damit die
                     // Leiste auf dem SidePhone dem Titel noch Platz laesst.
                     Box {
                         IconButton(onClick = { showMenu = true }) {
-                            Icon(Icons.Default.MoreVert, contentDescription = "Weitere")
+                            Icon(Icons.Default.MoreVert, contentDescription = stringResource(R.string.weitere))
                         }
                         DropdownMenu(expanded = showMenu, onDismissRequest = { showMenu = false }) {
                             DropdownMenuItem(
-                                text = { Text("PIN ändern") },
+                                text = { Text(stringResource(R.string.pin_aendern)) },
                                 leadingIcon = { Icon(Icons.Default.Key, contentDescription = null) },
                                 onClick = { showMenu = false; onChangePin() }
                             )
                             DropdownMenuItem(
-                                text = { Text("Quellen & Sicherheitsstufen") },
+                                text = { Text(stringResource(R.string.quellen_und_stufen)) },
                                 leadingIcon = { Icon(Icons.Default.Shield, contentDescription = null) },
                                 onClick = { showMenu = false; onSources() }
                             )
                             DropdownMenuItem(
-                                text = { Text("Eltern benachrichtigen") },
+                                text = { Text(stringResource(R.string.eltern_benachrichtigen)) },
                                 leadingIcon = { Icon(Icons.Default.NotificationsActive, contentDescription = null) },
                                 onClick = { showMenu = false; onElternkanal() }
                             )
@@ -123,9 +131,9 @@ fun ProfileListScreen(
     ) { padding ->
         if (state.profiles.isEmpty()) {
             EmptyHint(
-                title = "Noch kein Profil",
-                text = "Lege für jedes Kind ein Profil mit eigener Liste an.",
-                actionLabel = "Profil anlegen",
+                title = stringResource(R.string.noch_kein_profil),
+                text = stringResource(R.string.noch_kein_profil_text),
+                actionLabel = stringResource(R.string.profil_anlegen),
                 onAction = { showCreate = true },
                 modifier = Modifier.padding(padding)
             )
@@ -135,15 +143,18 @@ fun ProfileListScreen(
                     ListItem(
                         headlineContent = { Text(profile.name) },
                         supportingContent = {
-                            Text(profileSummary(profile))
+                            Text(profileSummary(profile, LocalTexte.current))
                         },
                         trailingContent = {
                             Row {
+                                IconButton(onClick = { onStats(profile) }) {
+                                    Icon(Icons.Default.BarChart, contentDescription = stringResource(R.string.nutzung))
+                                }
                                 IconButton(onClick = { onEdit(profile) }) {
-                                    Icon(Icons.Default.Edit, contentDescription = "Profil bearbeiten")
+                                    Icon(Icons.Default.Edit, contentDescription = stringResource(R.string.profil_bearbeiten))
                                 }
                                 IconButton(onClick = { onDelete(profile) }) {
-                                    Icon(Icons.Default.Delete, contentDescription = "Profil entfernen")
+                                    Icon(Icons.Default.Delete, contentDescription = stringResource(R.string.profil_entfernen))
                                 }
                             }
                         },
@@ -152,7 +163,7 @@ fun ProfileListScreen(
                     HorizontalDivider()
                     if (profile.id in state.interruptedProfiles) {
                         TextButton(onClick = { recoveryProfile = profile }) {
-                            Text("Unterbrochene Wiedergabe prüfen: ${profile.name}")
+                            Text(stringResource(R.string.unterbrochene_wiedergabe_pruefen, profile.name))
                         }
                     }
                     BedtimeExceptionRow(profile, onSkipBedtime, onClearBedtimeException)
@@ -164,10 +175,10 @@ fun ProfileListScreen(
     recoveryProfile?.let { profile ->
         AlertDialog(
             onDismissRequest = { recoveryProfile = null },
-            title = { Text("Wiedergabe wieder freigeben?") },
-            text = { Text("Die letzte Wiedergabe wurde nicht sicher abgeschlossen. Ein Teil der Sehzeit ist möglicherweise unbekannt. Bereits gespeicherte Sehzeit bleibt erhalten. Diese Freigabe schätzt keine fehlende Zeit nach.") },
-            confirmButton = { TextButton(onClick = { recoveryProfile = null; onRecoverPlayback(profile.id) }) { Text("Als Eltern freigeben") } },
-            dismissButton = { TextButton(onClick = { recoveryProfile = null }) { Text("Abbrechen") } }
+            title = { Text(stringResource(R.string.wiedergabe_freigeben_titel)) },
+            text = { Text(stringResource(R.string.wiedergabe_freigeben_text)) },
+            confirmButton = { TextButton(onClick = { recoveryProfile = null; onRecoverPlayback(profile.id) }) { Text(stringResource(R.string.als_eltern_freigeben)) } },
+            dismissButton = { TextButton(onClick = { recoveryProfile = null }) { Text(stringResource(R.string.abbrechen)) } }
         )
     }
 
@@ -182,9 +193,9 @@ fun ProfileListScreen(
 
     if (showCreate) {
         TextPrompt(
-            title = "Neues Profil",
-            label = "Name",
-            confirmLabel = "Anlegen",
+            title = stringResource(R.string.neues_profil),
+            label = stringResource(R.string.name),
+            confirmLabel = stringResource(R.string.anlegen),
             onDismiss = { showCreate = false },
             onConfirm = { name -> showCreate = false; if (name.isNotBlank()) onCreate(name) }
         )
@@ -192,9 +203,9 @@ fun ProfileListScreen(
 }
 
 /** Kurzfassung unter dem Namen: Tageslimit und Ruhezeit, die zwei Regeln, die Eltern am haeufigsten suchen. */
-internal fun profileSummary(profile: KidProfileEntity): String = listOf(
-    profile.dailyLimitMinutes?.let { "$it Minuten am Tag" } ?: "ohne Tageslimit",
-    if (profile.bedtimeEnabled) "Ruhezeit ab ${ParentLabels.clock(profile.bedtimeStartMinutes)}" else "ohne Ruhezeit"
+internal fun profileSummary(profile: KidProfileEntity, texte: Texte): String = listOf(
+    profile.dailyLimitMinutes?.let { texte.plural(R.plurals.profil_minuten_am_tag, it) } ?: texte.get(R.string.profil_ohne_tageslimit),
+    if (profile.bedtimeEnabled) texte.get(R.string.profil_ruhezeit_ab, ParentLabels.clock(profile.bedtimeStartMinutes)) else texte.get(R.string.profil_ohne_ruhezeit)
 ).joinToString(" · ")
 
 /**
@@ -221,14 +232,14 @@ private fun BedtimeExceptionRow(
             horizontalArrangement = Arrangement.SpaceBetween
         ) {
             Text(
-                "Ruhezeit ausgesetzt bis ${ParentFormat.time(skipUntil, zone)}",
+                stringResource(R.string.ruhezeit_ausgesetzt_bis, ParentFormat.time(skipUntil, zone)),
                 style = MaterialTheme.typography.bodySmall
             )
-            TextButton(onClick = { onClear(profile) }) { Text("Aufheben") }
+            TextButton(onClick = { onClear(profile) }) { Text(stringResource(R.string.aufheben)) }
         }
         BedtimePolicy.state(profile, now, zone) == BedtimeState.Active ->
             TextButton(onClick = { onSkip(profile) }) {
-                Text("Ruhezeit für ${profile.name} bis zum Ende aussetzen")
+                Text(stringResource(R.string.ruhezeit_aussetzen_fuer, profile.name))
             }
     }
 }
@@ -248,14 +259,13 @@ private fun SleepModeDialog(
     var minutes by remember { mutableStateOf(SleepTimerPolicy.DEFAULT_MINUTES.toFloat()) }
     AlertDialog(
         onDismissRequest = onDismiss,
-        title = { Text("Schlafmodus") },
+        title = { Text(stringResource(R.string.schlafmodus)) },
         text = {
             if (remainingSeconds != null) {
-                Text("Der Schlafmodus laeuft noch ${SleepTimerPolicy.format(remainingSeconds)}. " +
-                    "Danach endet die Wiedergabe und es laesst sich kein neues Video starten.")
+                Text(stringResource(R.string.schlafmodus_laeuft_text, SleepTimerPolicy.format(remainingSeconds)))
             } else {
                 Column {
-                    Text("Nach ${minutes.toInt()} Minuten endet die Wiedergabe von selbst.")
+                    Text(pluralStringResource(R.plurals.schlafmodus_nach_minuten, minutes.toInt(), minutes.toInt()))
                     Spacer(Modifier.height(8.dp))
                     Slider(
                         value = minutes,
@@ -263,16 +273,16 @@ private fun SleepModeDialog(
                         valueRange = 5f..SleepTimerPolicy.MINUTES.last.toFloat(),
                         steps = (SleepTimerPolicy.MINUTES.last - 5) / 5 - 1
                     )
-                    Text("Die letzte Minute wird leiser ausgeblendet.",
+                    Text(stringResource(R.string.schlafmodus_ausblenden),
                         style = MaterialTheme.typography.bodySmall)
                 }
             }
         },
         confirmButton = {
-            if (remainingSeconds != null) TextButton(onClick = onStop) { Text("Schlafmodus beenden") }
-            else TextButton(onClick = { onStart(minutes.toInt()) }) { Text("Starten") }
+            if (remainingSeconds != null) TextButton(onClick = onStop) { Text(stringResource(R.string.schlafmodus_beenden)) }
+            else TextButton(onClick = { onStart(minutes.toInt()) }) { Text(stringResource(R.string.starten)) }
         },
-        dismissButton = { TextButton(onClick = onDismiss) { Text("Abbrechen") } }
+        dismissButton = { TextButton(onClick = onDismiss) { Text(stringResource(R.string.abbrechen)) } }
     )
 }
 
@@ -301,7 +311,7 @@ fun WhitelistScreen(
             TopAppBar(
                 title = { Text(profile.name) },
                 navigationIcon = {
-                    IconButton(onClick = onBack) { Icon(Icons.Default.ArrowBack, contentDescription = "Zurück") }
+                    IconButton(onClick = onBack) { Icon(Icons.Default.ArrowBack, contentDescription = stringResource(R.string.zurueck)) }
                 },
                 actions = {
                     BadgedBox(badge = {
@@ -310,14 +320,14 @@ fun WhitelistScreen(
                         if (offen > 0) Badge { Text("$offen") }
                     }) {
                         IconButton(onClick = onReview) {
-                            Icon(Icons.Default.CheckCircle, contentDescription = "Freigaben prüfen")
+                            Icon(Icons.Default.CheckCircle, contentDescription = stringResource(R.string.freigaben_pruefen))
                         }
                     }
                     IconButton(onClick = { showPacks = true }) {
-                        Icon(Icons.Default.Download, contentDescription = "Startpaket laden")
+                        Icon(Icons.Default.Download, contentDescription = stringResource(R.string.startpaket_laden))
                     }
                     IconButton(onClick = { showAdd = true }) {
-                        Icon(Icons.Default.Add, contentDescription = "Hinzufügen")
+                        Icon(Icons.Default.Add, contentDescription = stringResource(R.string.hinzufuegen))
                     }
                 }
             )
@@ -325,9 +335,9 @@ fun WhitelistScreen(
     ) { padding ->
         if (state.items.isEmpty()) {
             EmptyHint(
-                title = "Liste ist leer",
-                text = "Füge Kanäle, Videos oder Playlists über ihren Link hinzu – oder lade ein Startpaket.",
-                actionLabel = "Link hinzufügen",
+                title = stringResource(R.string.liste_leer),
+                text = stringResource(R.string.liste_leer_text),
+                actionLabel = stringResource(R.string.link_hinzufuegen),
                 onAction = { showAdd = true },
                 modifier = Modifier.padding(padding)
             )
@@ -337,10 +347,10 @@ fun WhitelistScreen(
                     ListItem(
                         leadingContent = { Vorschau(item) },
                         headlineContent = { Text(item.title, maxLines = 2) },
-                        supportingContent = { Text(describe(item)) },
+                        supportingContent = { Text(describe(item, LocalTexte.current)) },
                         trailingContent = {
                             IconButton(onClick = { onRemove(item) }) {
-                                Icon(Icons.Default.Delete, contentDescription = "Entfernen")
+                                Icon(Icons.Default.Delete, contentDescription = stringResource(R.string.entfernen))
                             }
                         },
                         modifier = Modifier.clickable { onEdit(item) }
@@ -353,9 +363,9 @@ fun WhitelistScreen(
 
     if (showAdd) {
         TextPrompt(
-            title = "Link hinzufügen",
-            label = "YouTube-Adresse",
-            confirmLabel = "Prüfen",
+            title = stringResource(R.string.link_hinzufuegen),
+            label = stringResource(R.string.youtube_adresse),
+            confirmLabel = stringResource(R.string.pruefen),
             onDismiss = { showAdd = false },
             onConfirm = { url -> showAdd = false; if (url.isNotBlank()) onAddUrl(url) }
         )
@@ -375,11 +385,11 @@ fun WhitelistScreen(
     }
 }
 
-private fun describe(item: WhitelistItemEntity): String {
-    val status = when (ApprovalStatus.from(item.approvalStatus)) {
-        ApprovalStatus.APPROVED -> "freigegeben"
-        ApprovalStatus.REJECTED -> "abgelehnt"
-        else -> "zu prüfen"
-    }
+private fun describe(item: WhitelistItemEntity, texte: Texte): String {
+    val status = texte.get(when (ApprovalStatus.from(item.approvalStatus)) {
+        ApprovalStatus.APPROVED -> R.string.status_freigegeben
+        ApprovalStatus.REJECTED -> R.string.status_abgelehnt
+        else -> R.string.status_zu_pruefen
+    })
     return listOfNotNull(item.type.lowercase(), status, item.channelTitle).joinToString(" · ")
 }

@@ -4,6 +4,12 @@
 
 package xyz.steier.sidetube.parent
 
+import androidx.compose.ui.res.pluralStringResource
+import androidx.compose.ui.res.stringResource
+import xyz.steier.sidetube.LocalTexte
+import xyz.steier.sidetube.R
+import xyz.steier.sidetube.Texte
+
 import androidx.compose.foundation.layout.Box
 import xyz.steier.sidetube.core.model.WhitelistItemType
 import xyz.steier.sidetube.kid.Vorschaubilder
@@ -79,20 +85,20 @@ fun ReviewQueueScreen(
     Scaffold(
         topBar = {
             if (auswahlModus) TopAppBar(
-                title = { Text("${auswahl.size} ausgewählt") },
+                title = { Text(stringResource(R.string.review_ausgewaehlt, auswahl.size)) },
                 navigationIcon = {
-                    IconButton(onClick = ::beende) { Icon(Icons.Default.Close, contentDescription = "Auswahl beenden") }
+                    IconButton(onClick = ::beende) { Icon(Icons.Default.Close, contentDescription = stringResource(R.string.review_auswahl_beenden)) }
                 }
             ) else TopAppBar(
-                title = { Text("Prüfen (${pending.size + wuensche.size})") },
+                title = { Text(stringResource(R.string.review_pruefen_anzahl, pending.size + wuensche.size)) },
                 navigationIcon = {
-                    IconButton(onClick = onBack) { Icon(Icons.Default.ArrowBack, contentDescription = "Zurück") }
+                    IconButton(onClick = onBack) { Icon(Icons.Default.ArrowBack, contentDescription = stringResource(R.string.zurueck)) }
                 },
                 actions = {
                     if (pending.isNotEmpty()) {
-                        TextButton(onClick = { auswahlModus = true }) { Text("Auswählen") }
+                        TextButton(onClick = { auswahlModus = true }) { Text(stringResource(R.string.review_auswaehlen)) }
                         IconButton(onClick = { confirmDiscard = true }) {
-                            Icon(Icons.Default.DeleteSweep, contentDescription = "Alle verwerfen")
+                            Icon(Icons.Default.DeleteSweep, contentDescription = stringResource(R.string.review_alle_verwerfen))
                         }
                     }
                 }
@@ -105,8 +111,8 @@ fun ReviewQueueScreen(
     ) { padding ->
         if (pending.isEmpty() && wuensche.isEmpty()) {
             EmptyHint(
-                title = "Nichts zu prüfen",
-                text = "Neue Inhalte und Wünsche erscheinen hier, bevor sie im Kinderprofil sichtbar werden.",
+                title = stringResource(R.string.review_nichts),
+                text = stringResource(R.string.review_nichts_text),
                 modifier = Modifier.padding(padding)
             )
         } else if (auswahlModus) {
@@ -115,7 +121,7 @@ fun ReviewQueueScreen(
             Column(Modifier.fillMaxSize().padding(padding)) {
                 AlleAuswaehlen(
                     gewaehlt = auswahl.size, moeglich = sammelbar.size,
-                    hinweis = ParentLabels.einzelpruefungHinweis(gruende.values.filterNotNull()),
+                    hinweis = ParentLabels.einzelpruefungHinweis(gruende.values.filterNotNull(), LocalTexte.current),
                     onChange = { alle -> ausgewaehlt = if (alle) sammelbar.map { it.id }.toSet() else emptySet() }
                 )
                 HorizontalDivider()
@@ -134,7 +140,7 @@ fun ReviewQueueScreen(
                             headlineContent = { Text(item.title, maxLines = 2) },
                             supportingContent = {
                                 if (grund == null) Text(hints(item), maxLines = 1)
-                                else Text("Einzeln: ${ParentLabels.einzelpruefung(grund)}", maxLines = 1,
+                                else Text(stringResource(R.string.review_einzeln, ParentLabels.einzelpruefung(grund)), maxLines = 1,
                                     color = MaterialTheme.colorScheme.tertiary)
                             },
                             // Nicht Sammelbares oeffnet die Einzelpruefung – der Weg, den es ohnehin braucht.
@@ -149,12 +155,12 @@ fun ReviewQueueScreen(
         } else {
             LazyColumn(Modifier.fillMaxSize().padding(padding)) {
                 if (wuensche.isNotEmpty()) {
-                    item(key = "wuensche-kopf") { ListenKopf("Wünsche (${wuensche.size})") }
+                    item(key = "wuensche-kopf") { ListenKopf(stringResource(R.string.review_wuensche_anzahl, wuensche.size)) }
                     items(wuensche, key = { "wunsch-" + it.id }) { wunsch ->
                         WunschListItem(wunsch, onOpen = { onOpenWish(wunsch) })
                         HorizontalDivider()
                     }
-                    if (pending.isNotEmpty()) item(key = "inhalte-kopf") { ListenKopf("Inhalte (${pending.size})") }
+                    if (pending.isNotEmpty()) item(key = "inhalte-kopf") { ListenKopf(stringResource(R.string.review_inhalte_anzahl, pending.size)) }
                 }
                 items(pending, key = { it.id }) { item ->
                     ListItem(
@@ -172,14 +178,14 @@ fun ReviewQueueScreen(
     if (confirmDiscard) {
         AlertDialog(
             onDismissRequest = { confirmDiscard = false },
-            title = { Text("Alle offenen Einträge verwerfen?") },
-            text = { Text("${pending.size} Einträge verschwinden aus der Liste. Freigegebenes bleibt unberührt; ein Startpaket lässt sich erneut laden.") },
+            title = { Text(stringResource(R.string.review_verwerfen_titel)) },
+            text = { Text(pluralStringResource(R.plurals.review_verwerfen_text, pending.size, pending.size)) },
             confirmButton = {
                 TextButton(onClick = { confirmDiscard = false; onDiscardAll() }) {
-                    Text("${pending.size} verwerfen")
+                    Text(stringResource(R.string.review_verwerfen_anzahl, pending.size))
                 }
             },
-            dismissButton = { TextButton(onClick = { confirmDiscard = false }) { Text("Abbrechen") } }
+            dismissButton = { TextButton(onClick = { confirmDiscard = false }) { Text(stringResource(R.string.abbrechen)) } }
         )
     }
 
@@ -216,7 +222,7 @@ private fun AlleAuswaehlen(gewaehlt: Int, moeglich: Int, hinweis: String?, onCha
                 onClick = null, enabled = moeglich > 0
             )
             Spacer(Modifier.width(8.dp))
-            Text("Alle auswählen ($moeglich)", style = MaterialTheme.typography.bodyMedium)
+            Text(stringResource(R.string.review_alle_auswaehlen, moeglich), style = MaterialTheme.typography.bodyMedium)
         }
         hinweis?.let {
             Text(it, style = MaterialTheme.typography.bodySmall, color = MaterialTheme.colorScheme.tertiary)
@@ -230,12 +236,13 @@ private fun ListenKopf(text: String) {
         modifier = Modifier.padding(start = 16.dp, end = 16.dp, top = 12.dp, bottom = 4.dp))
 }
 
+@Composable
 private fun hints(item: WhitelistItemEntity): String = listOfNotNull(
     item.channelTitle,
-    "ab ${item.ageMin}",
-    item.sensitiveTopics.takeIf { it.isNotBlank() }?.let { "Hinweise: $it" },
-    "Short".takeIf { item.isShort },
-    "Live".takeIf { item.isLive }
+    stringResource(R.string.review_ab_alter, item.ageMin),
+    item.sensitiveTopics.takeIf { it.isNotBlank() }?.let { stringResource(R.string.review_hinweise, it) },
+    stringResource(R.string.review_short).takeIf { item.isShort },
+    stringResource(R.string.review_live).takeIf { item.isLive }
 ).joinToString(" · ")
 
 /**
@@ -274,7 +281,7 @@ fun ReviewDecisionSheet(
 
     AlertDialog(
         onDismissRequest = onDismiss,
-        title = { Text(if (approved) "Bearbeiten" else "Prüfen") },
+        title = { Text(stringResource(if (approved) R.string.review_bearbeiten else R.string.pruefen)) },
         text = {
             // Auf 427 dp Hoehe passt der Inhalt nicht immer; ohne Scrollen ueberlappen die
             // Abschnitte einander - genau das war am Geraet zu sehen.
@@ -292,7 +299,7 @@ fun ReviewDecisionSheet(
                 }
                 if (item.sensitiveTopics.isNotBlank()) {
                     Spacer(Modifier.height(4.dp))
-                    Text("Hinweise des Filters: ${item.sensitiveTopics}",
+                    Text(stringResource(R.string.review_hinweise_filter, item.sensitiveTopics),
                         style = MaterialTheme.typography.bodySmall, color = MaterialTheme.colorScheme.tertiary)
                 }
                 Spacer(Modifier.height(12.dp))
@@ -306,7 +313,7 @@ fun ReviewDecisionSheet(
                         if (ageMax < it.effektivesMindestalter) ageMax = it.effektivesMindestalter
                     })
                 } else {
-                    AgeStepper("Ab $ageMin Jahren", "Mindestalter",
+                    AgeStepper(stringResource(R.string.ab_jahren, ageMin), stringResource(R.string.mindestalter),
                         onMinus = { if (ageMin > 3) ageMin-- },
                         onPlus = { if (ageMin < 16) { ageMin++; if (ageMax < ageMin) ageMax = ageMin } })
                 }
@@ -320,11 +327,11 @@ fun ReviewDecisionSheet(
                     ),
                     verticalAlignment = Alignment.CenterVertically
                 ) {
-                    Text("Höchstalter", Modifier.weight(1f), style = MaterialTheme.typography.bodyMedium)
+                    Text(stringResource(R.string.hoechstalter), Modifier.weight(1f), style = MaterialTheme.typography.bodyMedium)
                     Switch(checked = ageMaxEnabled, onCheckedChange = null)
                 }
                 if (ageMaxEnabled && !gesperrt) {
-                    AgeStepper("Bis $ageMax Jahre", "Höchstalter",
+                    AgeStepper(stringResource(R.string.bis_jahre, ageMax), stringResource(R.string.hoechstalter),
                         onMinus = { if (ageMax > untergrenze) ageMax-- },
                         onPlus = { if (ageMax < 17) ageMax++ })
                 }
@@ -334,7 +341,7 @@ fun ReviewDecisionSheet(
                     // Aufklappliste statt zehn Auswahlknoepfe: Die passen auf dem kleinen Display nicht.
                     CategoryPicker(selected = category, onSelect = { category = it })
                     ContentCategory.from(category)?.takeIf { it.minimumAge > ageMin }?.let {
-                        Text("„${title(it)}“ wird erst ab ${it.minimumAge} gezeigt – das Mindestalter wird entsprechend angehoben.",
+                        Text(stringResource(R.string.review_kategorie_hebt_an, title(it), it.minimumAge),
                             style = MaterialTheme.typography.bodySmall, color = MaterialTheme.colorScheme.tertiary)
                     }
                 }
@@ -344,13 +351,12 @@ fun ReviewDecisionSheet(
                     colors = xyz.steier.sidetube.sideTextFieldColors(),
                     value = notes,
                     onValueChange = { notes = it },
-                    label = { Text("Anmerkung (freiwillig)") },
+                    label = { Text(stringResource(R.string.anmerkung_freiwillig)) },
                     modifier = Modifier.fillMaxWidth()
                 )
                 Spacer(Modifier.height(8.dp))
                 Text(
-                    if (approved) "Änderungen werden im Verlauf festgehalten. „Zurück zur Prüfung“ nimmt den Eintrag so lange aus dem Kinderprofil."
-                    else "Der automatische Filter ist nur ein Hinweis. Bitte selbst hineinsehen.",
+                    stringResource(if (approved) R.string.review_verlauf_hinweis else R.string.review_filter_hinweis),
                     style = MaterialTheme.typography.bodySmall,
                     color = MaterialTheme.colorScheme.onSurface.copy(alpha = 0.7f)
                 )
@@ -364,37 +370,37 @@ fun ReviewDecisionSheet(
                     modifier = Modifier.fillMaxWidth()
                 ) {
                     Text(when {
-                        gesperrt -> "Kanal sperren"
-                        approved -> "Änderungen sichern"
-                        else -> "Freigeben"
+                        gesperrt -> stringResource(R.string.kanal_sperren)
+                        approved -> stringResource(R.string.aenderungen_sichern)
+                        else -> stringResource(R.string.freigeben)
                     })
                 }
                 if (approved) {
                     OutlinedButton(onClick = onBackToReview, modifier = Modifier.fillMaxWidth()) {
-                        Text("Zurück zur Prüfung")
+                        Text(stringResource(R.string.zurueck_zur_pruefung))
                     }
                     OutlinedButton(onClick = onReject, modifier = Modifier.fillMaxWidth()) {
-                        Text("Ablehnen", color = MaterialTheme.colorScheme.error)
+                        Text(stringResource(R.string.ablehnen), color = MaterialTheme.colorScheme.error)
                     }
                 } else {
                     OutlinedButton(onClick = onReject, modifier = Modifier.fillMaxWidth()) {
-                        Text("Ablehnen", color = MaterialTheme.colorScheme.error)
+                        Text(stringResource(R.string.ablehnen), color = MaterialTheme.colorScheme.error)
                     }
                     OutlinedButton(onClick = onLater, modifier = Modifier.fillMaxWidth()) {
-                        Text("Später")
+                        Text(stringResource(R.string.spaeter))
                     }
                 }
 
                 Spacer(Modifier.height(16.dp))
-                Text("Verlauf", style = MaterialTheme.typography.titleSmall)
+                Text(stringResource(R.string.verlauf), style = MaterialTheme.typography.titleSmall)
                 Spacer(Modifier.height(4.dp))
                 if (history.isEmpty()) {
-                    Text("Noch keine Einträge", style = MaterialTheme.typography.bodySmall,
+                    Text(stringResource(R.string.noch_keine_eintraege), style = MaterialTheme.typography.bodySmall,
                         color = MaterialTheme.colorScheme.onSurface.copy(alpha = 0.7f))
                 }
                 history.forEach { event ->
                     Column(Modifier.padding(vertical = 4.dp)) {
-                        Text(ParentLabels.eventHeadline(event), style = MaterialTheme.typography.labelMedium)
+                        Text(ParentLabels.eventHeadline(event, LocalTexte.current), style = MaterialTheme.typography.labelMedium)
                         Text(ParentLabels.eventTime(event), style = MaterialTheme.typography.bodySmall,
                             color = MaterialTheme.colorScheme.onSurface.copy(alpha = 0.7f))
                         event.note?.takeIf { it.isNotBlank() }?.let {
@@ -405,16 +411,18 @@ fun ReviewDecisionSheet(
                 }
             }
         },
-        confirmButton = { TextButton(onClick = onDismiss) { Text("Schließen") } }
+        confirmButton = { TextButton(onClick = onDismiss) { Text(stringResource(R.string.schliessen)) } }
     )
 }
 
 @Composable
 internal fun AgeStepper(label: String, what: String, onMinus: () -> Unit, onPlus: () -> Unit) {
+    val senken = stringResource(R.string.stepper_senken, what)
+    val erhoehen = stringResource(R.string.stepper_erhoehen, what)
     Row(Modifier.fillMaxWidth(), verticalAlignment = Alignment.CenterVertically) {
         Text(label, Modifier.weight(1f), style = MaterialTheme.typography.bodyMedium)
-        TextButton(onClick = onMinus, modifier = Modifier.semantics { contentDescription = "$what senken" }) { Text("−") }
-        TextButton(onClick = onPlus, modifier = Modifier.semantics { contentDescription = "$what erhöhen" }) { Text("+") }
+        TextButton(onClick = onMinus, modifier = Modifier.semantics { contentDescription = senken }) { Text("−") }
+        TextButton(onClick = onPlus, modifier = Modifier.semantics { contentDescription = erhoehen }) { Text("+") }
     }
 }
 
@@ -444,7 +452,7 @@ internal data class ReviewInput(
 @Composable
 internal fun CategoryPicker(selected: String?, onSelect: (String?) -> Unit) {
     var open by remember { mutableStateOf(false) }
-    val label = selected?.let { id -> ContentCategory.from(id)?.let { title(it) } } ?: "keine"
+    val label = selected?.let { id -> ContentCategory.from(id)?.let { title(it) } } ?: stringResource(R.string.keine)
 
     ExposedDropdownMenuBox(expanded = open, onExpandedChange = { open = it }) {
         OutlinedTextField(
@@ -452,12 +460,12 @@ internal fun CategoryPicker(selected: String?, onSelect: (String?) -> Unit) {
             value = label,
             onValueChange = {},
             readOnly = true,
-            label = { Text("Kategorie") },
+            label = { Text(stringResource(R.string.kategorie)) },
             trailingIcon = { ExposedDropdownMenuDefaults.TrailingIcon(expanded = open) },
             modifier = Modifier.menuAnchor(MenuAnchorType.PrimaryNotEditable).fillMaxWidth()
         )
         ExposedDropdownMenu(expanded = open, onDismissRequest = { open = false }) {
-            DropdownMenuItem(text = { Text("keine") }, onClick = { onSelect(null); open = false })
+            DropdownMenuItem(text = { Text(stringResource(R.string.keine)) }, onClick = { onSelect(null); open = false })
             ContentCategory.entries.forEach { entry ->
                 DropdownMenuItem(
                     text = { Text(title(entry)) },
@@ -468,6 +476,7 @@ internal fun CategoryPicker(selected: String?, onSelect: (String?) -> Unit) {
     }
 }
 
+@Composable
 private fun title(category: ContentCategory): String = ParentLabels.category(category)
 
 /** Quellen und ihre Sicherheitsstufen – auch die, die das Register nicht kennt. */
@@ -481,9 +490,9 @@ fun SourceTrustScreen(
     Scaffold(
         topBar = {
             TopAppBar(
-                title = { Text("Quellen") },
+                title = { Text(stringResource(R.string.quellen)) },
                 navigationIcon = {
-                    IconButton(onClick = onBack) { Icon(Icons.Default.ArrowBack, contentDescription = "Zurück") }
+                    IconButton(onClick = onBack) { Icon(Icons.Default.ArrowBack, contentDescription = stringResource(R.string.zurueck)) }
                 }
             )
         }
@@ -491,8 +500,7 @@ fun SourceTrustScreen(
         LazyColumn(Modifier.fillMaxSize().padding(padding)) {
             item {
                 Text(
-                    "„Vertrauenswürdige Kinderquelle“ erlaubt das Stöbern im ganzen Kanal. " +
-                        "Alle anderen Stufen zeigen nur einzeln freigegebene Videos.",
+                    stringResource(R.string.quellen_erklaerung),
                     style = MaterialTheme.typography.bodySmall,
                     modifier = Modifier.padding(16.dp)
                 )

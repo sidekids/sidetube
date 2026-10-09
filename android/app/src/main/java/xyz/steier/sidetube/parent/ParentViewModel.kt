@@ -43,13 +43,15 @@ import xyz.steier.sidetube.core.model.ApprovalStatus
 import xyz.steier.sidetube.core.model.WhitelistItemType
 import xyz.steier.sidetube.core.provider.YouTubeThumbnails
 import xyz.steier.sidetube.core.repo.WunschRepository
+import xyz.steier.sidetube.R
+import xyz.steier.sidetube.Texte
 
 /** Rueckmeldung nach einer Sammelpruefung: „5 freigegeben – 2 Wünsche erfüllt. 1 braucht eine Einzelprüfung." */
-internal fun sammelMeldung(was: String, entschieden: Int, einzeln: Int, wuenscheErfuellt: Int): String = buildString {
-    append(if (entschieden == 1) "1 Eintrag $was" else "$entschieden Einträge $was")
-    if (wuenscheErfuellt > 0) append(if (wuenscheErfuellt == 1) " – 1 Wunsch erfüllt" else " – $wuenscheErfuellt Wünsche erfüllt")
+internal fun sammelMeldung(texte: Texte, wasRes: Int, entschieden: Int, einzeln: Int, wuenscheErfuellt: Int): String = buildString {
+    append(texte.plural(R.plurals.sammel_eintraege, entschieden, entschieden, texte.get(wasRes)))
+    if (wuenscheErfuellt > 0) append(texte.plural(R.plurals.sammel_wuensche_erfuellt, wuenscheErfuellt))
     append(".")
-    if (einzeln > 0) append(if (einzeln == 1) " 1 braucht eine Einzelprüfung." else " $einzeln brauchen eine Einzelprüfung.")
+    if (einzeln > 0) append(texte.plural(R.plurals.sammel_einzeln, einzeln))
 }
 
 data class ParentState(
@@ -90,12 +92,15 @@ class ParentViewModel internal constructor(
     private val starterPacks: StarterPackService,
     private val resolver: YouTubeResolver,
     private val seedSources: suspend () -> Unit,
-    private val wuensche: WunschRepository
+    private val wuensche: WunschRepository,
+    /** Texte der Rueckmeldungen; Compose nimmt `stringResource`, dieses ViewModel fragt hier. */
+    private val texte: Texte
 ) : ViewModel() {
 
     constructor(container: AppContainer) : this(
         container.profiles, container.whitelist, container.curation, container.playbackSessions,
-        container.starterPacks, container.resolver, { container.seedSources() }, container.wuensche
+        container.starterPacks, container.resolver, { container.seedSources() }, container.wuensche,
+        texte = container.texte
     )
 
     private val _state = MutableStateFlow(ParentState())
@@ -151,12 +156,12 @@ class ParentViewModel internal constructor(
 
     fun createProfile(name: String) = launchWithMessage {
         profiles.create(name)
-        "Profil „$name“ angelegt."
+        texte.get(R.string.meldung_profil_angelegt, name)
     }
 
     fun deleteProfile(profile: KidProfileEntity) = launchWithMessage {
         profiles.delete(profile)
-        "Profil „${profile.name}“ entfernt."
+        texte.get(R.string.meldung_profil_entfernt, profile.name)
     }
 
     fun updateProfile(profile: KidProfileEntity) = launchWithMessage {
@@ -170,15 +175,15 @@ class ParentViewModel internal constructor(
      * Strecke. Die Durchsetzung (Tageslimit, Ruhezeit) beobachtet das Profil und greift sofort.
      */
     fun saveProfile(profileId: String, draft: ProfileDraft) = launchWithMessage {
-        if (!draft.canSave) return@launchWithMessage "Bitte einen Namen eingeben."
-        val current = profiles.byId(profileId) ?: return@launchWithMessage "Das Profil gibt es nicht mehr."
+        if (!draft.canSave) return@launchWithMessage texte.get(R.string.meldung_name_eingeben)
+        val current = profiles.byId(profileId) ?: return@launchWithMessage texte.get(R.string.meldung_profil_weg)
         val updated = draft.applyTo(current)
         profiles.update(updated)
-        "Profil „${updated.name}“ gesichert."
+        texte.get(R.string.meldung_profil_gesichert, updated.name)
     }
 
     /** Die neue PIN liegt schon im Speicher; hier geht es nur um die Rueckmeldung. */
-    fun pinChanged() = _state.update { it.copy(message = "Die PIN ist geändert.") }
+    fun pinChanged() = _state.update { it.copy(message = texte.get(R.string.meldung_pin_geaendert)) }
 
     /**
      * Setzt die laufende Ruhezeit bis zu ihrem Ende aus - nicht unbegrenzt und nicht fuer eine
@@ -187,16 +192,16 @@ class ParentViewModel internal constructor(
     fun skipBedtimeTonight(profile: KidProfileEntity) = launchWithMessage {
         val until = BedtimePolicy.endOfCurrentWindow(profile, Instant.now(), ZoneId.systemDefault())
         if (until == null) {
-            "Gerade laeuft keine Ruhezeit, oder die gespeicherten Zeiten sind unplausibel."
+            texte.get(R.string.meldung_keine_ruhezeit)
         } else {
             profiles.update(profile.copy(bedtimeSkipUntil = until.toEpochMilli()))
-            "Ruhezeit ausgesetzt bis ${ParentFormat.time(until)}."
+            texte.get(R.string.meldung_ruhezeit_ausgesetzt, ParentFormat.time(until))
         }
     }
 
     fun clearBedtimeException(profile: KidProfileEntity) = launchWithMessage {
         profiles.update(profile.copy(bedtimeSkipUntil = null))
-        "Die Ausnahme ist aufgehoben."
+        texte.get(R.string.meldung_ausnahme_aufgehoben)
     }
 
     /**
@@ -210,11 +215,11 @@ class ParentViewModel internal constructor(
             _state.update { it.copy(vorschau = draft) }
             null
         } catch (_: ProviderError.NotFound) {
-            "Dazu gibt es nichts – gelöscht oder privat?"
+            texte.get(R.string.meldung_link_nichts)
         } catch (_: ProviderError.Unsupported) {
-            "Diese Adresse versteht SideTube nicht."
+            texte.get(R.string.meldung_link_unverstanden)
         } catch (error: Exception) {
-            "Hat nicht geklappt: ${error.message ?: "unbekannter Fehler"}"
+            texte.get(R.string.meldung_link_fehler, error.message ?: texte.get(R.string.meldung_unbekannter_fehler))
         }
     }
 
@@ -225,14 +230,13 @@ class ParentViewModel internal constructor(
         try {
             curation.discover(draft, profileId, actor = "Eltern")
             wunsch?.let { wuensche.verknuepfe(it, draft.contentId, "Eltern") }
-            if (wunsch != null) "„${draft.title}“ wartet auf die Prüfung. Mit der Freigabe ist der Wunsch erfüllt."
-            else "„${draft.title}“ wartet auf die Prüfung."
+            texte.get(if (wunsch != null) R.string.meldung_wartet_mit_wunsch else R.string.meldung_wartet, draft.title)
         } catch (_: DiscoverError.Duplicate) {
             // Steht schon da: Der Wunsch zeigt trotzdem darauf.
             wunsch?.let { wuensche.verknuepfe(it, draft.contentId, "Eltern") }
-            "Das steht schon in der Liste."
+            texte.get(R.string.meldung_schon_in_liste)
         } catch (_: DiscoverError.BlockedSource) {
-            "Diese Quelle ist gesperrt."
+            texte.get(R.string.meldung_quelle_gesperrt)
         }
     }
 
@@ -260,16 +264,15 @@ class ParentViewModel internal constructor(
 
     private suspend fun kanalMeldung(titel: String, profileId: String, contentId: String, ergebnis: KanalErgebnis): String =
         when (ergebnis) {
-            KanalErgebnis.Gesperrt -> "„$titel“ ist gesperrt und erscheint nicht beim Kind. Links aus diesem Kanal werden abgewiesen."
+            KanalErgebnis.Gesperrt -> texte.get(R.string.meldung_kanal_gesperrt_lang, titel)
             is KanalErgebnis.Freigegeben -> {
                 // Was ein Kind sich gewuenscht hat, ist mit der Freigabe erfuellt (ADR 0001).
                 val erfuellt = wuensche.erfuelleDurchFreigabe(profileId, contentId, "Eltern")
-                if (erfuellt.isEmpty()) "„$titel“ ist eingestuft und freigegeben."
-                else "„$titel“ ist eingestuft und freigegeben – Wunsch erfüllt."
+                texte.get(if (erfuellt.isEmpty()) R.string.meldung_kanal_eingestuft else R.string.meldung_kanal_eingestuft_wunsch, titel)
             }
             is KanalErgebnis.VomFilterAbgelehnt ->
-                "Der Filter hat „$titel“ abgelehnt (${ergebnis.item.editorialNotes.orEmpty()}). Bitte in der Liste selbst ansehen."
-            is KanalErgebnis.SchonAbgelehnt -> "„$titel“ ist schon abgelehnt. Bitte in der Liste selbst ansehen."
+                texte.get(R.string.meldung_filter_abgelehnt_liste, titel, ergebnis.item.editorialNotes.orEmpty())
+            is KanalErgebnis.SchonAbgelehnt -> texte.get(R.string.meldung_schon_abgelehnt_liste, titel)
         }
 
     fun verwirfVorschau() = _state.update { it.copy(vorschau = null, linkFuerWunsch = null) }
@@ -278,7 +281,7 @@ class ParentViewModel internal constructor(
         curation.approve(item, approval, actor = "Eltern")
         // Was ein Kind sich gewuenscht hat, ist mit der Freigabe erfuellt (ADR 0001).
         val erfuellt = wuensche.erfuelleDurchFreigabe(item.profileId, item.contentId, "Eltern")
-        if (erfuellt.isEmpty()) "„${item.title}“ ist freigegeben." else "„${item.title}“ ist freigegeben – Wunsch erfüllt."
+        texte.get(if (erfuellt.isEmpty()) R.string.meldung_freigegeben else R.string.meldung_freigegeben_wunsch, item.title)
     }
 
     // ── Wuensche (ADR 0001) ────────────────────────────────────────────────────────────────
@@ -288,7 +291,7 @@ class ParentViewModel internal constructor(
      * und erfuellt den Wunsch. Lehnt der Filter das Video hart ab, wird nichts freigegeben.
      */
     fun wunschFreigeben(wunsch: WishEntity, antwort: String?) = launchWithMessage {
-        val videoId = wunsch.videoId ?: return@launchWithMessage "Zu diesem Wunsch gehört kein Video."
+        val videoId = wunsch.videoId ?: return@launchWithMessage texte.get(R.string.meldung_wunsch_ohne_video)
         val draft = ContentDraft(
             type = WhitelistItemType.VIDEO, contentId = videoId, title = wunsch.videoTitle ?: videoId,
             thumbnailUrl = YouTubeThumbnails.url(videoId, 320), channelTitle = wunsch.channelTitle,
@@ -297,34 +300,33 @@ class ParentViewModel internal constructor(
         val item = try {
             curation.discover(draft, wunsch.profileId, actor = "Eltern").also {
                 if (ApprovalStatus.from(it.approvalStatus) == ApprovalStatus.REJECTED) {
-                    return@launchWithMessage "Der Filter hat „${draft.title}“ abgelehnt (${it.editorialNotes.orEmpty()}). Bitte selbst ansehen."
+                    return@launchWithMessage texte.get(R.string.meldung_filter_abgelehnt_selbst, draft.title, it.editorialNotes.orEmpty())
                 }
             }
         } catch (_: DiscoverError.Duplicate) {
-            val vorhanden = whitelist.find(wunsch.profileId, videoId) ?: return@launchWithMessage "Der Eintrag ist verschwunden."
+            val vorhanden = whitelist.find(wunsch.profileId, videoId) ?: return@launchWithMessage texte.get(R.string.meldung_eintrag_verschwunden)
             // Wie ohne Eintrag: Was abgelehnt ist (von den Eltern oder vom Filter), gibt dieser Knopf nicht frei.
             if (ApprovalStatus.from(vorhanden.approvalStatus) == ApprovalStatus.REJECTED) {
-                return@launchWithMessage "„${vorhanden.title}“ ist schon abgelehnt" +
-                    (vorhanden.editorialNotes?.takeIf { it.isNotBlank() }?.let { " ($it)" } ?: "") +
-                    ". Bitte in der Liste selbst ansehen."
+                return@launchWithMessage texte.get(R.string.meldung_schon_abgelehnt_mit_vermerk, vorhanden.title,
+                    vorhanden.editorialNotes?.takeIf { it.isNotBlank() }?.let { texte.get(R.string.meldung_vermerk_klammer, it) } ?: "")
             }
             vorhanden
         } catch (_: DiscoverError.BlockedSource) {
-            return@launchWithMessage "Diese Quelle ist gesperrt."
+            return@launchWithMessage texte.get(R.string.meldung_quelle_gesperrt)
         }
         val approval = ReviewInput(item.ageMin, false, 12, item.category, "").toApproval()
         curation.approve(item, approval, actor = "Eltern")
         wuensche.entscheide(wunsch, WunschStatus.ERFUELLT, antwort, "Eltern", ergebnis = videoId)
-        "„${item.title}“ ist freigegeben – Wunsch erfüllt."
+        texte.get(R.string.meldung_freigegeben_wunsch, item.title)
     }
 
     /** Ablehnen, Besprechen, Erledigt – mit freiwilliger Antwort an das Kind. */
     fun wunschEntscheiden(wunsch: WishEntity, status: WunschStatus, antwort: String?) = launchWithMessage {
-        wuensche.entscheide(wunsch, status, antwort, "Eltern") ?: return@launchWithMessage "Der Wunsch ist schon entschieden."
+        wuensche.entscheide(wunsch, status, antwort, "Eltern") ?: return@launchWithMessage texte.get(R.string.meldung_wunsch_schon_entschieden)
         when (status) {
-            WunschStatus.ABGELEHNT -> "Wunsch abgelehnt („nicht jetzt“)."
-            WunschStatus.BESPRECHEN -> "Wunsch steht auf „Sprechen wir drüber“."
-            WunschStatus.ERFUELLT -> "Wunsch erledigt."
+            WunschStatus.ABGELEHNT -> texte.get(R.string.meldung_wunsch_abgelehnt)
+            WunschStatus.BESPRECHEN -> texte.get(R.string.meldung_wunsch_besprechen)
+            WunschStatus.ERFUELLT -> texte.get(R.string.meldung_wunsch_erledigt)
             WunschStatus.OFFEN -> null
         }
     }
@@ -338,7 +340,7 @@ class ParentViewModel internal constructor(
     fun wunschKanalPruefen(wunsch: WishEntity, zuQuellen: () -> Unit) = launchWithMessage {
         // Videos, die per Link kamen, kennen ihren Kanal oft nur dem Namen nach; dann ueber oEmbed.
         val gefunden = if (wunsch.channelId == null) kanalZumVideo(wunsch)
-            ?: return@launchWithMessage "Der Kanal zu diesem Video ließ sich nicht finden. Ist das Internet an?"
+            ?: return@launchWithMessage texte.get(R.string.meldung_kanal_nicht_gefunden)
             else null
         val kanal = gefunden?.contentId ?: wunsch.channelId!!
         val titel = gefunden?.title ?: wunsch.channelTitle ?: kanal
@@ -348,14 +350,14 @@ class ParentViewModel internal constructor(
                     type = WhitelistItemType.CHANNEL, contentId = kanal, title = titel, channelTitle = titel,
                     sourceChannelId = kanal, sourceUrl = "https://www.youtube.com/channel/$kanal"
                 ), wunsch.profileId, actor = "Eltern")
-                "„$titel“ wartet als Kanal in der Prüfliste – dort Stufe, Alter und Kategorie wählen."
+                texte.get(R.string.meldung_kanal_wartet, titel)
             } catch (_: DiscoverError.BlockedSource) {
-                "Dieser Kanal ist gesperrt."
+                texte.get(R.string.meldung_dieser_kanal_gesperrt)
             }
         } else {
             curation.ensureSources(listOf(SourceDefinition(channelId = kanal, title = titel, trust = "perVideoReview")))
             zuQuellen()
-            "„$titel“ steht schon in der Liste – hier die Stufe ändern."
+            texte.get(R.string.meldung_kanal_schon_in_liste, titel)
         }
     }
 
@@ -393,22 +395,22 @@ class ParentViewModel internal constructor(
     fun sammelFreigeben(items: List<WhitelistItemEntity>, wahl: Sammelwahl) = launchWithMessage {
         val ergebnis = curation.sammelFreigeben(items, wahl, actor = "Eltern")
         val erfuellt = ergebnis.entschieden.sumOf { wuensche.erfuelleDurchFreigabe(it.profileId, it.contentId, "Eltern").size }
-        sammelMeldung("freigegeben", ergebnis.entschieden.size, ergebnis.einzeln.size, erfuellt)
+        sammelMeldung(texte, R.string.sammel_was_freigegeben, ergebnis.entschieden.size, ergebnis.einzeln.size, erfuellt)
     }
 
     fun sammelAblehnen(items: List<WhitelistItemEntity>) = launchWithMessage {
         val ergebnis = curation.sammelAblehnen(items, actor = "Eltern")
-        sammelMeldung("abgelehnt", ergebnis.entschieden.size, ergebnis.einzeln.size, 0)
+        sammelMeldung(texte, R.string.sammel_was_abgelehnt, ergebnis.entschieden.size, ergebnis.einzeln.size, 0)
     }
 
     fun reject(item: WhitelistItemEntity) = launchWithMessage {
         curation.reject(item, actor = "Eltern")
-        "„${item.title}“ abgelehnt."
+        texte.get(R.string.meldung_abgelehnt, item.title)
     }
 
     fun backToReview(item: WhitelistItemEntity) = launchWithMessage {
         curation.defer(item, actor = "Eltern")
-        "„${item.title}“ steht wieder zur Prüfung."
+        texte.get(R.string.meldung_wieder_zur_pruefung, item.title)
     }
 
     /**
@@ -417,7 +419,7 @@ class ParentViewModel internal constructor(
      */
     fun later(item: WhitelistItemEntity) = launchWithMessage {
         curation.defer(item, actor = "Eltern")
-        "„${item.title}“ zurückgestellt."
+        texte.get(R.string.meldung_zurueckgestellt, item.title)
     }
 
     /**
@@ -435,14 +437,14 @@ class ParentViewModel internal constructor(
 
     fun remove(item: WhitelistItemEntity) = launchWithMessage {
         whitelist.remove(item)
-        "„${item.title}“ entfernt."
+        texte.get(R.string.meldung_entfernt, item.title)
     }
 
     /** Alle offenen Kandidaten verwerfen – Freigegebenes bleibt unberuehrt. */
     fun discardPending() = launchWithMessage {
         val open = _state.value.pending
         open.forEach { whitelist.remove(it) }
-        "${open.size} offene Einträge verworfen."
+        texte.plural(R.plurals.meldung_offene_verworfen, open.size)
     }
 
     fun setTrust(source: CuratedSourceEntity, trust: SourceTrust) = launchWithMessage {
@@ -453,11 +455,11 @@ class ParentViewModel internal constructor(
     fun importStarterPack(pack: StarterPack, profile: KidProfileEntity, applyPreset: Boolean) = launchWithMessage {
         val result = starterPacks.import(pack.fileName, profile, applyPreset)
         buildString {
-            append("${pack.title}: ${result.added} zur Prüfung für ${profile.name}")
-            if (result.skipped > 0) append(", ${result.skipped} schon vorhanden")
-            if (result.blocked > 0) append(", ${result.blocked} aus gesperrten Quellen")
+            append(texte.get(R.string.meldung_startpaket, pack.title, result.added, profile.name))
+            if (result.skipped > 0) append(texte.get(R.string.meldung_startpaket_vorhanden, result.skipped))
+            if (result.blocked > 0) append(texte.get(R.string.meldung_startpaket_gesperrt, result.blocked))
             append(".")
-            if (result.presetApplied) append(" Profilvorgaben übernommen.")
+            if (result.presetApplied) append(texte.get(R.string.meldung_startpaket_vorgaben))
         }
     }
 
@@ -466,7 +468,7 @@ class ParentViewModel internal constructor(
     private fun launchWithMessage(block: suspend () -> String?) {
         viewModelScope.launch {
             _state.update { it.copy(isBusy = true) }
-            val message = runCatching { block() }.getOrElse { "Fehler: ${it.message}" }
+            val message = runCatching { block() }.getOrElse { texte.get(R.string.meldung_fehler, it.message ?: "") }
             _state.update { it.copy(isBusy = false, message = message) }
         }
     }

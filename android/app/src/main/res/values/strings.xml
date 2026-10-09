@@ -1,4 +1,501 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <string name="app_name" translatable="false">SideTube</string>
+
+    <!-- ===== Kindermodus: Abschnitte, Zeilen, Hinweise ===== -->
+    <string name="kid_abschnitt_zuletzt">Zuletzt geschaut</string>
+    <string name="kid_abschnitt_kanaele">Kanäle</string>
+    <string name="kid_abschnitt_sendungen">Sendungen</string>
+    <string name="kid_abschnitt_videos">Videos</string>
+    <string name="kid_alle_videos">Alle Videos</string>
+    <string name="kid_alle_videos_untertitel">Kanäle · Videos · Sendungen</string>
+    <string name="kid_sendung">Sendung</string>
+    <string name="kid_suche">Suche</string>
+    <string name="kid_meine_wuensche">Meine Wünsche</string>
+    <string name="kid_wunsch_an_die_eltern">Wunsch an die Eltern</string>
+    <string name="kid_hinweis_freigaben_aktualisiert">Die Freigaben wurden aktualisiert. Bitte ein Video erneut auswählen.</string>
+    <string name="kid_hinweis_wunsch_geschickt">Dein Wunsch ist bei den Eltern. %1$s.</string>
+    <string name="kid_hinweis_wunsch_schon">Das hast du dir schon gewünscht.</string>
+    <string name="kid_hinweis_wunsch_grenze">Heute gehen keine Wünsche mehr. Morgen wieder.</string>
+    <string name="kid_hinweis_wunsch_leer">Erst Buchstaben wählen.</string>
+    <string name="kid_hinweis_wunsch_fehler">Der Wunsch konnte nicht gespeichert werden.</string>
+    <string name="kid_hinweis_wiedergabe_freigegeben">Unterbrochene Wiedergabe freigegeben. Gespeicherte Sehzeit bleibt erhalten.</string>
+    <string name="kid_hinweis_freigabe_fehler">Die Freigabe konnte nicht gespeichert werden.</string>
+    <plurals name="kid_hinweis_ruhezeit_warnung">
+        <item quantity="one">In %1$d Minute beginnt die Ruhezeit.</item>
+        <item quantity="other">In %1$d Minuten beginnt die Ruhezeit.</item>
+    </plurals>
+    <string name="kid_restminuten">%1$d min</string>
+    <string name="kid_suchen">Suchen</string>
+    <string name="kid_einstellungen">Einstellungen</string>
+    <string name="kid_gesperrt">Gesperrt</string>
+    <string name="kid_leer_startseite_wunsch">Hier ist noch nichts. Deine Eltern können Videos freigeben – oder du wünschst dir etwas.</string>
+    <string name="kid_leer_mediathek">Hier ist noch nichts. Deine Eltern können etwas aussuchen.</string>
+    <string name="kid_leer_t9_anleitung">Tippe mit den Zahlen. Auf der 2 stehen a, b und c.</string>
+    <string name="kid_leer_nichts_gefunden">Dazu gibt es nichts.</string>
+    <string name="kid_leer_rad_anleitung">Wähle mit dem Rad den ersten Buchstaben.</string>
+    <string name="kid_leer_playlist_offline">Hier ist gerade nichts zu sehen. Ist das Internet an?</string>
+    <string name="kid_leer_startseite">Hier ist noch nichts. Deine Eltern können Videos freigeben.</string>
+    <string name="kid_neue_folge_hinweis">Neu bei %1$s · erst nach Freigabe abspielbar</string>
+    <string name="kid_t9_hinweis">Tippe mit den Zahlen: 2 = abc …</string>
+    <string name="kid_t9_luecke_hinweis">0 = Lücke · Zurück löscht</string>
+    <string name="kid_rad_treffer">Treffer</string>
+    <string name="kid_rad_wunsch">Wunsch</string>
+    <string name="kid_rad_schicken">schicken</string>
+    <string name="kid_rad_gesucht">Gesucht: %1$s</string>
+    <string name="kid_rad_noch_nichts">noch nichts</string>
+    <string name="kid_rad_zurueck_zu_buchstaben">▲ zurück zu den Buchstaben</string>
+    <string name="kid_rad_hilfe_mit_unten">◀ ▶ wählen · Mitte nimmt · ▼ %1$s</string>
+    <string name="kid_rad_hilfe">◀ ▶ wählen · Mitte nimmt</string>
+    <string name="kid_rad_luecke">Lücke</string>
+    <string name="kid_rad_loeschen">Löschen</string>
+
+    <!-- ===== Wünsche (ADR 0001), Kindermodus ===== -->
+    <string name="wunsch_abschnitt_neu">Neu bei deinen Kanälen</string>
+    <string name="wunsch_abschnitt_wuensche">Wünsche</string>
+    <string name="wunsch_heute_keine">Heute keine Wünsche mehr – morgen wieder</string>
+    <plurals name="wunsch_heute_noch">
+        <item quantity="one">Heute noch %1$d Wunsch</item>
+        <item quantity="other">Heute noch %1$d Wünsche</item>
+    </plurals>
+    <string name="wunsch_offen">%1$d offen</string>
+    <string name="wunsch_folge_gewuenscht">✓ Gewünscht · %1$s</string>
+    <string name="wunsch_folge_wuenschen">🔒 Wünschen · %1$s</string>
+    <string name="wunsch_thema_wuenschen">Ein Thema wünschen</string>
+    <string name="wunsch_text_wuenschen">„%1$s“ wünschen</string>
+    <string name="wunsch_abschnitt_nicht_gefunden">Nicht gefunden?</string>
+    <string name="wunsch_erst_buchstaben">Erst Buchstaben wählen</string>
+    <string name="wunsch_oben_mit_rad">Oben mit ◀ ▶ und Mitte</string>
+    <string name="wunsch_schon_gewuenscht_text">„%1$s“ ist schon gewünscht</string>
+    <string name="wunsch_unter_meine_wuensche">Unter „Meine Wünsche“</string>
+    <string name="wunsch_schicken_text">Wunsch schicken: „%1$s“</string>
+    <string name="wunsch_wuenschen">Wünschen</string>
+    <string name="wunsch_schon_gewuenscht">✓ Schon gewünscht</string>
+    <string name="wunsch_eltern_sehen_es">Die Eltern sehen es</string>
+    <string name="wunsch_zurueck">Zurück</string>
+    <string name="wunsch_etwas_wuenschen">Etwas wünschen</string>
+    <string name="wunsch_thema_fuer_eltern">Ein Thema für die Eltern</string>
+    <string name="wunsch_eltern_antwort">Eltern: „%1$s“</string>
+    <string name="wunsch_art_mehr_davon">Mehr davon</string>
+    <string name="wunsch_art_eine_neue_folge">Eine neue Folge</string>
+    <string name="wunsch_art_thema">Thema</string>
+    <string name="wunsch_art_neue_folge">Neue Folge</string>
+    <string name="wunsch_status_wartet">Wartet auf die Eltern</string>
+    <string name="wunsch_status_freigegeben">Freigegeben ▶</string>
+    <string name="wunsch_status_erledigt">Erledigt</string>
+    <string name="wunsch_status_nicht_jetzt">Nicht jetzt</string>
+    <string name="wunsch_status_besprechen">Sprechen wir drüber</string>
+
+    <!-- ===== Vollbild-Sperre (ADR 0007) ===== -->
+    <string name="sperre_gute_nacht_titel">Gute Nacht!</string>
+    <string name="sperre_zeit_um_titel">Die Zeit ist um</string>
+    <string name="sperre_ruhezeit_titel">Schlafenszeit</string>
+    <string name="sperre_speicherfehler_titel">Wiedergabe angehalten</string>
+    <string name="sperre_unterbrochen_titel">Wiedergabe unterbrochen</string>
+    <string name="sperre_gute_nacht_text">Die Schlafzeit ist da. Bis morgen!</string>
+    <string name="sperre_zeit_um_text">Deine Zeit für heute ist um. Morgen geht es weiter.</string>
+    <string name="sperre_ruhezeit_text_ab">Jetzt ist Ruhezeit. Ab %1$s Uhr geht es weiter.</string>
+    <string name="sperre_ruhezeit_text">Jetzt ist Ruhezeit. Morgen früh geht es weiter.</string>
+    <string name="sperre_speicherfehler_text">Die Sehzeit konnte nicht gespeichert werden. Bitte die Eltern fragen.</string>
+    <string name="sperre_unterbrochen_text">Die letzte Wiedergabe wurde nicht sicher beendet. Bereits gespeicherte Sehzeit bleibt erhalten; fehlende Zeit wird nicht geschätzt. Bitte die Eltern fragen.</string>
+    <string name="sperre_fuer_eltern">Für Eltern</string>
+
+    <!-- ===== Player ===== -->
+    <string name="player_uebersprungen">„%1$s“ lässt sich nicht abspielen – übersprungen.</string>
+    <string name="player_voriges">Voriges Video</string>
+    <string name="player_pause">Pause</string>
+    <string name="player_abspielen">Abspielen</string>
+    <string name="player_naechstes">Nächstes Video</string>
+    <string name="player_mehr_davon">Mehr davon</string>
+    <string name="player_schliessen">Schließen</string>
+    <string name="player_status_laedt">Lädt …</string>
+    <string name="player_status_spielt">Spielt</string>
+    <string name="player_status_pause">Pause</string>
+    <string name="player_status_fertig">Fertig</string>
+    <string name="player_status_uebersprungen">Übersprungen</string>
+    <string name="player_status_nicht_abspielbar">Nicht abspielbar</string>
+    <string name="player_fertig">Fertig 🎉</string>
+    <string name="player_nochmal">Nochmal</string>
+    <string name="player_zurueck_zu_videos">Zurück zu den Videos</string>
+    <string name="player_mehr_davon_wuenschen">Mehr davon wünschen</string>
+    <string name="player_mehr_davon_gewuenscht">✓ Mehr davon gewünscht</string>
+    <string name="player_heute_keine_wuensche">Heute keine Wünsche mehr</string>
+    <string name="player_weiterschauen">Weiterschauen</string>
+
+    <!-- ===== PIN und Wunsch-Link (MainActivity) ===== -->
+    <string name="pin_wiederholen">PIN wiederholen</string>
+    <string name="pin_festlegen">PIN festlegen</string>
+    <string name="pin_festlegen_untertitel">Vier Ziffern. Sie schützt die Einstellungen.</string>
+    <string name="pin_fuer_einstellungen">PIN für die Einstellungen</string>
+    <string name="wunsch_link_titel">Link zum Wunsch</string>
+    <string name="wunsch_video_link_titel">Video-Link zum Wunsch</string>
+    <string name="youtube_adresse">YouTube-Adresse</string>
+    <string name="pruefen">Prüfen</string>
+
+    <!-- ===== Elternbereich: Bezeichnungen (ParentLabels) ===== -->
+    <string name="trust_trusted_child_source">Vertrauenswürdige Kinderquelle</string>
+    <string name="trust_trusted_series">Vertrauenswürdige Reihe</string>
+    <string name="trust_per_video_review">Nur einzeln geprüfte Videos</string>
+    <string name="trust_parent_only">Nur für Eltern</string>
+    <string name="trust_blocked">Gesperrt</string>
+    <string name="trust_erklaerung_trusted_child_source">Das Kind darf im ganzen Kanal stöbern, auch neue Videos ohne einzelne Freigabe.</string>
+    <string name="trust_erklaerung_trusted_series">Nur freigegebene Videos; neue Folgen sieht das Kind als Vorschau und kann sie sich wünschen.</string>
+    <string name="trust_erklaerung_per_video_review">Das Kind sieht nur Videos, die einzeln freigegeben sind.</string>
+    <string name="trust_erklaerung_parent_only">Bleibt in der Liste, aber das Kind sieht nichts aus diesem Kanal.</string>
+    <string name="trust_erklaerung_blocked">Nichts aus diesem Kanal; auch künftige Links werden abgewiesen.</string>
+    <string name="kategorie_wissen">Wissen</string>
+    <string name="kategorie_medienkompetenz">Medienkompetenz</string>
+    <string name="kategorie_nachrichten">Nachrichten</string>
+    <string name="kategorie_geschichten">Geschichten</string>
+    <string name="kategorie_musik">Musik</string>
+    <string name="kategorie_basteln">Basteln</string>
+    <string name="kategorie_manga_zeichnen">Manga zeichnen</string>
+    <string name="kategorie_anime_manga">Anime &amp; Manga</string>
+    <string name="kategorie_sport">Sport</string>
+    <string name="einzelpruefung_nicht_offen">nicht mehr offen</string>
+    <string name="einzelpruefung_quelle_gesperrt">Quelle gesperrt</string>
+    <string name="einzelpruefung_nur_eltern">nur für Eltern</string>
+    <string name="einzelpruefung_filtertreffer">Filtertreffer</string>
+    <string name="einzelpruefung_nachricht">Nachricht prüfen</string>
+    <plurals name="einzelpruefung_kopf">
+        <item quantity="one">%1$d braucht eine Einzelprüfung</item>
+        <item quantity="other">%1$d brauchen eine Einzelprüfung</item>
+    </plurals>
+    <string name="einzelpruefung_hinweis">%1$s: %2$s</string>
+    <string name="einzelpruefung_grund_mit_anzahl">%1$s (%2$d)</string>
+    <string name="altersprofil_preschool">Vorschule (3–5)</string>
+    <string name="altersprofil_early">Jüngere Kinder (6–8)</string>
+    <string name="altersprofil_kids">Kinder (9–11)</string>
+    <string name="altersprofil_tween">Ab 12</string>
+    <string name="entscheidung_discovered">Aufgenommen</string>
+    <string name="entscheidung_approved">Freigegeben</string>
+    <string name="entscheidung_rejected">Abgelehnt</string>
+    <string name="entscheidung_deferred">Zurückgestellt</string>
+    <string name="entscheidung_auto_rejected">Vom Filter abgelehnt</string>
+    <string name="entscheidung_blocked_source">Quelle gesperrt</string>
+    <string name="entscheidung_trust_changed">Stufe geändert</string>
+    <string name="entscheidung_status_expired">Prüfung fällig</string>
+    <string name="entscheidung_wished">Gewünscht</string>
+    <string name="entscheidung_wish_fulfilled">Wunsch erfüllt</string>
+    <string name="entscheidung_wish_rejected">Wunsch: nicht jetzt</string>
+    <string name="entscheidung_wish_discuss">Wunsch: besprechen</string>
+    <string name="entscheidung_wish_linked">Zum Wunsch aufgenommen</string>
+    <string name="verlauf_zeile">%1$s · %2$s</string>
+
+    <!-- ===== Elternbereich: Meldungen (ParentViewModel) ===== -->
+    <plurals name="sammel_eintraege">
+        <item quantity="one">%1$d Eintrag %2$s</item>
+        <item quantity="other">%1$d Einträge %2$s</item>
+    </plurals>
+    <string name="sammel_was_freigegeben">freigegeben</string>
+    <string name="sammel_was_abgelehnt">abgelehnt</string>
+    <plurals name="sammel_wuensche_erfuellt">
+        <item quantity="one">" – %1$d Wunsch erfüllt"</item>
+        <item quantity="other">" – %1$d Wünsche erfüllt"</item>
+    </plurals>
+    <plurals name="sammel_einzeln">
+        <item quantity="one">" %1$d braucht eine Einzelprüfung."</item>
+        <item quantity="other">" %1$d brauchen eine Einzelprüfung."</item>
+    </plurals>
+    <string name="meldung_profil_angelegt">Profil „%1$s“ angelegt.</string>
+    <string name="meldung_profil_entfernt">Profil „%1$s“ entfernt.</string>
+    <string name="meldung_name_eingeben">Bitte einen Namen eingeben.</string>
+    <string name="meldung_profil_weg">Das Profil gibt es nicht mehr.</string>
+    <string name="meldung_profil_gesichert">Profil „%1$s“ gesichert.</string>
+    <string name="meldung_pin_geaendert">Die PIN ist geändert.</string>
+    <string name="meldung_keine_ruhezeit">Gerade läuft keine Ruhezeit, oder die gespeicherten Zeiten sind unplausibel.</string>
+    <string name="meldung_ruhezeit_ausgesetzt">Ruhezeit ausgesetzt bis %1$s.</string>
+    <string name="meldung_ausnahme_aufgehoben">Die Ausnahme ist aufgehoben.</string>
+    <string name="meldung_link_nichts">Dazu gibt es nichts – gelöscht oder privat?</string>
+    <string name="meldung_link_unverstanden">Diese Adresse versteht SideTube nicht.</string>
+    <string name="meldung_link_fehler">Hat nicht geklappt: %1$s</string>
+    <string name="meldung_unbekannter_fehler">unbekannter Fehler</string>
+    <string name="meldung_wartet_mit_wunsch">„%1$s“ wartet auf die Prüfung. Mit der Freigabe ist der Wunsch erfüllt.</string>
+    <string name="meldung_wartet">„%1$s“ wartet auf die Prüfung.</string>
+    <string name="meldung_schon_in_liste">Das steht schon in der Liste.</string>
+    <string name="meldung_quelle_gesperrt">Diese Quelle ist gesperrt.</string>
+    <string name="meldung_kanal_gesperrt_lang">„%1$s“ ist gesperrt und erscheint nicht beim Kind. Links aus diesem Kanal werden abgewiesen.</string>
+    <string name="meldung_kanal_eingestuft">„%1$s“ ist eingestuft und freigegeben.</string>
+    <string name="meldung_kanal_eingestuft_wunsch">„%1$s“ ist eingestuft und freigegeben – Wunsch erfüllt.</string>
+    <string name="meldung_filter_abgelehnt_liste">Der Filter hat „%1$s“ abgelehnt (%2$s). Bitte in der Liste selbst ansehen.</string>
+    <string name="meldung_schon_abgelehnt_liste">„%1$s“ ist schon abgelehnt. Bitte in der Liste selbst ansehen.</string>
+    <string name="meldung_freigegeben">„%1$s“ ist freigegeben.</string>
+    <string name="meldung_freigegeben_wunsch">„%1$s“ ist freigegeben – Wunsch erfüllt.</string>
+    <string name="meldung_wunsch_ohne_video">Zu diesem Wunsch gehört kein Video.</string>
+    <string name="meldung_filter_abgelehnt_selbst">Der Filter hat „%1$s“ abgelehnt (%2$s). Bitte selbst ansehen.</string>
+    <string name="meldung_eintrag_verschwunden">Der Eintrag ist verschwunden.</string>
+    <string name="meldung_schon_abgelehnt_mit_vermerk">„%1$s“ ist schon abgelehnt%2$s. Bitte in der Liste selbst ansehen.</string>
+    <string name="meldung_vermerk_klammer">" (%1$s)"</string>
+    <string name="meldung_wunsch_schon_entschieden">Der Wunsch ist schon entschieden.</string>
+    <string name="meldung_wunsch_abgelehnt">Wunsch abgelehnt („nicht jetzt“).</string>
+    <string name="meldung_wunsch_besprechen">Wunsch steht auf „Sprechen wir drüber“.</string>
+    <string name="meldung_wunsch_erledigt">Wunsch erledigt.</string>
+    <string name="meldung_kanal_nicht_gefunden">Der Kanal zu diesem Video ließ sich nicht finden. Ist das Internet an?</string>
+    <string name="meldung_kanal_wartet">„%1$s“ wartet als Kanal in der Prüfliste – dort Stufe, Alter und Kategorie wählen.</string>
+    <string name="meldung_dieser_kanal_gesperrt">Dieser Kanal ist gesperrt.</string>
+    <string name="meldung_kanal_schon_in_liste">„%1$s“ steht schon in der Liste – hier die Stufe ändern.</string>
+    <string name="meldung_abgelehnt">„%1$s“ abgelehnt.</string>
+    <string name="meldung_wieder_zur_pruefung">„%1$s“ steht wieder zur Prüfung.</string>
+    <string name="meldung_zurueckgestellt">„%1$s“ zurückgestellt.</string>
+    <string name="meldung_entfernt">„%1$s“ entfernt.</string>
+    <plurals name="meldung_offene_verworfen">
+        <item quantity="one">%1$d offener Eintrag verworfen.</item>
+        <item quantity="other">%1$d offene Einträge verworfen.</item>
+    </plurals>
+    <string name="meldung_startpaket">%1$s: %2$d zur Prüfung für %3$s</string>
+    <string name="meldung_startpaket_vorhanden">, %1$d schon vorhanden</string>
+    <string name="meldung_startpaket_gesperrt">, %1$d aus gesperrten Quellen</string>
+    <string name="meldung_startpaket_vorgaben">" Profilvorgaben übernommen."</string>
+    <string name="meldung_fehler">Fehler: %1$s</string>
+
+    <!-- ===== PIN ===== -->
+    <string name="pin_loeschen">Löschen</string>
+    <string name="pin_eingaben_ungleich">Die beiden Eingaben stimmen nicht überein.</string>
+    <plurals name="pin_falsch">
+        <item quantity="one">Falsche PIN. Noch %1$d Versuch.</item>
+        <item quantity="other">Falsche PIN. Noch %1$d Versuche.</item>
+    </plurals>
+    <plurals name="pin_gesperrt">
+        <item quantity="one">Zu viele Versuche. Noch %1$d Sekunde gesperrt.</item>
+        <item quantity="other">Zu viele Versuche. Noch %1$d Sekunden gesperrt.</item>
+    </plurals>
+    <string name="pin_aktuelle">Aktuelle PIN</string>
+    <string name="pin_neue">Neue PIN</string>
+    <string name="pin_neue_wiederholen">Neue PIN wiederholen</string>
+    <string name="pin_neue_ungleich">Die neue PIN stimmte nicht überein. Bitte erneut eingeben.</string>
+    <plurals name="pin_aktuelle_falsch">
+        <item quantity="one">Aktuelle PIN falsch (noch %1$d Versuch).</item>
+        <item quantity="other">Aktuelle PIN falsch (noch %1$d Versuche).</item>
+    </plurals>
+    <string name="pin_gesperrt_kurz">Gesperrt für %1$d s.</string>
+    <string name="pin_aendern">PIN ändern</string>
+    <string name="abbrechen">Abbrechen</string>
+    <string name="pin_vier_ziffern">Vier Ziffern</string>
+
+    <!-- ===== Elternbereich: Bausteine, Kanal einstufen, Sammelpruefung ===== -->
+    <string name="startpaket_laden">Startpaket laden</string>
+    <string name="startpaket_erklaerung">Von Hand geprüfte Listen. Alles kommt zur Prüfung, nichts wird sofort sichtbar.</string>
+    <string name="startpaket_keine">In dieser Fassung sind keine Startpakete enthalten.</string>
+    <plurals name="startpaket_videos">
+        <item quantity="one">%1$d Video</item>
+        <item quantity="other">%1$d Videos</item>
+    </plurals>
+    <plurals name="startpaket_kanaele">
+        <item quantity="one">%1$d Kanal</item>
+        <item quantity="other">%1$d Kanäle</item>
+    </plurals>
+    <string name="startpaket_regeln_uebernehmen">Vorgeschlagene Regeln mit übernehmen</string>
+    <string name="kanal_hinzufuegen">Kanal hinzufügen</string>
+    <string name="vorschau">Vorschau</string>
+    <string name="sperren">Sperren</string>
+    <string name="hinzufuegen">Hinzufügen</string>
+    <string name="aufnehmen">Aufnehmen</string>
+    <string name="vertrauensstufe">Vertrauensstufe</string>
+    <string name="ab_jahren">Ab %1$d Jahren</string>
+    <string name="mindestalter">Mindestalter</string>
+    <string name="kategorie_hebt_alter_an">„%1$s“ wird erst ab %2$d gezeigt – es gilt ab %3$d.</string>
+    <string name="kanal_kommt_nicht_in_liste">Der Kanal kommt nicht in die Liste des Kindes. Links aus diesem Kanal werden künftig abgewiesen.</string>
+    <string name="sammel_freigeben_anzahl">Freigeben (%1$d)</string>
+    <string name="sammel_ablehnen_anzahl">Ablehnen (%1$d)</string>
+    <plurals name="sammel_eintraege_freigeben">
+        <item quantity="one">%1$d Eintrag freigeben</item>
+        <item quantity="other">%1$d Einträge freigeben</item>
+    </plurals>
+    <string name="fuer_alle_gleich">für alle gleich</string>
+    <string name="wie_vorgeschlagen">wie vorgeschlagen</string>
+    <string name="kategorie_gilt_erst_ab">„%1$s“ gilt erst ab %2$d – jüngere Angaben werden angehoben.</string>
+    <string name="freigeben">Freigeben</string>
+    <plurals name="sammel_eintraege_ablehnen">
+        <item quantity="one">%1$d Eintrag ablehnen?</item>
+        <item quantity="other">%1$d Einträge ablehnen?</item>
+    </plurals>
+    <string name="sammel_ablehnen_erklaerung">Sie erscheinen nicht beim Kind. Jeder Eintrag bekommt einen Vermerk im Verlauf.</string>
+    <string name="ablehnen">Ablehnen</string>
+    <string name="kategorie">Kategorie</string>
+    <string name="keine">keine</string>
+    <plurals name="stufe_fuer_kanaele">
+        <item quantity="one">Stufe für %1$d Kanal</item>
+        <item quantity="other">Stufe für %1$d Kanäle</item>
+    </plurals>
+
+    <!-- ===== Elternbereich: Einstellungen, Profile, Liste (ParentScreens) ===== -->
+    <string name="eltern_einstellungen">Einstellungen</string>
+    <string name="eltern_sperren">Sperren</string>
+    <string name="schlafmodus_laeuft_noch">Schlafmodus läuft, noch %1$s</string>
+    <string name="schlafmodus">Schlafmodus</string>
+    <string name="neues_profil">Neues Profil</string>
+    <string name="weitere">Weitere</string>
+    <string name="quellen_und_stufen">Quellen &amp; Sicherheitsstufen</string>
+    <string name="eltern_benachrichtigen">Eltern benachrichtigen</string>
+    <string name="noch_kein_profil">Noch kein Profil</string>
+    <string name="noch_kein_profil_text">Lege für jedes Kind ein Profil mit eigener Liste an.</string>
+    <string name="profil_anlegen">Profil anlegen</string>
+    <string name="profil_bearbeiten">Profil bearbeiten</string>
+    <string name="profil_entfernen">Profil entfernen</string>
+    <string name="unterbrochene_wiedergabe_pruefen">Unterbrochene Wiedergabe prüfen: %1$s</string>
+    <string name="wiedergabe_freigeben_titel">Wiedergabe wieder freigeben?</string>
+    <string name="wiedergabe_freigeben_text">Die letzte Wiedergabe wurde nicht sicher abgeschlossen. Ein Teil der Sehzeit ist möglicherweise unbekannt. Bereits gespeicherte Sehzeit bleibt erhalten. Diese Freigabe schätzt keine fehlende Zeit nach.</string>
+    <string name="als_eltern_freigeben">Als Eltern freigeben</string>
+    <string name="name">Name</string>
+    <string name="anlegen">Anlegen</string>
+    <plurals name="profil_minuten_am_tag">
+        <item quantity="one">%1$d Minute am Tag</item>
+        <item quantity="other">%1$d Minuten am Tag</item>
+    </plurals>
+    <string name="profil_ohne_tageslimit">ohne Tageslimit</string>
+    <string name="profil_ruhezeit_ab">Ruhezeit ab %1$s</string>
+    <string name="profil_ohne_ruhezeit">ohne Ruhezeit</string>
+    <string name="ruhezeit_ausgesetzt_bis">Ruhezeit ausgesetzt bis %1$s</string>
+    <string name="aufheben">Aufheben</string>
+    <string name="ruhezeit_aussetzen_fuer">Ruhezeit für %1$s bis zum Ende aussetzen</string>
+    <string name="schlafmodus_laeuft_text">Der Schlafmodus läuft noch %1$s. Danach endet die Wiedergabe und es lässt sich kein neues Video starten.</string>
+    <plurals name="schlafmodus_nach_minuten">
+        <item quantity="one">Nach %1$d Minute endet die Wiedergabe von selbst.</item>
+        <item quantity="other">Nach %1$d Minuten endet die Wiedergabe von selbst.</item>
+    </plurals>
+    <string name="schlafmodus_ausblenden">Die letzte Minute wird leiser ausgeblendet.</string>
+    <string name="schlafmodus_beenden">Schlafmodus beenden</string>
+    <string name="starten">Starten</string>
+    <string name="zurueck">Zurück</string>
+    <string name="freigaben_pruefen">Freigaben prüfen</string>
+    <string name="liste_leer">Liste ist leer</string>
+    <string name="liste_leer_text">Füge Kanäle, Videos oder Playlists über ihren Link hinzu – oder lade ein Startpaket.</string>
+    <string name="link_hinzufuegen">Link hinzufügen</string>
+    <string name="entfernen">Entfernen</string>
+    <string name="status_freigegeben">freigegeben</string>
+    <string name="status_abgelehnt">abgelehnt</string>
+    <string name="status_zu_pruefen">zu prüfen</string>
+
+    <!-- ===== Pruefliste (ReviewScreens) ===== -->
+    <string name="review_ausgewaehlt">%1$d ausgewählt</string>
+    <string name="review_auswahl_beenden">Auswahl beenden</string>
+    <string name="review_pruefen_anzahl">Prüfen (%1$d)</string>
+    <string name="review_auswaehlen">Auswählen</string>
+    <string name="review_alle_verwerfen">Alle verwerfen</string>
+    <string name="review_nichts">Nichts zu prüfen</string>
+    <string name="review_nichts_text">Neue Inhalte und Wünsche erscheinen hier, bevor sie im Kinderprofil sichtbar werden.</string>
+    <string name="review_einzeln">Einzeln: %1$s</string>
+    <string name="review_wuensche_anzahl">Wünsche (%1$d)</string>
+    <string name="review_inhalte_anzahl">Inhalte (%1$d)</string>
+    <string name="review_verwerfen_titel">Alle offenen Einträge verwerfen?</string>
+    <plurals name="review_verwerfen_text">
+        <item quantity="one">%1$d Eintrag verschwindet aus der Liste. Freigegebenes bleibt unberührt; ein Startpaket lässt sich erneut laden.</item>
+        <item quantity="other">%1$d Einträge verschwinden aus der Liste. Freigegebenes bleibt unberührt; ein Startpaket lässt sich erneut laden.</item>
+    </plurals>
+    <string name="review_verwerfen_anzahl">%1$d verwerfen</string>
+    <string name="review_alle_auswaehlen">Alle auswählen (%1$d)</string>
+    <string name="review_ab_alter">ab %1$d</string>
+    <string name="review_hinweise">Hinweise: %1$s</string>
+    <string name="review_short">Short</string>
+    <string name="review_live">Live</string>
+    <string name="review_bearbeiten">Bearbeiten</string>
+    <string name="review_hinweise_filter">Hinweise des Filters: %1$s</string>
+    <string name="hoechstalter">Höchstalter</string>
+    <string name="bis_jahre">Bis %1$d Jahre</string>
+    <string name="review_kategorie_hebt_an">„%1$s“ wird erst ab %2$d gezeigt – das Mindestalter wird entsprechend angehoben.</string>
+    <string name="anmerkung_freiwillig">Anmerkung (freiwillig)</string>
+    <string name="review_verlauf_hinweis">Änderungen werden im Verlauf festgehalten. „Zurück zur Prüfung“ nimmt den Eintrag so lange aus dem Kinderprofil.</string>
+    <string name="review_filter_hinweis">Der automatische Filter ist nur ein Hinweis. Bitte selbst hineinsehen.</string>
+    <string name="kanal_sperren">Kanal sperren</string>
+    <string name="aenderungen_sichern">Änderungen sichern</string>
+    <string name="zurueck_zur_pruefung">Zurück zur Prüfung</string>
+    <string name="spaeter">Später</string>
+    <string name="verlauf">Verlauf</string>
+    <string name="noch_keine_eintraege">Noch keine Einträge</string>
+    <string name="schliessen">Schließen</string>
+    <string name="stepper_senken">%1$s senken</string>
+    <string name="stepper_erhoehen">%1$s erhöhen</string>
+    <string name="quellen">Quellen</string>
+    <string name="quellen_erklaerung">„Vertrauenswürdige Kinderquelle“ erlaubt das Stöbern im ganzen Kanal. Alle anderen Stufen zeigen nur einzeln freigegebene Videos.</string>
+
+    <!-- ===== Eltern benachrichtigen (ADR 0005) ===== -->
+    <string name="elternkanal_eingerichtet_meldung">Eingerichtet. Mit „Test senden“ prüfen, ob die Meldung ankommt.</string>
+    <string name="elternkanal_code_passt_nicht">Der Einrichtungscode passt nicht.</string>
+    <string name="elternkanal_nicht_eingerichtet">Noch nicht eingerichtet.</string>
+    <string name="elternkanal_testnachricht">" SideTube: Test der Benachrichtigung"</string>
+    <string name="elternkanal_gesendet">Gesendet. Die Meldung erscheint in der Nextcloud-App.</string>
+    <string name="elternkanal_nicht_erreichbar">Nicht angekommen: Server nicht erreichbar.</string>
+    <string name="elternkanal_401">Abgelehnt: Schlüssel oder Bot passen nicht (HTTP 401).</string>
+    <string name="elternkanal_404">Nicht gefunden: Gespräch oder Talk fehlt (HTTP 404).</string>
+    <string name="elternkanal_http">Nicht angekommen (HTTP %1$d).</string>
+    <string name="elternkanal_entfernt">Entfernt. SideTube meldet keine Wünsche mehr.</string>
+    <string name="elternkanal_ohne_kamera">Ohne Kamera: den Code kopieren und „Code einfügen“ wählen.</string>
+    <string name="elternkanal_erklaerung">Bei jedem neuen Wunsch schreibt SideTube eine kurze Nachricht in ein Gespräch auf der eigenen Nextcloud – ohne Namen und ohne Titel. Die Nextcloud-App meldet sie auf dem Telefon der Eltern.</string>
+    <string name="elternkanal_eingerichtet">Eingerichtet</string>
+    <string name="elternkanal_nextcloud">Nextcloud: %1$s</string>
+    <string name="elternkanal_erwaehnt">Erwähnt: %1$s</string>
+    <string name="elternkanal_sendet">Sendet …</string>
+    <string name="elternkanal_test_senden">Test senden</string>
+    <string name="elternkanal_neu_einrichten">Neu einrichten</string>
+    <string name="elternkanal_code_scannen">Einrichtungscode scannen</string>
+    <string name="elternkanal_code_einfuegen">Code einfügen</string>
+    <string name="elternkanal_skript_hinweis">Den Code erzeugt das Skript talk-wunschkanal.sh auf dem Server der Familie (Nextcloud mit Talk).</string>
+    <string name="elternkanal_entfernen_titel">Benachrichtigung entfernen?</string>
+    <string name="elternkanal_entfernen_text">Der Schlüssel wird von diesem Gerät gelöscht. Bot und Gespräch auf der Nextcloud bleiben.</string>
+
+    <!-- ===== Profil bearbeiten ===== -->
+    <string name="sichern">Sichern</string>
+    <string name="altersprofil">Altersprofil</string>
+    <string name="altersprofil_hinweis">Inhalte mit höherem Mindestalter bleiben unsichtbar. Manga zeichnen ab 8, Anime &amp; Manga ab 12.</string>
+    <string name="inhalte">Inhalte</string>
+    <string name="inhalt_nachrichten">Nachrichten (logo!)</string>
+    <string name="inhalt_manga_zeichnen">Manga zeichnen</string>
+    <string name="inhalt_anime_manga">Anime &amp; Manga (ab 12)</string>
+    <string name="shorts_erlauben">Shorts erlauben</string>
+    <string name="naechstes_automatisch">Nächstes Video automatisch</string>
+    <string name="ruhezeit">Ruhezeit</string>
+    <string name="ruhezeit_beginn">Beginn %1$s</string>
+    <string name="beginn">Beginn</string>
+    <string name="ruhezeit_ende">Ende %1$s</string>
+    <string name="ende">Ende</string>
+    <string name="ruhezeit_wochenende">Fr/Sa %1$d min später</string>
+    <string name="wochenende">Wochenende</string>
+    <string name="vorschlag">Vorschlag</string>
+    <string name="ausnahme_bis">Ausnahme bis %1$s</string>
+    <string name="ruhezeit_hinweis">In der Ruhezeit ist der Kindermodus gesperrt; 15 und 5 Minuten vorher gibt es einen Hinweis. Die PIN hebt die Sperre bis zum Ende der Ruhezeit auf.</string>
+    <string name="tageslimit">Tageslimit</string>
+    <plurals name="tageslimit_minuten">
+        <item quantity="one">%1$d Minute pro Tag</item>
+        <item quantity="other">%1$d Minuten pro Tag</item>
+    </plurals>
+    <string name="tageslimit_hinweis">Ohne Limit darf unbegrenzt geschaut werden. Die Zeit wird um Mitternacht zurückgesetzt.</string>
+    <string name="stepper_weniger">%1$s weniger</string>
+    <string name="stepper_mehr">%1$s mehr</string>
+
+    <!-- ===== Wuensche im Elternbereich ===== -->
+    <string name="wunsch_herkunft_thema">Themenwunsch</string>
+    <string name="wunsch_herkunft_mehr_davon">Mehr davon</string>
+    <string name="wunsch_herkunft_mehr_davon_kanal">Mehr davon · %1$s</string>
+    <string name="wunsch_herkunft_neue_folge">Neue Folge</string>
+    <string name="wunsch_herkunft_neue_folge_kanal">Neue Folge bei %1$s</string>
+    <string name="wunsch_zeile_besprechen">besprechen</string>
+    <string name="wunsch_zeile_link">Link aufgenommen</string>
+    <string name="wunsch_titel">Wunsch</string>
+    <string name="wunsch_antwort_label">Antwort an das Kind (freiwillig)</string>
+    <string name="wunsch_kanal_pruefen">Kanal prüfen</string>
+    <string name="wunsch_video_link_hinzufuegen">Video-Link hinzufügen</string>
+    <string name="erledigt">Erledigt</string>
+    <string name="wunsch_ablehnen_nicht_jetzt">Ablehnen („nicht jetzt“)</string>
+    <string name="besprechen">Besprechen</string>
+    <string name="wunsch_erklaerung_neue_folge">Das Kind hat Bild und Titel gesehen, das Video aber nicht. Freigeben legt einen freigegebenen Eintrag an (Alter und Kategorie aus der Quelle).</string>
+    <string name="wunsch_erklaerung_mehr_davon">Das Kind möchte mehr von diesem freigegebenen Video. Ein Link kommt in die Prüfliste; mit seiner Freigabe ist der Wunsch erfüllt.</string>
+    <string name="wunsch_erklaerung_thema">Ein Thema, kein Inhalt: Das Kind hat nichts Fremdes gesehen. Ein Link kommt in die Prüfliste; mit seiner Freigabe ist der Wunsch erfüllt.</string>
+    <string name="ruhezeit_vorschlag_6_9">6–9 Jahre</string>
+    <string name="ruhezeit_vorschlag_10_12">10–12 Jahre</string>
+    <string name="ruhezeit_vorschlag_ab_13">ab 13</string>
+
+    <!-- ===== Nutzung (Sehstatistik) ===== -->
+    <string name="nutzung">Nutzung</string>
+    <string name="stats_heute">Heute</string>
+    <string name="stats_7_tage">7 Tage</string>
+    <string name="stats_30_tage">30 Tage</string>
+    <string name="sehzeit">Sehzeit</string>
+    <string name="stats_minuten">%1$d min</string>
+    <string name="stats_stunden">%1$d h %2$d min</string>
+    <string name="stats_hinweis">Gezählt wird die tatsächlich gespielte Zeit, nicht die Länge der Videos.</string>
+    <string name="pro_tag">Pro Tag</string>
+    <string name="am_meisten_gesehen">Am meisten gesehen</string>
+    <string name="nichts_geschaut">Nichts geschaut</string>
+    <string name="nichts_geschaut_text">In diesem Zeitraum wurde kein Video abgespielt.</string>
+    <string name="stats_video_zeile">%1$s · %2$d×</string>
 </resources>

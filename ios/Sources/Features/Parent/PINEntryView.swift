@@ -74,7 +74,8 @@ struct PINEntryView: View {
         case .success:
             onSuccess()
         case .failure(let attemptsRemaining):
-            message = "Falsche PIN. Noch \(attemptsRemaining) Versuch\(attemptsRemaining == 1 ? "" : "e")."
+            message = attemptsRemaining == 1 ? String(localized: "Falsche PIN. Noch 1 Versuch.")
+                : String(localized: "Falsche PIN. Noch \(attemptsRemaining) Versuche.")
         case .lockedOut(let seconds):
             message = nil
             lockedUntil = Date().addingTimeInterval(TimeInterval(seconds))

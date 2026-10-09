@@ -37,8 +37,8 @@ struct ChannelSearchView: View {
                     }
                 } footer: {
                     Text(AppConfig.hasYouTubeAPIKey
-                         ? "Die Suche nutzt das YouTube-Kontingent. Für einzelne Kanäle ist „Link hinzufügen“ sparsamer."
-                         : "Ohne API-Schlüssel werden bekannte SideTube-Quellen durchsucht. Andere Kanäle lassen sich über „Link hinzufügen“ per Adresse aufnehmen.")
+                         ? String(localized: "Die Suche nutzt das YouTube-Kontingent. Für einzelne Kanäle ist „Link hinzufügen“ sparsamer.")
+                         : String(localized: "Ohne API-Schlüssel werden bekannte SideTube-Quellen durchsucht. Andere Kanäle lassen sich über „Link hinzufügen“ per Adresse aufnehmen."))
                 }
 
                 if isSearching {
@@ -85,11 +85,11 @@ struct ChannelSearchView: View {
         Task {
             do {
                 results = try await services.youtube.searchChannels(query: term)
-                if results.isEmpty { message = "Kein Kanal gefunden. Andere Schreibweise probieren oder den Link direkt einfügen." }
+                if results.isEmpty { message = String(localized: "Kein Kanal gefunden. Andere Schreibweise probieren oder den Link direkt einfügen.") }
             } catch YouTubeError.missingAPIKey {
-                message = "Dieser Kanal ist nicht im SideTube-Quellenregister. Mit einem API-Schlüssel kann die allgemeine YouTube-Suche verwendet werden; sonst bitte die Kanaladresse einfügen."
+                message = String(localized: "Dieser Kanal ist nicht im SideTube-Quellenregister. Mit einem API-Schlüssel kann die allgemeine YouTube-Suche verwendet werden; sonst bitte die Kanaladresse einfügen.")
             } catch {
-                message = "Suche fehlgeschlagen: \(error.localizedDescription)"
+                message = String(localized: "Suche fehlgeschlagen: \(error.localizedDescription)")
             }
             isSearching = false
         }

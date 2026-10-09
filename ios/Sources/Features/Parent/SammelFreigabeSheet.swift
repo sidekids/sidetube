@@ -41,7 +41,7 @@ struct SammelFreigabeSheet: View {
         NavigationStack {
             Form {
                 Section {
-                    Text(sammelbar.count == 1 ? "1 Eintrag wird freigegeben." : "\(sammelbar.count) Einträge werden freigegeben.")
+                    Text(sammelbar.count == 1 ? String(localized: "1 Eintrag wird freigegeben.") : String(localized: "\(sammelbar.count) Einträge werden freigegeben."))
                         .font(.headline)
                         .accessibilityIdentifier("sammel.anzahl")
                 } footer: {
@@ -74,7 +74,7 @@ struct SammelFreigabeSheet: View {
                 } header: {
                     Text("Mindestalter")
                 } footer: {
-                    Text(alterWieVorgeschlagen ? "Jeder Eintrag behält sein vorgeschlagenes Alter." : "Gilt für alle ausgewählten Einträge.")
+                    Text(alterWieVorgeschlagen ? String(localized: "Jeder Eintrag behält sein vorgeschlagenes Alter.") : String(localized: "Gilt für alle ausgewählten Einträge."))
                 }
 
                 Section {
@@ -88,8 +88,8 @@ struct SammelFreigabeSheet: View {
                     .accessibilityIdentifier("sammel.kategorie")
                     if angehoben > 0 {
                         Text(angehoben == 1
-                             ? "Bei 1 Eintrag hebt die Kategorie das Mindestalter an – dort gilt das höhere."
-                             : "Bei \(angehoben) Einträgen hebt die Kategorie das Mindestalter an – dort gilt das höhere.")
+                             ? String(localized: "Bei 1 Eintrag hebt die Kategorie das Mindestalter an – dort gilt das höhere.")
+                             : String(localized: "Bei \(angehoben) Einträgen hebt die Kategorie das Mindestalter an – dort gilt das höhere."))
                             .font(.footnote).foregroundStyle(.orange)
                     }
                 } header: {
@@ -111,14 +111,14 @@ struct SammelFreigabeSheet: View {
                         .pickerStyle(.inline)
                         .labelsHidden()
                     } header: {
-                        Text(kanaele == 1 ? "Vertrauensstufe für 1 Kanal" : "Vertrauensstufe für \(kanaele) Kanäle")
+                        Text(kanaele == 1 ? String(localized: "Vertrauensstufe für 1 Kanal") : String(localized: "Vertrauensstufe für \(kanaele) Kanäle"))
                     } footer: {
                         Text("„Gesperrt“ geht nur einzeln: Kanal in der Prüfliste antippen.")
                     }
                 }
 
                 Section {
-                    Button(sammelbar.count == 1 ? "1 Eintrag freigeben" : "\(sammelbar.count) Einträge freigeben",
+                    Button(sammelbar.count == 1 ? String(localized: "1 Eintrag freigeben") : String(localized: "\(sammelbar.count) Einträge freigeben"),
                            systemImage: "checkmark.circle.fill") { freigeben() }
                         .buttonStyle(.borderedProminent)
                         .disabled(sammelbar.isEmpty)
@@ -139,7 +139,7 @@ struct SammelFreigabeSheet: View {
             onFertig(ergebnis)
             dismiss()
         } catch {
-            self.error = "Konnte nicht speichern: \(error.localizedDescription)"
+            self.error = String(localized: "Konnte nicht speichern: \(error.localizedDescription)")
         }
     }
 }

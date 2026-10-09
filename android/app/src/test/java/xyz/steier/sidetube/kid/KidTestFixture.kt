@@ -14,6 +14,7 @@ import xyz.steier.sidetube.core.player.PlaybackModel
 import xyz.steier.sidetube.core.provider.ChannelFeedSource
 import xyz.steier.sidetube.core.provider.ChannelVideo
 import xyz.steier.sidetube.core.repo.*
+import xyz.steier.sidetube.TestTexte
 
 /**
  * Gemeinsamer Aufbau fuer die ViewModel-Tests des Kindermodus: kontrollierte DAOs, keine Room-,
@@ -37,14 +38,23 @@ internal class KidFixture(
     var readStarted = false
     var beginStarted = false
     val allProfiles = listOf(profile) + otherProfiles
+    /** Profilstand wie aus Room: Aenderungen der Eltern (Limit, Ausnahme) kommen als neue Emission an. */
+    val profileFlow = MutableStateFlow(allProfiles)
+    /** Was `update` zuletzt geschrieben hat; `null`, wenn nichts. */
+    var updatedProfile: KidProfileEntity? = null
+    /** Gesehene Sekunden heute, fuer das Tageslimit. */
+    var secondsToday = 0L
     val profilePrefs = object : xyz.steier.sidetube.ProfilePreferenceStore {
         override var lastProfileId: String? = null
     }
     val profiles = object : KidProfileDao {
-        override fun observeAll() = flowOf(allProfiles)
-        override suspend fun byId(id: String) = allProfiles.find { it.id == id }
+        override fun observeAll() = profileFlow
+        override suspend fun byId(id: String) = profileFlow.value.find { it.id == id }
         override suspend fun insert(profile: KidProfileEntity) = error("unexpected insert")
-        override suspend fun update(profile: KidProfileEntity) = error("unexpected update")
+        override suspend fun update(profile: KidProfileEntity) {
+            updatedProfile = profile
+            profileFlow.value = profileFlow.value.map { if (it.id == profile.id) profile else it }
+        }
         override suspend fun delete(profile: KidProfileEntity) = error("unexpected delete")
     }
     val whitelist = object : WhitelistDao {
@@ -71,7 +81,7 @@ internal class KidFixture(
         override suspend fun secondsBetween(profileId: String, from: Long, until: Long): Long {
             readStarted = true
             readGate?.await()
-            return 0
+            return secondsToday
         }
     }
     val sessions = object : PlaybackSessionDao {
@@ -129,6 +139,6 @@ internal class KidFixture(
                     ?: error("Unexpected network request")
         }), now, profilePrefs, kanalbild,
         playlistHolen = { id -> requested += id; playlists[id] ?: error("offline") },
-        wuensche = WunschRepository(wishes, reviews, now = now), neuerWunschGemeldet = { gemeldet++ }).also { it.onPlaybackCommand = commands::add }
+        wuensche = WunschRepository(wishes, reviews, now = now), neuerWunschGemeldet = { gemeldet++ }, texte = TestTexte).also { it.onPlaybackCommand = commands::add }
     fun rejectB() { items.value = items.value.map { if (it.id == "b") it.copy(approvalStatus = "rejected") else it } }
 }

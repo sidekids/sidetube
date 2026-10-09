@@ -59,7 +59,7 @@ struct Kanaleinstufung: Equatable, Sendable {
 
     /// Meldung nach „Gesperrt" – sagt ausdrücklich, dass nichts beim Kind ankam und was künftig passiert.
     static func sperrMeldung(kanal: String, profil: String) -> String {
-        "„\(kanal)“ ist jetzt gesperrt und steht nicht in der Liste von \(profil). Links aus diesem Kanal werden künftig abgewiesen."
+        String(localized: "„\(kanal)“ ist jetzt gesperrt und steht nicht in der Liste von \(profil). Links aus diesem Kanal werden künftig abgewiesen.")
     }
 }
 
@@ -68,11 +68,11 @@ extension SourceTrust {
     /// sonst schneller gewählt als verstanden ist (ADR 0003, Begründung).
     var erklaerung: String {
         switch self {
-        case .trustedChildSource: "Das Kind darf im Kanal stöbern; neue Videos erscheinen ohne Einzelprüfung, nur mit Risikofilter."
-        case .trustedSeries: "Neue Folgen erscheinen gesperrt mit Bild und Titel – das Kind kann sie sich wünschen, ihr gebt sie frei."
-        case .perVideoReview: "Das Kind sieht nur Videos dieses Kanals, die ihr einzeln freigegeben habt."
-        case .parentOnly: "Nur für euch in den Einstellungen – das Kind sieht nichts aus diesem Kanal."
-        case .blocked: "Der Kanal kommt nicht in die Liste; künftige Links dieses Kanals werden abgewiesen."
+        case .trustedChildSource: String(localized: "Das Kind darf im Kanal stöbern; neue Videos erscheinen ohne Einzelprüfung, nur mit Risikofilter.")
+        case .trustedSeries: String(localized: "Neue Folgen erscheinen gesperrt mit Bild und Titel – das Kind kann sie sich wünschen, ihr gebt sie frei.")
+        case .perVideoReview: String(localized: "Das Kind sieht nur Videos dieses Kanals, die ihr einzeln freigegeben habt.")
+        case .parentOnly: String(localized: "Nur für euch in den Einstellungen – das Kind sieht nichts aus diesem Kanal.")
+        case .blocked: String(localized: "Der Kanal kommt nicht in die Liste; künftige Links dieses Kanals werden abgewiesen.")
         }
     }
 }

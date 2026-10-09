@@ -72,7 +72,7 @@ final class PlayerModel {
     private var failedIds: Set<String> = []
 
     var current: Item { queue[index] }
-    var positionText: String { "Video \(index + 1) von \(queue.count)" }
+    var positionText: String { String(localized: "Video \(index + 1) von \(queue.count)") }
 
     init(queue: [Item], startIndex: Int, engine: any PlayerEngine,
          watchTime: (any WatchTimeRecording)? = nil, profile: KidProfile? = nil,

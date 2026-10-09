@@ -21,7 +21,7 @@ class ElternkanalEchtTest {
         val code = System.getenv("ELTERNKANAL_CODE")
         assumeTrue("Kein Einrichtungscode in der Umgebung", !code.isNullOrBlank())
         val ablage = FluechtigeAblage()
-        val einrichtung = ElternkanalEinrichtung(ablage, TalkBotMelder({ ablage.lade() }, UrlConnectionPoster()))
+        val einrichtung = ElternkanalEinrichtung(ablage, TalkBotMelder({ ablage.lade() }, UrlConnectionPoster()), xyz.steier.sidetube.TestTexte)
         assertThat(einrichtung.uebernimm(code!!)).startsWith("Eingerichtet.")
         assertThat(einrichtung.teste()).isEqualTo("Gesendet. Die Meldung erscheint in der Nextcloud-App.")
     }

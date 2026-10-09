@@ -39,7 +39,7 @@ struct PINSetupView: View {
         }
         guard first == pin else {
             firstEntry = nil
-            message = "Die Eingaben stimmen nicht überein. Bitte erneut beginnen."
+            message = String(localized: "Die Eingaben stimmen nicht überein. Bitte erneut beginnen.")
             return
         }
         do {
@@ -47,10 +47,10 @@ struct PINSetupView: View {
             onDone()
         } catch PINSetupError.storageUnavailable {
             firstEntry = nil
-            message = "Die PIN konnte nicht sicher gespeichert werden. Bitte versuche es erneut."
+            message = String(localized: "Die PIN konnte nicht sicher gespeichert werden. Bitte versuche es erneut.")
         } catch {
             firstEntry = nil
-            message = "PIN ungültig: nur Ziffern, mindestens \(PINManager.minimumLength)."
+            message = String(localized: "PIN ungültig: nur Ziffern, mindestens \(PINManager.minimumLength).")
         }
     }
 }

@@ -75,8 +75,8 @@ struct ClickWheelView: View {
         .accessibilityElement(children: .ignore)
         .accessibilityLabel("Scrollrad")
         .accessibilityHint(inPlayer
-            ? "Mitte: Abspielen oder Pause. Links und rechts: Video wechseln. Oben und unten oder Drehen: 10 Sekunden spulen."
-            : "Drehen, links und rechts: Auswahl in der Reihe. Oben und unten: Reihe wechseln. Mitte: öffnen.")
+            ? String(localized: "Mitte: Abspielen oder Pause. Links und rechts: Video wechseln. Oben und unten oder Drehen: 10 Sekunden spulen.")
+            : String(localized: "Drehen, links und rechts: Auswahl in der Reihe. Oben und unten: Reihe wechseln. Mitte: öffnen."))
         .accessibilityAdjustableAction { direction in
             onEvent(.rotate(steps: direction == .increment ? 1 : -1))
         }
