@@ -75,3 +75,10 @@ Dritter Zwischenstand: GitHub-`main` = `f03e9af`, Tag `v0.1.0-test.3`, Vorabvers
 deutsch und englisch. Release Test 2 gelöscht, die Tags `v0.1.0-test.1` und `v0.1.0-test.2` bleiben.
 Reihenfolge diesmal Commit → Tag → Release (`--verify-tag`). Vorher Scans ohne Fund und öffentliche
 Doku zu Drittanbieter-Cookies auf Stand gebracht. Freigabe durch Christian am 11.10.2026.
+
+## Nachtrag (11.10.2026, abends)
+
+Vierter Zwischenstand: GitHub-`main` = `7e7f05e`, Tag `v0.1.0-test.4`, APK Build 4 (SHA-256
+`f86c2f6b…643872`, gleiches Zertifikat), Notizen deutsch und englisch. Release Test 3 gelöscht, Tags bleiben.
+Inhalt: Pflichtlinks, iOS-Vollbild ohne Überlagerung, YouTube-Daten höchstens 30 Tage (ADR 0010),
+Store-Einordnung (ADR 0011). Freigabe durch Christian am 11.10.2026.
