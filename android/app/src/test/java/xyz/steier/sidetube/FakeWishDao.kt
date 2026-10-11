@@ -30,6 +30,22 @@ internal class FakeWishDao : WishDao {
     /** Haelt das Speichern an, bis der Test es freigibt (langsame Datenbank). */
     var insertGate: kotlinx.coroutines.CompletableDeferred<Unit>? = null
 
+    override suspend fun loescheEntschiedeneAelterAls(grenze: Long): Int {
+        val vorher = rows.value.size
+        rows.value = rows.value.filterNot { it.status !in setOf("offen", "besprechen") && it.createdAt < grenze }
+        return vorher - rows.value.size
+    }
+
+    override suspend fun leereYouTubeDatenAelterAls(grenze: Long): Int {
+        var n = 0
+        rows.value = rows.value.map {
+            if (it.status in setOf("offen", "besprechen") && it.createdAt < grenze && (it.videoTitle != null || it.channelTitle != null)) {
+                n++; it.copy(videoTitle = null, channelTitle = null)
+            } else it
+        }
+        return n
+    }
+
     override suspend fun insert(wish: WishEntity) {
         insertGate?.await()
         check(rows.value.none { it.id == wish.id }) { "doppelte Kennung" }

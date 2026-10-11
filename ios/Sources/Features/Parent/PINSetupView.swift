@@ -27,6 +27,13 @@ struct PINSetupView: View {
             if let message {
                 Text(message).font(.footnote).foregroundStyle(.red)
             }
+            // YouTube API Services Developer Policies III.A: Wer SideTube nutzt, stimmt den YouTube-
+            // Nutzungsbedingungen und der Datenschutzerklärung zu; beides ist danach unter „Über SideTube“ verlinkt.
+            Text("Mit dem Festlegen der PIN gelten die [Nutzungsbedingungen von YouTube](https://www.youtube.com/t/terms), die [Datenschutzerklärung von SideTube](https://sidekids.github.io/about/privacy.html#sidetube) und die [Datenschutzerklärung von Google](https://policies.google.com/privacy).")
+                .font(.caption2)
+                .foregroundStyle(.secondary)
+                .multilineTextAlignment(.center)
+                .padding(.horizontal, 24)
         }
         .padding()
     }

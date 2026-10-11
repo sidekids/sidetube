@@ -15,3 +15,5 @@ Checked against official guidance on 2026-09-09. This is technical preparation, 
 - [ ] Run internal testing and the Play pre-launch report; obtain explicit upload/publication approval.
 
 Sources: [target API requirements](https://support.google.com/googleplay/android-developer/answer/11926878?hl=en), [Families Policy](https://support.google.com/googleplay/android-developer/answer/9893335?hl=en), [Data Safety](https://support.google.com/googleplay/android-developer/answer/10787469?hl=en), [AGP compatibility](https://developer.android.com/build/releases/about-agp).
+
+- [x] Target audience decided 2026-10-11 (ADR 0011): parents and children (mixed audience); no ads SDK, so no neutral age screen for ads is needed.

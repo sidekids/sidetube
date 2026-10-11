@@ -31,31 +31,33 @@ struct PlayerScreen: View {
         NavigationStack {
             Group {
                 if fullscreen {
-                    ZStack {
-                        FullscreenPlayerView(model: model, webView: coordinator.webView,
-                                             onExit: verticalSizeClass == .compact ? nil : { coordinator.fullscreenRequested = false })
-                            .onTapGesture(count: 2) { coordinator.fullscreenRequested.toggle() }
+                    // Nichts liegt über dem Video (YouTube Required Minimum Functionality): Während der
+                    // Wiedergabe steht die Leiste darunter, nach dem Ende das „Fertig“-Feld daneben.
+                    GeometryReader { geo in
                         if isEnded {
-                            ScrollView {
-                                endedPanel(compact: true)
-                                    .padding(20)
+                            HStack(spacing: 0) {
+                                FullscreenPlayerView(model: model, webView: coordinator.webView)
+                                    .frame(width: geo.size.width * 0.45)
+                                ScrollView {
+                                    endedPanel(compact: true)
+                                        .padding(20)
+                                }
+                                .scrollBounceBehavior(.basedOnSize)
+                                .frame(maxWidth: .infinity)
                             }
-                            .scrollBounceBehavior(.basedOnSize)
-                            .frame(maxWidth: 520)
-                            .background(.regularMaterial, in: RoundedRectangle(cornerRadius: 24, style: .continuous))
-                            .padding(24)
                         } else {
-                            // Ohne YouTubes Leiste braucht auch das Vollbild eine Bedienung –
-                            // sonst ließe sich dort weder pausieren noch spulen.
-                            VStack {
-                                Spacer()
+                            VStack(spacing: 0) {
+                                FullscreenPlayerView(model: model, webView: coordinator.webView)
+                                    .onTapGesture(count: 2) { coordinator.fullscreenRequested.toggle() }
+                                if let hinweis = fullscreenStatus {
+                                    Text(hinweis).font(.footnote).foregroundStyle(.white.opacity(0.8)).padding(.top, 4)
+                                }
                                 controls
-                                    .padding(.vertical, 8)
-                                    .background(.ultraThinMaterial)
+                                    .padding(.vertical, 6)
                             }
-                            .ignoresSafeArea(edges: .bottom)
                         }
                     }
+                    .background(Color.black.ignoresSafeArea())
                 } else {
                     portrait
                 }
@@ -96,6 +98,15 @@ struct PlayerScreen: View {
         .alert("Mehr davon", isPresented: Binding(get: { wishFeedback != nil }, set: { if !$0 { wishFeedback = nil } })) {
             Button("OK", role: .cancel) {}
         } message: { Text(wishFeedback ?? "") }
+    }
+
+    /// Ladehinweis und Fehler im Vollbild – unter dem Video statt darüber.
+    private var fullscreenStatus: String? {
+        switch model.status {
+        case .loading: String(localized: "Lädt …")
+        case .allUnavailable, .engineFailed, .storageFailed: String(localized: "Geht gerade nicht")
+        default: nil
+        }
     }
 
     private var moreLikeThisAction: (() -> Void)? {
@@ -196,7 +207,9 @@ struct PlayerScreen: View {
     private var controls: some View {
         VStack(spacing: 4) {
             PlayerScrubBar(model: model)
-            HStack(spacing: 18) {
+            // Die Knöpfe teilen sich die Breite: Mit Untertitel- und Vollbildknopf waren es sieben, und mit
+            // festem Abstand ragte die Reihe auf dem iPhone über den rechten Rand.
+            HStack(spacing: 4) {
                 control("backward.end.fill", String(localized: "Voriges Video")) { model.previous() }
                 control("gobackward.10", String(localized: "10 Sekunden zurück")) { model.seek(by: -10) }
                 control(model.status == .playing ? "pause.fill" : "play.fill", model.status == .playing ? String(localized: "Pause") : String(localized: "Abspielen"), large: true) { model.togglePlayback() }
@@ -207,9 +220,16 @@ struct PlayerScreen: View {
                             model.captionsEnabled ? String(localized: "Untertitel ausschalten") : String(localized: "Untertitel einschalten"),
                             identifier: "player.captions") { model.toggleCaptions() }
                 }
-                // Vollbild auch ohne Drehen – hilft, wenn die Drehsperre des iPhones an ist.
-                control("arrow.up.left.and.arrow.down.right", String(localized: "Vollbild"), identifier: "player.fullscreenToggle") {
-                    coordinator.fullscreenRequested = true
+                // Vollbild auch ohne Drehen – hilft, wenn die Drehsperre des iPhones an ist. Im Vollbild wird
+                // derselbe Knopf zum Verkleinern; im Querformat gibt es nichts zu verkleinern.
+                if !coordinator.fullscreenRequested {
+                    control("arrow.up.left.and.arrow.down.right", String(localized: "Vollbild"), identifier: "player.fullscreenToggle") {
+                        coordinator.fullscreenRequested = true
+                    }
+                } else if verticalSizeClass != .compact {
+                    control("arrow.down.right.and.arrow.up.left", String(localized: "Verkleinern"), identifier: "player.fullscreenExit") {
+                        coordinator.fullscreenRequested = false
+                    }
                 }
             }
             .frame(maxWidth: .infinity)
@@ -221,7 +241,8 @@ struct PlayerScreen: View {
         Button(action: action) {
             Image(systemName: symbol)
                 .font(large ? .largeTitle : .title2)
-                .frame(width: large ? 64 : KidTheme.minimumTouchTarget, height: large ? 64 : KidTheme.minimumTouchTarget)
+                .frame(minWidth: large ? 64 : KidTheme.minimumTouchTarget, maxWidth: .infinity,
+                       minHeight: large ? 64 : KidTheme.minimumTouchTarget)
         }
         .tint(large ? KidTheme.accent : .primary)
         .accessibilityLabel(label)

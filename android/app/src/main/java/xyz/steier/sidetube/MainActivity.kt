@@ -427,7 +427,7 @@ private fun SideTubeApp(container: AppContainer, registerKeys: (((KeyEvent, Bool
 
             Screen.PinSetup -> PinPad(
                 title = stringResource(if (flow.awaitingRepeat) R.string.pin_wiederholen else R.string.pin_festlegen),
-                subtitle = stringResource(R.string.pin_festlegen_untertitel),
+                subtitle = stringResource(R.string.pin_festlegen_einverstaendnis),
                 error = flow.error,
                 onComplete = { pin -> if (flow.setup(pin)) screen = Screen.Kid }
             )

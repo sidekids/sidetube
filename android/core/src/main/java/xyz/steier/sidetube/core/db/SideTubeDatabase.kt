@@ -29,7 +29,7 @@ import androidx.room.withTransaction
         PlaybackSessionEntity::class,
         WishEntity::class,
     ],
-    version = 3,
+    version = 4,
     exportSchema = true
 )
 abstract class SideTubeDatabase : RoomDatabase() {
@@ -67,7 +67,13 @@ abstract class SideTubeDatabase : RoomDatabase() {
                 db.execSQL("ALTER TABLE `cached_channel_videos` ADD COLUMN `videoChannelId` TEXT")
             }
         }
-        val MIGRATIONS: Array<androidx.room.migration.Migration> = arrayOf(MIGRATION_1_2, MIGRATION_2_3)
+        /** Zeitpunkt der YouTube-Metadaten je Freigabe (ADR 0010). Nur Hinzufuegen; `NULL` heisst „beim Hinzufuegen“. */
+        val MIGRATION_3_4 = object : androidx.room.migration.Migration(3, 4) {
+            override fun migrate(db: androidx.sqlite.db.SupportSQLiteDatabase) {
+                db.execSQL("ALTER TABLE `whitelist_items` ADD COLUMN `metadataAt` INTEGER")
+            }
+        }
+        val MIGRATIONS: Array<androidx.room.migration.Migration> = arrayOf(MIGRATION_1_2, MIGRATION_2_3, MIGRATION_3_4)
 
         fun open(context: Context, name: String = NAME): SideTubeDatabase =
             Room.databaseBuilder(context.applicationContext, SideTubeDatabase::class.java, name)

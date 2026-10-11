@@ -65,6 +65,7 @@ struct ChannelVideoCacheRepository {
             if let videoChannel = video.channelId { cached.videoChannelId = videoChannel }
             cached.isShort = video.isShort
             cached.isUpcoming = video.isUpcoming
+            cached.cachedAt = Date()
         }
         try context.save()
     }

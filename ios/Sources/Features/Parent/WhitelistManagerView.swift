@@ -122,7 +122,7 @@ struct WhitelistItemRow: View {
         HStack(spacing: 12) {
             Thumbnail(url: item.thumbnailUrl, isChannel: item.type == .channel)
             VStack(alignment: .leading, spacing: 3) {
-                Text(item.title).lineLimit(2)
+                Text(item.displayTitle).lineLimit(2)
                 HStack(spacing: 6) {
                     Text(item.type.label).font(.caption2.weight(.semibold)).padding(.horizontal, 6).padding(.vertical, 2)
                         .background(Capsule().fill(Color.accentColor.opacity(0.15)))

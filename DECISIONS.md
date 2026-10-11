@@ -13,3 +13,5 @@
 | [0007](docs/adr/0007-android-vollbild-sperre.md) | Android: Vollbild-Sperre statt wegtippbarem Hinweis bei Ruhezeit, Schlaf-Timer, Sehzeit, Speicherfehler, unterbrochener Wiedergabe | angenommen 08.10.2026 |
 | [0008](docs/adr/0008-android-lokalisierung.md) | Android: Texte als Ressourcen, ViewModels fragen `Texte` statt `Context`; Tests lesen strings.xml | angenommen 09.10.2026 |
 | [0009](docs/adr/0009-oeffentliche-fassung-kanal.md) | Öffentliche Fassung: zuerst GitHub-Release, Stores später; jede Veröffentlichung mit Einzelfreigabe | angenommen 09.10.2026 |
+| [0010](docs/adr/0010-youtube-daten-30-tage.md) | YouTube-Daten höchstens 30 Tage: Freigaben auffrischen, Zwischenspeicher, Sehverlauf und entschiedene Wünsche löschen | angenommen 11.10.2026 |
+| [0011](docs/adr/0011-store-einordnung.md) | Store-Einordnung: App Store normale Kategorie mit Eltern als Zielgruppe, Google Play gemischtes Publikum; Player-Tipps zurückgestellt | angenommen 11.10.2026 |

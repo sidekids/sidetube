@@ -137,7 +137,7 @@ fun ReviewQueueScreen(
                                     Vorschau(item)
                                 }
                             },
-                            headlineContent = { Text(item.title, maxLines = 2) },
+                            headlineContent = { Text(item.title.ifBlank { stringResource(R.string.nicht_mehr_verfuegbar) }, maxLines = 2) },
                             supportingContent = {
                                 if (grund == null) Text(hints(item), maxLines = 1)
                                 else Text(stringResource(R.string.review_einzeln, ParentLabels.einzelpruefung(grund)), maxLines = 1,
@@ -165,7 +165,7 @@ fun ReviewQueueScreen(
                 items(pending, key = { it.id }) { item ->
                     ListItem(
                         leadingContent = { Vorschau(item) },
-                        headlineContent = { Text(item.title, maxLines = 2) },
+                        headlineContent = { Text(item.title.ifBlank { stringResource(R.string.nicht_mehr_verfuegbar) }, maxLines = 2) },
                         supportingContent = { Text(hints(item)) },
                         modifier = Modifier.clickable { onOpen(item) }
                     )
@@ -292,7 +292,7 @@ fun ReviewDecisionSheet(
                     VorschauKachel(Vorschaubilder.adresse(item), kanal, breite = if (kanal) 56.dp else 144.dp)
                 }
                 Spacer(Modifier.height(8.dp))
-                Text(item.title, style = MaterialTheme.typography.titleSmall)
+                Text(item.title.ifBlank { stringResource(R.string.nicht_mehr_verfuegbar) }, style = MaterialTheme.typography.titleSmall)
                 item.channelTitle?.takeIf { it != item.title }?.let {
                     Text(it, style = MaterialTheme.typography.bodySmall,
                         color = MaterialTheme.colorScheme.onSurface.copy(alpha = 0.7f))

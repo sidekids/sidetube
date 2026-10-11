@@ -88,4 +88,22 @@ class MigrationTest {
             assertThat(db.wishes().countBetween("p", 0, Long.MAX_VALUE)).isEqualTo(0)
         } finally { db.close(); context.deleteDatabase(name) }
     }
+
+    @Test fun `v3 nach v4 behaelt Freigaben und setzt den Metadaten-Zeitpunkt leer`() = runTest {
+        val name = "migration-v4-${UUID.randomUUID()}.db"
+        baueAlt(name, 3) { alt ->
+            alt.execSQL("INSERT INTO kid_profiles VALUES ('p','Kind',NULL,30,NULL,1,'kids',1,1,0,0,0,1,1200,390,60,NULL)")
+            alt.execSQL("INSERT INTO whitelist_items (id,profileId,type,provider,contentId,title,thumbnailUrl,addedAt,approvalStatus,ageMin,sensitiveTopics,isNews,isShort,isLive) " +
+                "VALUES ('i','p','VIDEO','youtube','v1','Spring','',7,'approved',0,'',0,0,0)")
+        }
+        val db = SideTubeDatabase.open(context, name)
+        try {
+            val item = db.whitelist().observeApproved("p").first().single()
+            assertThat(item.title).isEqualTo("Spring")
+            assertThat(item.metadataAt).isNull()
+            // NULL zaehlt als „beim Hinzufuegen“: addedAt = 7 ist aelter als jede Grenze ab 8.
+            assertThat(db.whitelist().metadatenFaellig(8, 10).map { it.id }).containsExactly("i")
+            assertThat(db.whitelist().metadatenFaellig(7, 10)).isEmpty()
+        } finally { db.close(); context.deleteDatabase(name) }
+    }
 }

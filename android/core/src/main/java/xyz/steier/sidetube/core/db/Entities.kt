@@ -86,7 +86,12 @@ data class WhitelistItemEntity(
     val parentNotes: String? = null,
     val approvedBy: String? = null,
     val approvedAt: Long? = null,
-    val lastReviewedAt: Long? = null
+    val lastReviewedAt: Long? = null,
+    /**
+     * Wann Titel, Kanalname und Bild zuletzt von YouTube geholt wurden; `null` = beim Hinzufuegen
+     * ([addedAt]). Nach 30 Tagen frischt [xyz.steier.sidetube.core.repo.YouTubeDatenPflege] sie auf (ADR 0010).
+     */
+    val metadataAt: Long? = null
 )
 
 /** Quelle mit Sicherheitsstufe. Elternentscheidungen ueberdauern spaetere Registerstaende. */

@@ -468,4 +468,11 @@
     <string name="nichts_geschaut_text">No video was played in this period.</string>
     <string name="stats_video_zeile">%1$s · %2$d×</string>
     <string name="player_fortschritt">%1$d of %2$d</string>
+    <string name="rechtliches">Legal</string>
+    <string name="rechtliches_datenschutz_sidetube">SideTube privacy policy</string>
+    <string name="rechtliches_youtube_agb">YouTube Terms of Service</string>
+    <string name="rechtliches_google_datenschutz">Google Privacy Policy</string>
+    <string name="rechtliches_quelltext">Source code and licence (MPL-2.0)</string>
+    <string name="pin_festlegen_einverstaendnis">Four digits. It protects the settings. By setting it you agree to the YouTube Terms of Service and the SideTube and Google privacy policies (Settings → Legal).</string>
+    <string name="nicht_mehr_verfuegbar">No longer available on YouTube</string>
 </resources>

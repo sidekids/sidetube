@@ -67,3 +67,11 @@ Medien. Stolperstein: Legt `gh release create` ein Release an, bevor der Tag gep
 den Tag auf den alten `main`; der Tag musste einmal gelöscht und neu gesetzt werden, das Release wurde
 dabei kurz zum Entwurf und danach wieder veröffentlicht. Künftig: erst Commit und Tag pushen, dann das
 Release anlegen. Freigabe durch Christian am 09.10.2026 (ADR 0009).
+
+## Nachtrag (11.10.2026)
+
+Dritter Zwischenstand: GitHub-`main` = `f03e9af`, Tag `v0.1.0-test.3`, Vorabversion mit
+`SideTube-0.1.0-test.3.apk` (Build-Nummer 3, SHA-256 `4fd976f5…c9c5b1`, gleiches Zertifikat), Notizen
+deutsch und englisch. Release Test 2 gelöscht, die Tags `v0.1.0-test.1` und `v0.1.0-test.2` bleiben.
+Reihenfolge diesmal Commit → Tag → Release (`--verify-tag`). Vorher Scans ohne Fund und öffentliche
+Doku zu Drittanbieter-Cookies auf Stand gebracht. Freigabe durch Christian am 11.10.2026.

@@ -50,6 +50,25 @@ struct SidetubeApp: App {
         #endif
     }
 
+   /// ADR 0010: einmal am Tag YouTube-Daten auffrischen bzw. löschen. Bleibt ein Abruf offen (offline),
+   /// gilt der Tag nicht als erledigt und der nächste Start versucht es wieder.
+    @MainActor
+    private func datenPflegeEinmalAmTag() async {
+        let heute = Date().formatted(.iso8601.year().month().day())
+        let defaults = UserDefaults.standard
+        guard defaults.string(forKey: "datenpflege.letzterLauf") != heute else { return }
+        let pflege = YouTubeDatenPflege(context: container.mainContext) { [services] type, id in
+            let ziel: ParsedYouTubeURL = switch type {
+            case .video: .video(id: id)
+            case .playlist: .playlist(id: id)
+            case .channel: .channel(id: id)
+            }
+            return try await services.youtube.resolve(ziel)
+        }
+        guard let bericht = try? await pflege.lauf() else { return }
+        if bericht.spaeter == 0 { defaults.set(heute, forKey: "datenpflege.letzterLauf") }
+    }
+
    /// Nur DEBUG: `-sidetube.devPIN 1234` setzt eine PIN, falls keine existiert (Simulator-Screenshots, UI-Tests).
     private func applyDeveloperLaunchArguments() {
         #if DEBUG
@@ -62,6 +81,7 @@ struct SidetubeApp: App {
     var body: some Scene {
         WindowGroup {
             RootView()
+                .task { await datenPflegeEinmalAmTag() }
         }
         .modelContainer(container)
         .environment(pinManager)

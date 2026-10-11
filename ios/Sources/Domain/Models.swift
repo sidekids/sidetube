@@ -115,6 +115,9 @@ final class WhitelistItem {
     var sourceChannelId: String?
     var sourceChannelHandle: String?
     var sourceUrl: String?
+   /// Wann Titel, Kanalname und Bild zuletzt von YouTube kamen; `nil` = beim Hinzufügen (`addedAt`).
+   /// Nach 30 Tagen frischt `YouTubeDatenPflege` sie auf (ADR 0010). Optional: leichte Migration.
+    var metadataAt: Date? = nil
 
     var type: YouTubeContentType {
         get { YouTubeContentType(rawValue: typeRaw) ?? .video }
@@ -138,6 +141,9 @@ final class WhitelistItem {
         get { ContentProvider(rawValue: providerRaw) ?? .youtube }
         set { providerRaw = newValue.rawValue }
     }
+    /// Titel für den Elternbereich; leer heißt: bei YouTube nicht mehr verfügbar (ADR 0010).
+    var displayTitle: String { title.isEmpty ? String(localized: "Nicht mehr bei YouTube verfügbar") : title }
+
     var approvalStatus: ApprovalStatus {
         get { ApprovalStatus(rawValue: approvalStatusRaw) ?? .reviewRequired }
         set { approvalStatusRaw = newValue.rawValue }
@@ -285,6 +291,9 @@ final class CachedChannelVideo {
    /// Feed-Kennzeichen (`/shorts/`, `views="0"`), damit der Zwischenspeicher dieselbe Antwort gibt wie der Feed.
     var isShort: Bool = false
     var isUpcoming: Bool = false
+   /// Wann der Eintrag zuletzt aus dem Feed kam; nach 30 Tagen gelöscht (ADR 0010). Bestehende Zeilen
+   /// bekommen bei der Migration den Vorgabewert, gelten also ab dann 30 Tage.
+    var cachedAt: Date = Date()
 
     init(channelId: String, videoId: String, title: String, thumbnailUrl: String, channelTitle: String, position: Int) {
         self.channelId = channelId

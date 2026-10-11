@@ -32,6 +32,7 @@ import androidx.compose.material.icons.filled.Delete
 import androidx.compose.material.icons.filled.Download
 import androidx.compose.material.icons.filled.BarChart
 import androidx.compose.material.icons.filled.Edit
+import androidx.compose.material.icons.filled.Gavel
 import androidx.compose.material.icons.filled.Key
 import androidx.compose.material.icons.filled.MoreVert
 import androidx.compose.material.icons.filled.Shield
@@ -81,6 +82,7 @@ fun ProfileListScreen(
     var showSleep by remember { mutableStateOf(false) }
     var showMenu by remember { mutableStateOf(false) }
     var recoveryProfile by remember { mutableStateOf<KidProfileEntity?>(null) }
+    var showLegal by remember { mutableStateOf(false) }
 
     Scaffold(
         topBar = {
@@ -122,6 +124,11 @@ fun ProfileListScreen(
                                 text = { Text(stringResource(R.string.eltern_benachrichtigen)) },
                                 leadingIcon = { Icon(Icons.Default.NotificationsActive, contentDescription = null) },
                                 onClick = { showMenu = false; onElternkanal() }
+                            )
+                            DropdownMenuItem(
+                                text = { Text(stringResource(R.string.rechtliches)) },
+                                leadingIcon = { Icon(Icons.Default.Gavel, contentDescription = null) },
+                                onClick = { showMenu = false; showLegal = true }
                             )
                         }
                     }
@@ -171,6 +178,8 @@ fun ProfileListScreen(
             }
         }
     }
+
+    if (showLegal) RechtlichesDialog(onDismiss = { showLegal = false })
 
     recoveryProfile?.let { profile ->
         AlertDialog(
@@ -346,7 +355,7 @@ fun WhitelistScreen(
                 items(state.items, key = { it.id }) { item ->
                     ListItem(
                         leadingContent = { Vorschau(item) },
-                        headlineContent = { Text(item.title, maxLines = 2) },
+                        headlineContent = { Text(item.title.ifBlank { stringResource(R.string.nicht_mehr_verfuegbar) }, maxLines = 2) },
                         supportingContent = { Text(describe(item, LocalTexte.current)) },
                         trailingContent = {
                             IconButton(onClick = { onRemove(item) }) {
@@ -392,4 +401,32 @@ private fun describe(item: WhitelistItemEntity, texte: Texte): String {
         else -> R.string.status_zu_pruefen
     })
     return listOfNotNull(item.type.lowercase(), status, item.channelTitle).joinToString(" · ")
+}
+
+/**
+ * Rechtliches hinter der PIN: YouTube API Services Developer Policies III.A verlangen einen Link auf die
+ * YouTube-Nutzungsbedingungen und eine Datenschutzerklärung, die auf die von Google verweist
+ * (docs/release/provider-assessment.md, Punkt 4). Die Links öffnen den Browser – nur hier, nie im Kindermodus.
+ */
+@Composable
+private fun RechtlichesDialog(onDismiss: () -> Unit) {
+    val uri = androidx.compose.ui.platform.LocalUriHandler.current
+    val links = listOf(
+        R.string.rechtliches_datenschutz_sidetube to "https://sidekids.github.io/about/privacy.html#sidetube",
+        R.string.rechtliches_youtube_agb to "https://www.youtube.com/t/terms",
+        R.string.rechtliches_google_datenschutz to "https://policies.google.com/privacy",
+        R.string.rechtliches_quelltext to "https://github.com/sidekids/sidetube"
+    )
+    AlertDialog(
+        onDismissRequest = onDismiss,
+        title = { Text(stringResource(R.string.rechtliches)) },
+        text = {
+            Column {
+                links.forEach { (label, url) ->
+                    TextButton(onClick = { runCatching { uri.openUri(url) } }) { Text(stringResource(label)) }
+                }
+            }
+        },
+        confirmButton = { TextButton(onClick = onDismiss) { Text(stringResource(R.string.schliessen)) } }
+    )
 }

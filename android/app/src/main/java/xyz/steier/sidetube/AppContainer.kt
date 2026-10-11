@@ -4,6 +4,10 @@
 
 package xyz.steier.sidetube
 
+import xyz.steier.sidetube.core.model.WhitelistItemType
+import xyz.steier.sidetube.core.repo.YouTubeDatenPflege
+import xyz.steier.sidetube.core.url.YouTubeTarget
+
 import android.content.Context
 import xyz.steier.sidetube.core.curation.ContentBundle
 import xyz.steier.sidetube.core.curation.ContentSource
@@ -89,4 +93,16 @@ class AppContainer(context: Context) {
 
     /** Das mitgelieferte Quellenregister anlegen, ohne Elternentscheidungen zu überschreiben. */
     suspend fun seedSources() = curation.ensureSources(content.sources())
+
+    /** YouTube-Daten hoechstens 30 Tage (ADR 0010); laeuft einmal am Tag beim Start, siehe [SideTubeApp]. */
+    val datenPflege = YouTubeDatenPflege(
+        database.whitelist(), database.channelVideoCache(), database.watchHistory(), database.wishes(),
+        holen = { type, id ->
+            resolver.resolve(when (type) {
+                WhitelistItemType.VIDEO -> YouTubeTarget.Video(id)
+                WhitelistItemType.PLAYLIST -> YouTubeTarget.Playlist(id)
+                WhitelistItemType.CHANNEL -> YouTubeTarget.Channel(id)
+            })
+        }
+    )
 }

@@ -41,4 +41,4 @@ The CI workflow performs native builds, unit tests, Android lint, content checks
 
 Do not push audit/backup refs containing unreviewed private material. Secret deletion does not revoke credentials: any confirmed credential requires owner-led revocation/rotation before history cleanup.
 
-See [Apple checklist](store-ios.md), [Google Play checklist](store-android.md), [energy gates](../energy/README.md), and [accessibility gates](../accessibility/README.md).
+See the [provider and store assessment](provider-assessment.md), [Apple checklist](store-ios.md), [Google Play checklist](store-android.md), [energy gates](../energy/README.md), and [accessibility gates](../accessibility/README.md).

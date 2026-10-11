@@ -65,6 +65,8 @@ internal class KidFixture(
         override suspend fun insert(item: WhitelistItemEntity) { items.value += item }
         override suspend fun update(item: WhitelistItemEntity) { items.value = items.value.map { if (it.id == item.id) item else it } }
         override suspend fun delete(item: WhitelistItemEntity) { items.value = items.value.filterNot { it.id == item.id } }
+        override suspend fun metadatenFaellig(grenze: Long, limit: Int) =
+            items.value.filter { it.provider == "youtube" && (it.metadataAt ?: it.addedAt) < grenze }.take(limit)
     }
     val sourceDao = object : CuratedSourceDao {
         override fun observeAll() = sources
@@ -78,6 +80,9 @@ internal class KidFixture(
         override suspend fun insert(entry: WatchHistoryEntity) = Unit
         override suspend fun since(profileId: String, since: Long) =
             historyEntries.filter { it.profileId == profileId && it.watchedAt >= since }.sortedByDescending { it.watchedAt }
+        override suspend fun loescheAelterAls(grenze: Long): Int {
+            val vorher = historyEntries.size; historyEntries.removeAll { it.watchedAt < grenze }; return vorher - historyEntries.size
+        }
         override suspend fun secondsBetween(profileId: String, from: Long, until: Long): Long {
             readStarted = true
             readGate?.await()
@@ -119,6 +124,14 @@ internal class KidFixture(
         override suspend fun byChannel(channelId: String) = cached[channelId].orEmpty()
         override suspend fun search(query: String, limit: Int) = emptyList<CachedChannelVideoEntity>()
         override suspend fun clear(channelId: String) { cached.remove(channelId) }
+        override suspend fun loescheAelterAls(grenze: Long): Int {
+            var n = 0
+            for (key in cached.keys.toList()) {
+                val rest = cached.getValue(key).filter { it.cachedAt >= grenze }
+                n += cached.getValue(key).size - rest.size; cached[key] = rest
+            }
+            return n
+        }
     }
     /** Feed-Inhalt je Playlist; fehlt sie, gilt das als Netzfehler. Abgefragte Playlists in [requested]. */
     val playlists = mutableMapOf<String, List<ChannelVideo>>()

@@ -225,10 +225,24 @@ final class ParentFlowUITests: XCTestCase {
         XCTAssertTrue(app.buttons["remote.back"].exists)
         XCTAssertTrue(app.buttons["remote.home"].exists)
 
+        // Alle Knöpfe der Leiste liegen im Bild (mit Untertitel- und Vollbildknopf ragte die Reihe hinaus).
+        let schirm = app.windows.firstMatch.frame
+        XCTAssertTrue(schirm.contains(app.buttons["player.fullscreenToggle"].frame), "Vollbildknopf liegt außerhalb des Bildes")
+        let hochformatFoto = XCTAttachment(screenshot: XCUIScreen.main.screenshot())
+        hochformatFoto.name = "hochformat"; hochformatFoto.lifetime = .keepAlways; add(hochformatFoto)
+
         // Vollbild gehört dem Video: die offene Fernbedienung tritt zur Seite und kommt danach zurück.
         app.buttons["player.fullscreenToggle"].tap()
         XCTAssertTrue(app.otherElements["player.fullscreen"].waitForExistence(timeout: 3), "Vollbild kommt nicht")
         XCTAssertFalse(wheel.exists, "Fernbedienung verdeckt das Vollbild")
+        // Nichts über dem Video (YouTube Required Minimum Functionality): Die Steuerung liegt unter der Fläche.
+        let flaeche = app.otherElements["player.fullscreen"].frame
+        let verkleinern = app.buttons["player.fullscreenExit"]
+        XCTAssertTrue(verkleinern.exists)
+        XCTAssertFalse(flaeche.intersects(verkleinern.frame), "Verkleinern liegt über dem Video")
+        XCTAssertTrue(schirm.contains(verkleinern.frame), "Verkleinern liegt außerhalb des Bildes")
+        let vollbildFoto = XCTAttachment(screenshot: XCUIScreen.main.screenshot())
+        vollbildFoto.name = "vollbild"; vollbildFoto.lifetime = .keepAlways; add(vollbildFoto)
         app.buttons["player.fullscreenExit"].tap()
         XCTAssertTrue(wheel.waitForExistence(timeout: 3), "Fernbedienung kehrt nach dem Vollbild nicht zurück")
         app.buttons["remote.back"].tap()

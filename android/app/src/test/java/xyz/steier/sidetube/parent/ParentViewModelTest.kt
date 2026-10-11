@@ -59,6 +59,8 @@ private class ParentFixture {
         override suspend fun insert(item: WhitelistItemEntity) { items.value += item }
         override suspend fun update(item: WhitelistItemEntity) { items.value = items.value.map { if (it.id == item.id) item else it } }
         override suspend fun delete(item: WhitelistItemEntity) { items.value = items.value.filterNot { it.id == item.id } }
+        override suspend fun metadatenFaellig(grenze: Long, limit: Int) =
+            items.value.filter { it.provider == "youtube" && (it.metadataAt ?: it.addedAt) < grenze }.take(limit)
     }
     private val sourceDao = object : CuratedSourceDao {
         override fun observeAll() = flowOf(emptyList<CuratedSourceEntity>())

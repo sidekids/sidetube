@@ -63,41 +63,24 @@ struct PlayerView: View {
 }
 
 /// Querformat: nur das Video, ohne Rad und Statusleiste. Zurückdrehen beendet das Vollbild.
+/// Videofläche im Vollbild – nur das Video, nichts darüber. Die YouTube API Services verbieten
+/// sichtbare Elemente vor dem eingebetteten Player (Required Minimum Functionality); Steuerung,
+/// Status und Verkleinern liegen deshalb neben bzw. unter der Fläche (`PlayerScreen`).
 struct FullscreenPlayerView: View {
     let model: PlayerModel
     let webView: WKWebView?
-    /// Sichtbarer Ausgang: Doppeltippen kommt an der WebView nicht immer an.
-    var onExit: (() -> Void)?
 
     var body: some View {
-        ZStack {
-            Color.black.ignoresSafeArea()
+        Group {
             if let webView {
-                PlayerWebView(webView: webView).ignoresSafeArea()
+                PlayerWebView(webView: webView)
             } else {
-                Image(systemName: "play.slash").foregroundStyle(.white)
-            }
-            if model.status == .loading || model.status == .allUnavailable || model.status == .engineFailed || model.status == .storageFailed {
-                VStack {
-                    Spacer()
-                    Text(model.status == .loading ? String(localized: "Lädt …") : String(localized: "Geht gerade nicht"))
-                        .font(.footnote).foregroundStyle(.white.opacity(0.8)).padding(8)
-                        .background(Capsule().fill(.black.opacity(0.5))).padding(.bottom, 12)
-                }
+                Color.black.overlay(Image(systemName: "play.slash").foregroundStyle(.white))
             }
         }
-        .overlay(alignment: .topLeading) {
-            if let onExit {
-                Button("Verkleinern", systemImage: "arrow.down.right.and.arrow.up.left") { onExit() }
-                    .labelStyle(.iconOnly)
-                    .font(.title3)
-                    .foregroundStyle(.white)
-                    .frame(width: 48, height: 48)
-                    .background(Circle().fill(.black.opacity(0.45)))
-                    .padding(12)
-                    .accessibilityIdentifier("player.fullscreenExit")
-            }
-        }
+        .aspectRatio(16 / 9, contentMode: .fit)
+        .frame(maxWidth: .infinity, maxHeight: .infinity)
+        .background(Color.black)
         .statusBarHidden(true)
         .persistentSystemOverlays(.hidden)
         .accessibilityElement(children: .contain)

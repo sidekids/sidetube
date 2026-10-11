@@ -1232,6 +1232,16 @@
         }
       }
     },
+    "Datenschutzerklärung von Google": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Google Privacy Policy"
+          }
+        }
+      }
+    },
     "Dauer": {
       "localizations": {
         "en": {
@@ -3182,6 +3192,16 @@
         }
       }
     },
+    "Mit dem Festlegen der PIN gelten die [Nutzungsbedingungen von YouTube](https://www.youtube.com/t/terms), die [Datenschutzerklärung von SideTube](https://sidekids.github.io/about/privacy.html#sidetube) und die [Datenschutzerklärung von Google](https://policies.google.com/privacy).": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "By setting the PIN you agree to the [YouTube Terms of Service](https://www.youtube.com/t/terms), the [SideTube privacy policy](https://sidekids.github.io/about/privacy.html#sidetube) and the [Google Privacy Policy](https://policies.google.com/privacy)."
+          }
+        }
+      }
+    },
     "Mitte: Abspielen oder Pause. Links und rechts: Video wechseln. Oben und unten oder Drehen: 10 Sekunden spulen.": {
       "localizations": {
         "en": {
@@ -3492,6 +3512,16 @@
         }
       }
     },
+    "Nicht mehr bei YouTube verfügbar": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "No longer available on YouTube"
+          }
+        }
+      }
+    },
     "Nichts dabei? Wünsch es dir!": {
       "localizations": {
         "en": {
@@ -3718,6 +3748,16 @@
           "stringUnit": {
             "state": "translated",
             "value": "Usage"
+          }
+        }
+      }
+    },
+    "Nutzungsbedingungen von YouTube": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "YouTube Terms of Service"
           }
         }
       }

@@ -17,7 +17,11 @@ enum Brand {
     static let authorRole = "Idee, Konzept und Entwicklung"
     static let websiteURL = URL(string: "https://sidekids.github.io")!
     static let supportURL = URL(string: "https://github.com/sidekids")!
-    static let privacyPolicyURL = URL(string: "https://sidekids.github.io/about/privacy.html")!
+    static let privacyPolicyURL = URL(string: "https://sidekids.github.io/about/privacy.html#sidetube")!
+    /// Pflicht nach den YouTube API Services Developer Policies III.A: Link auf die YouTube-Nutzungsbedingungen
+    /// und auf die Datenschutzerklärung von Google (docs/release/provider-assessment.md, Punkt 4).
+    static let youTubeTermsURL = URL(string: "https://www.youtube.com/t/terms")!
+    static let googlePrivacyURL = URL(string: "https://policies.google.com/privacy")!
     static let sourceURL = URL(string: "https://github.com/sidekids/sidetube")!
 }
 

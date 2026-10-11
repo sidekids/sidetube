@@ -16,3 +16,5 @@ Checked against official guidance on 2026-09-09. This is technical preparation, 
 - [ ] Complete energy gates and obtain explicit store submission approval.
 
 Sources: [App Review Guidelines](https://developer.apple.com/app-store/review/guidelines/), [privacy manifests](https://developer.apple.com/documentation/bundleresources/privacy_manifest_files), [App Privacy details](https://developer.apple.com/app-store/app-privacy-details/), [YouTube developer policies](https://developers.google.com/youtube/terms/developer-policies).
+
+- [x] Category decided 2026-10-11 (ADR 0011): regular category aimed at parents, **not** the Kids Category (the embedded YouTube player sends device data to Google, which guideline 1.3 forbids).

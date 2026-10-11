@@ -499,4 +499,13 @@
     <string name="nichts_geschaut_text">In diesem Zeitraum wurde kein Video abgespielt.</string>
     <string name="stats_video_zeile">%1$s · %2$d×</string>
     <string name="player_fortschritt">%1$d von %2$d</string>
+
+    <!-- ===== Rechtliches (YouTube API Services Developer Policies III.A) ===== -->
+    <string name="rechtliches">Rechtliches</string>
+    <string name="rechtliches_datenschutz_sidetube">Datenschutzerklärung von SideTube</string>
+    <string name="rechtliches_youtube_agb">Nutzungsbedingungen von YouTube</string>
+    <string name="rechtliches_google_datenschutz">Datenschutzerklärung von Google</string>
+    <string name="rechtliches_quelltext">Quelltext und Lizenz (MPL-2.0)</string>
+    <string name="pin_festlegen_einverstaendnis">Vier Ziffern. Sie schützt die Einstellungen. Mit dem Festlegen gelten die Nutzungsbedingungen von YouTube und die Datenschutzerklärungen von SideTube und Google (Einstellungen → Rechtliches).</string>
+    <string name="nicht_mehr_verfuegbar">Nicht mehr bei YouTube verfügbar</string>
 </resources>

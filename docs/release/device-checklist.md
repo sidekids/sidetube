@@ -33,7 +33,7 @@ Simulator note (2026-10-11, not a substitute for I5): in English the parent dash
 
 | # | Decision | Where it is recorded once taken |
 |---|---|---|
-| O1 | ~~Target audience~~ **Decided 2026-10-09 ([ADR 0009](../adr/0009-oeffentliche-fassung-kanal.md)): public, families in general.** Still open: the child-directed provider model (YouTube terms, COPPA-style designation) before the store phase | `pre-release-audit.md`, store checklists |
+| O1 | See [provider-assessment.md](provider-assessment.md) for the rules and the concrete conflicts (2026-10-11). ~~Target audience~~ **Decided 2026-10-09 ([ADR 0009](../adr/0009-oeffentliche-fassung-kanal.md)): public, families in general.** Store placement decided 2026-10-11 ([ADR 0011](../adr/0011-store-einordnung.md)): App Store regular category for parents, Google Play mixed audience. Still open: whether intercepting taps in the player may stay (YouTube Developer Policies I.6), before any store submission | `pre-release-audit.md`, store checklists |
 | O2 | Provenance of the Android replacement and rights to every bundled asset and seed library | `repository-audit.md`, `THIRD_PARTY_NOTICES.md` |
 | O3 | Which remaining parity gaps block the first version (starter-pack welcome flow, deep links, PeerTube; watch statistics landed on 2026-10-09) | `feature-parity.md` |
 | O4 | Store disclosures: camera permission, outgoing Nextcloud request, data safety / app privacy | `store-android.md`, `store-ios.md` |

@@ -219,7 +219,7 @@ struct ReviewCandidateRow: View {
         HStack(alignment: .top, spacing: 12) {
             Thumbnail(url: item.thumbnailUrl)
             VStack(alignment: .leading, spacing: 4) {
-                Text(item.title).font(.subheadline.weight(.semibold)).lineLimit(2)
+                Text(item.displayTitle).font(.subheadline.weight(.semibold)).lineLimit(2)
                 Text([item.channelTitle, item.durationSeconds.map { String(localized: "\($0 / 60) min") }, String(localized: "ab \(item.ageMin)"), item.category?.title]
                     .compactMap { $0 }.joined(separator: " · "))
                     .font(.caption).foregroundStyle(.secondary)

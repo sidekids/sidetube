@@ -36,6 +36,8 @@ struct AboutView: View {
                 }
                 Section("Datenschutz & Support") {
                     Link("Datenschutzerklärung", destination: Brand.privacyPolicyURL)
+                    Link("Nutzungsbedingungen von YouTube", destination: Brand.youTubeTermsURL)
+                    Link("Datenschutzerklärung von Google", destination: Brand.googlePrivacyURL)
                     Link("Support", destination: Brand.supportURL)
                 }
                 Section("Quellcode") {

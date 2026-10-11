@@ -53,6 +53,10 @@ interface WhitelistDao {
 
     @Delete
     suspend fun delete(item: WhitelistItemEntity)
+
+    /** YouTube-Eintraege, deren Metadaten aelter sind als [grenze] – die aeltesten zuerst (ADR 0010). */
+    @Query("SELECT * FROM whitelist_items WHERE provider = 'youtube' AND COALESCE(metadataAt, addedAt) < :grenze ORDER BY COALESCE(metadataAt, addedAt) LIMIT :limit")
+    suspend fun metadatenFaellig(grenze: Long, limit: Int): List<WhitelistItemEntity>
 }
 
 @Dao
@@ -97,6 +101,10 @@ interface WatchHistoryDao {
 
     @Query("SELECT CASE WHEN MIN(watchedSeconds) < 0 THEN -1 ELSE COALESCE(SUM(watchedSeconds), 0) END FROM watch_history WHERE profileId = :profileId AND watchedAt >= :from AND watchedAt < :until")
     suspend fun secondsBetween(profileId: String, from: Long, until: Long): Long
+
+    /** Sehverlauf aelter als [grenze] loeschen (ADR 0010); gibt die Anzahl zurueck. */
+    @Query("DELETE FROM watch_history WHERE watchedAt < :grenze")
+    suspend fun loescheAelterAls(grenze: Long): Int
 }
 
 @Dao
@@ -117,6 +125,10 @@ interface ChannelVideoCacheDao {
 
     @Query("DELETE FROM cached_channel_videos WHERE channelId = :channelId")
     suspend fun clear(channelId: String)
+
+    /** Zwischenspeicher aelter als [grenze] loeschen (ADR 0010); der Feed liefert neu. */
+    @Query("DELETE FROM cached_channel_videos WHERE cachedAt < :grenze")
+    suspend fun loescheAelterAls(grenze: Long): Int
 }
 
 @Dao
@@ -150,6 +162,14 @@ interface WishDao {
 
     @Insert(onConflict = OnConflictStrategy.ABORT)
     suspend fun insert(wish: WishEntity)
+
+    /** Entschiedene Wuensche aelter als [grenze] loeschen (ADR 0010). */
+    @Query("DELETE FROM wishes WHERE status NOT IN ('offen', 'besprechen') AND createdAt < :grenze")
+    suspend fun loescheEntschiedeneAelterAls(grenze: Long): Int
+
+    /** Offene Wuensche aelter als [grenze]: YouTube-Titel und Kanalname weg, das Thema des Kindes bleibt. */
+    @Query("UPDATE wishes SET videoTitle = NULL, channelTitle = NULL WHERE status IN ('offen', 'besprechen') AND createdAt < :grenze AND (videoTitle IS NOT NULL OR channelTitle IS NOT NULL)")
+    suspend fun leereYouTubeDatenAelterAls(grenze: Long): Int
 
     @Update
     suspend fun update(wish: WishEntity)
