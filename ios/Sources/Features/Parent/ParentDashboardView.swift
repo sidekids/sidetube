@@ -91,19 +91,38 @@ private struct ProfileRow: View {
         let watched = WatchTimeRepository(context: context).secondsWatched(by: profile, on: .now) / 60
         VStack(alignment: .leading, spacing: 4) {
             Text(profile.name).font(.headline)
-            HStack(spacing: 12) {
-                Label("\(profile.whitelistItems.filter { $0.approvalStatus == .approved }.count) frei", systemImage: "checklist")
-                let pending = CurationRepository(context: context).pendingReview(in: profile).count
-                if pending > 0 { Label("\(pending) prüfen", systemImage: "exclamationmark.circle").foregroundStyle(.orange) }
-                let wishes = WishRepository(context: context).pending(of: profile.id).count
-                if wishes > 0 { Label("\(wishes) \(wishes == 1 ? "Wunsch" : "Wünsche")", systemImage: "star.bubble").foregroundStyle(.orange) }
-                Text(profile.ageBand.title)
-                if profile.bedtimeEnabled {
-                    Label("ab \(BedtimeEvaluator.format(minutes: profile.bedtimeStartMinutes))", systemImage: "bed.double")
-                }
-                Label(profile.dailyLimitMinutes.map { String(localized: "\(watched)/\($0) min heute") } ?? String(localized: "\(watched) min heute"), systemImage: "clock")
+            // Drei kurze Zeilen statt einer: Zaehler, Regeln, Sehzeit. In einer Zeile brachen englische Woerter
+            // silbenweise um („ap-prov-ed“, „20:0 0“); jede Angabe bleibt jetzt einzeilig.
+            let pending = CurationRepository(context: context).pendingReview(in: profile).count
+            let wishes = WishRepository(context: context).pending(of: profile.id).count
+            VStack(alignment: .leading, spacing: 3) {
+                HStack(spacing: 12) { zaehler(pending: pending, wishes: wishes) }
+                HStack(spacing: 12) { regeln() }
+                sehzeit(watched: watched)
             }
+            .lineLimit(1)
             .font(.caption).foregroundStyle(.secondary)
         }
     }
+
+    @ViewBuilder private func zaehler(pending: Int, wishes: Int) -> some View {
+        Label("\(profile.whitelistItems.filter { $0.approvalStatus == .approved }.count) frei", systemImage: "checklist")
+        if pending > 0 { Label("\(pending) prüfen", systemImage: "exclamationmark.circle").foregroundStyle(.orange) }
+        if wishes > 0 {
+            Label(wishes == 1 ? String(localized: "1 Wunsch") : String(localized: "\(wishes) Wünsche"), systemImage: "star.bubble")
+                .foregroundStyle(.orange)
+        }
+    }
+
+    private func sehzeit(watched: Int) -> some View {
+        Label(profile.dailyLimitMinutes.map { String(localized: "\(watched)/\($0) min heute") } ?? String(localized: "\(watched) min heute"), systemImage: "clock")
+    }
+
+    @ViewBuilder private func regeln() -> some View {
+        Text(profile.ageBand.title)
+        if profile.bedtimeEnabled {
+            Label("ab \(BedtimeEvaluator.format(minutes: profile.bedtimeStartMinutes))", systemImage: "bed.double")
+        }
+    }
 }
+

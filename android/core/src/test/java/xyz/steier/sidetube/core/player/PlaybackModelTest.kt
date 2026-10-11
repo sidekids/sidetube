@@ -207,7 +207,8 @@ class PlaybackModelTest {
         val commands = model.start()
 
         assertThat(commands).containsExactly(PlaybackModel.Command.Load("b"))
-        assertThat(model.state.progressLabel).isEqualTo("2 von 3")
+        assertThat(model.state.position).isEqualTo(2)
+        assertThat(model.state.queue).hasSize(3)
     }
 
     @Test

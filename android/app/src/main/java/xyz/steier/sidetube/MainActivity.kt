@@ -82,6 +82,26 @@ class MainActivity : ComponentActivity() {
     private val mainHandler = android.os.Handler(android.os.Looper.getMainLooper())
     private var holdTimer: Runnable? = null
 
+    /**
+     * Haelt im Kindermodus den Fokus. Im Beruehrungsmodus verschluckt Android den ersten Druck auf
+     * Steuerkreuz, Mitte oder ENTER, um den Modus zu verlassen, und reicht ihn erst gar nicht an
+     * [dispatchKeyEvent] weiter – ausser ein gewoehnlicher View hat schon den Fokus
+     * (`ViewRootImpl.leaveTouchMode`). Ohne diesen View ging am SP-01 nach jeder Beruehrung der
+     * erste Raddruck verloren (Emulator, 11.10.2026; vorher als „erster Druck reagiert nicht“ an
+     * der Sperre gesehen). Im Elternbereich bleibt der Fokus frei fuer die Eingabefelder.
+     */
+    private val tastenFokus by lazy {
+        android.view.View(this).apply {
+            isFocusable = true
+            isFocusableInTouchMode = true
+            importantForAccessibility = android.view.View.IMPORTANT_FOR_ACCESSIBILITY_NO
+        }
+    }
+
+    private fun tastenFokusHalten() {
+        if (keyHandler != null && !tastenFokus.isFocused) tastenFokus.requestFocus()
+    }
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         val container = (application as SideTubeApp).container
@@ -89,11 +109,22 @@ class MainActivity : ComponentActivity() {
             SideTubeTheme {
                 androidx.compose.runtime.CompositionLocalProvider(LocalTexte provides container.texte) {
                     Surface(color = MaterialTheme.colorScheme.background) {
-                        SideTubeApp(container) { handler -> keyHandler = handler }
+                        SideTubeApp(container) { handler ->
+                            keyHandler = handler
+                            if (handler != null) tastenFokusHalten() else tastenFokus.clearFocus()
+                        }
                     }
                 }
             }
         }
+        addContentView(tastenFokus, android.widget.FrameLayout.LayoutParams(1, 1))
+        // Verschwindet der Fokus (Player-WebView entfernt, Dialog geschlossen), holt der Kindermodus ihn zurueck.
+        window.decorView.viewTreeObserver.addOnGlobalFocusChangeListener { _, neu -> if (neu == null) tastenFokusHalten() }
+    }
+
+    override fun onResume() {
+        super.onResume()
+        tastenFokusHalten()
     }
 
     /**
@@ -222,8 +253,14 @@ private fun SideTubeApp(container: AppContainer, registerKeys: (((KeyEvent, Bool
             videoBounds.width.toInt(),
             videoBounds.height.toInt()
         )
-        params.leftMargin = videoBounds.left.toInt()
-        params.topMargin = videoBounds.top.toInt()
+        // Compose meldet die Lage im Fenster, die WebView haengt aber im Inhaltsbereich unterhalb
+        // der Statusleiste. Ohne diesen Abzug rutschte sie um die Statusleiste nach unten und
+        // verdeckte Titel und Endkarte (am Emulator SP-01 gesehen, 09.10.2026).
+        val inhalt = IntArray(2)
+        (bridge.webView.parent as? android.view.View ?: activity.findViewById(android.R.id.content))
+            .getLocationInWindow(inhalt)
+        params.leftMargin = videoBounds.left.toInt() - inhalt[0]
+        params.topMargin = videoBounds.top.toInt() - inhalt[1]
         bridge.webView.layoutParams = params
     }
 

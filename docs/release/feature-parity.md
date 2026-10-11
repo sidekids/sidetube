@@ -26,7 +26,7 @@ Static code evidence, not a claim of end-to-end device validation. This supersed
 | Export/import/migration | Starter imports; no verified general roundtrip | Starter imports; no verified legacy migration | Existing installations need migration decision |
 | Parent PIN | PBKDF2/Keychain, persistent lockout, change PIN | PBKDF2/EncryptedSharedPreferences, lockout; change PIN via ⋯ → „PIN ändern“ (current PIN checked against the same lockout) | Capped penalties and corrupt-data tests; main-thread hashing remains to measure |
 | Background | Player teardown and parent relock added | Player teardown and parent relock added | Device verification pending |
-| Cookies | Nonpersistent players | Session-scoped store cleared at start and teardown, privacy-enhanced host; third-party cookies still accepted | Partial: remaining third-party acceptance and device verification stay Privacy BLOCKER |
+| Cookies | Nonpersistent players | Session-scoped store cleared at start and teardown, privacy-enhanced host, third-party cookies rejected since 2026-10-08 (plays on the physical SP-01) | Close; the persistent store between sessions differs from iOS, request capture pending |
 | Caching | SwiftData channel cache, memory HTTP cache, AsyncImage | Room channel cache, simple HTTP client | Different cache freshness/cancellation policies |
 | Offline | Local curated data/cache; streaming unavailable | Local data/cache; streaming unavailable | Error/slow-network/geo restriction device matrix pending |
 | Deep links / external shares | Recommendation links, parent-gated save/open | No comparable deep-link workflow | Optional platform difference; initial iOS lookup precedes PIN |

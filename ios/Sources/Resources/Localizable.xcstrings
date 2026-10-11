@@ -172,6 +172,16 @@
         }
       }
     },
+    "%lld Wünsche": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "%lld wishes"
+          }
+        }
+      }
+    },
     "%lld brauchen": {
       "localizations": {
         "en": {
@@ -338,6 +348,16 @@
           "stringUnit": {
             "state": "translated",
             "value": "1 entry will be approved."
+          }
+        }
+      }
+    },
+    "1 Wunsch": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "1 wish"
           }
         }
       }

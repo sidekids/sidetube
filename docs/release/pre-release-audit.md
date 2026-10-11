@@ -24,7 +24,7 @@ Baseline assessment: 2026-09-09; iOS scheduling follow-up: 2026-09-10; Android c
 | Content packaging | PASS | Explicit six-file manifest; built iOS app and Android release APK match source byte-for-byte |
 | Secret detection | WARNING | No confirmed credentials in completed Gitleaks scans; metadata/publication review and scanner limitations remain |
 | Child protection / parity | BLOCKER | Android time-limit enforcement not equivalent and the full-screen child overlay is missing; sleep timer, quiet-hours warnings/exception and kid-mode profile switching now implemented and covered by ViewModel tests; navigation/foreign-video guards code-equivalent but device-unverified |
-| Privacy / provider terms | BLOCKER | Android third-party cookies and provider requests; session-scoped cookie store and privacy-enhanced embed host landed but are device-unverified; no physical-device request capture or approved child-directed distribution model |
+| Privacy / provider terms | BLOCKER | Provider requests; Android third-party cookies rejected since 2026-10-08 and playback confirmed on the physical SP-01, session-scoped cookie store and privacy-enhanced host in place; no physical-device request capture or approved child-directed distribution model |
 | Licensing / assets | BLOCKER | Historical GPL fork, replacement provenance, restricted shared content and asset permissions |
 | Energy / performance | BLOCKER | Identified idle polling removed in code; no measured physical-device baseline |
 | Accessibility / localization | BLOCKER | Manual gates unrun; Android hardcoded German strings |
@@ -103,7 +103,7 @@ Post-implementation verification also passed: Gitleaks scanned all local refs (1
 
 ## Privacy
 
-See [model](../privacy/privacy-model.md), [network matrix](../privacy/network-services.md) and [storage inventory](../privacy/data-storage.md). No first-party analytics/advertising SDK was identified in the reviewed native dependency set. This is not a claim that remote video providers perform no tracking. Requests reveal connection information and requested content; WebViews execute remote code. Android now embeds through the privacy-enhanced host and erases its cookie store at session start and teardown, but still accepts third-party cookies and remains a persistent platform store between those points; this still differs from iOS nonpersistent player storage, and neither change is device-verified. All external flows require device capture, provider-policy assessment and truthful store disclosures. The privacy policy remains a draft, not a worldwide compliance declaration.
+See [model](../privacy/privacy-model.md), [network matrix](../privacy/network-services.md) and [storage inventory](../privacy/data-storage.md). No first-party analytics/advertising SDK was identified in the reviewed native dependency set. This is not a claim that remote video providers perform no tracking. Requests reveal connection information and requested content; WebViews execute remote code. Android embeds through the privacy-enhanced host, rejects third-party cookies (since 2026-10-08) and erases its cookie store at session start and teardown, but remains a persistent platform store between those points; this still differs from iOS nonpersistent player storage. Playback with this configuration works on the physical SP-01; no request capture exists. All external flows require device capture, provider-policy assessment and truthful store disclosures. The privacy policy remains a draft, not a worldwide compliance declaration.
 
 ## Licensing
 

@@ -4,7 +4,7 @@ Checked against official guidance on 2026-09-09. This is technical preparation, 
 
 - [x] Set compileSdk and targetSdk to 36; locally build the release APK/AAB with AGP 8.9.3 and Gradle 8.11.1.
 - [ ] Verify target requirements again at submission. Since 2026-08-31, new mobile apps and updates must target API 36 (subject to documented exceptions/extensions).
-- [ ] Decide target audience and complete Families Policy assessment, including third-party WebView/player services. Persistent and third-party cookies remain an open privacy issue.
+- [ ] Decide target audience and complete Families Policy assessment, including third-party WebView/player services. Third-party cookies are rejected since 2026-10-08; the persistent first-party WebView store between sessions remains to be assessed and disclosed.
 - [ ] Close unintended navigation/foreign-video paths; implement and test protective controls currently absent from the Android rewrite before claiming iOS parity. Subframe navigation and unsolicited-video guards are now implemented and unit-tested (2026-09-10); real click-through/device verification is still outstanding.
 - [ ] Complete Data Safety from observed app, WebView and provider behavior; publish an approved privacy policy and operator/support contact.
 - [ ] Review merged manifest permissions, exported components, intent handlers, backups and network-security settings in the final artifact.

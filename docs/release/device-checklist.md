@@ -6,7 +6,7 @@ Everything that still blocks a release and cannot be closed from the desk: it ne
 
 | # | What to verify | How | Evidence |
 |---|---|---|---|
-| A1 | Playback starts and runs with `controls: 0` and **no third-party cookies** on WebView 91 | Install the current debug build, approve one short video, start it, wait 30 s; repeat after a reboot | Status line „Spielt“ with advancing position; note WebView version from `adb shell dumpsys package com.google.android.webview` or the device's WebView |
+| A1 | ✅ 2026-10-09, owner report with v0.1.0-test.2 (see android-device-verification.md) – Playback starts and runs with `controls: 0` and **no third-party cookies** on WebView 91 | Install the current debug build, approve one short video, start it, wait 30 s; repeat after a reboot | Status line „Spielt“ with advancing position; note WebView version from `adb shell dumpsys package com.google.android.webview` or the device's WebView |
 | A2 | The 2026-09-13 playback stall | Same as A1 on a freshly rebooted device, no reinstalls in between; if it stalls, capture `adb logcat` and the page state through the WebView DevTools hook described in `android-device-verification.md` (2026-10-09 entry) | Either „does not reproduce after reboot“ or a logcat excerpt |
 | A3 | Click-through on YouTube's info bar | While playing, tap channel avatar, title, share, logo | App stays in the player; nothing opens youtube.com |
 | A4 | Full-screen lock: quiet hours | Enable quiet hours in the profile, set the device clock into the window, return to kid mode | Lock „Schlafenszeit“ with resume time; ring and taps do nothing; „Für Eltern“ → PIN sets the exception; lock lifts at the window end |
@@ -26,6 +26,8 @@ Everything that still blocks a release and cannot be closed from the desk: it ne
 | I3 | Force-stop during playback and PIN recovery | Swipe the app away while playing, reopen | Overlay „Wiedergabe unterbrochen“, parent PIN recovery works |
 | I4 | VoiceOver and large text | Walk kid mode and the review queue | Every control announced; nothing clipped at the largest text size |
 | I5 | English | Device language English, open kid mode and the review queue | No German leftovers in the UI (data such as wish titles may stay German) |
+
+Simulator note (2026-10-11, not a substitute for I5): in English the parent dashboard's profile row broke words by syllable and showed „Wunsch/Wünsche“ untranslated; fixed (three single-line rows, localized wish count) and seen in both languages on the iPhone 17 simulator.
 
 ## Owner decisions
 

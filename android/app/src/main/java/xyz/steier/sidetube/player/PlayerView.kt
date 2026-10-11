@@ -16,6 +16,9 @@ import androidx.compose.material.icons.filled.SkipNext
 import androidx.compose.material.icons.filled.SkipPrevious
 import androidx.compose.material3.*
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
+import androidx.compose.foundation.rememberScrollState
+import androidx.compose.foundation.verticalScroll
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.layout.boundsInWindow
@@ -96,7 +99,10 @@ fun PlayerView(
             )
             Spacer(Modifier.height(4.dp))
             Text(
-                listOfNotNull(state.progressLabel.takeIf { it.isNotEmpty() }, stringResource(statusLabel(state)), state.positionLabel)
+                listOfNotNull(
+                    if (state.queue.isEmpty()) null else stringResource(R.string.player_fortschritt, state.position, state.queue.size),
+                    stringResource(statusLabel(state)), state.positionLabel
+                )
                     .joinToString(" · "),
                 style = MaterialTheme.typography.bodySmall,
                 color = Color.White.copy(alpha = 0.7f)
@@ -167,7 +173,11 @@ private fun EndCard(
     title: String, endFocus: Int, onReplay: () -> Unit, onClose: () -> Unit,
     mehrDavon: WunschMoeglich, onMehrDavon: () -> Unit
 ) {
-    Column(Modifier.fillMaxWidth().padding(horizontal = 16.dp, vertical = 10.dp), verticalArrangement = Arrangement.spacedBy(8.dp)) {
+    // Drei Knoepfe passen unter dem Video nicht auf den 480×640-Schirm des SP-01; die Karte scrollt
+    // und folgt dem Fokus des Rads, sonst laege „Zurück zu den Videos“ unsichtbar unter dem Rand.
+    val scroll = rememberScrollState()
+    LaunchedEffect(endFocus) { scroll.animateScrollTo(if (endFocus == 0) 0 else scroll.maxValue) }
+    Column(Modifier.fillMaxWidth().verticalScroll(scroll).padding(horizontal = 16.dp, vertical = 10.dp), verticalArrangement = Arrangement.spacedBy(8.dp)) {
         Text(stringResource(R.string.player_fertig), style = MaterialTheme.typography.headlineSmall, color = Color.White)
         Text(title, style = MaterialTheme.typography.bodyMedium, color = Color.White.copy(alpha = 0.7f),
             maxLines = 1, overflow = TextOverflow.Ellipsis)

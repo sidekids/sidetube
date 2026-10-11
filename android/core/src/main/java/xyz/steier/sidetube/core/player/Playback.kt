@@ -18,7 +18,8 @@ data class PlaybackState(
 ) {
     val current: PlayableVideo? get() = queue.getOrNull(index)
     val positionLabel: String get() = "%d:%02d".format(positionSeconds / 60, positionSeconds % 60)
-    val progressLabel: String get() = if (queue.isEmpty()) "" else "${index + 1} von ${queue.size}"
+    /** Stelle in der Warteschlange (1-basiert) fuer „2 von 3“; den Satz baut die Oberflaeche aus Ressourcen. */
+    val position: Int get() = index + 1
 }
 
 /**
